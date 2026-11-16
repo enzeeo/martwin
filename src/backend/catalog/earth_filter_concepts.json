@@ -1,0 +1,100 @@
+{
+  "bare_ground": [
+    "earth_land_cover"
+  ],
+  "built_cover": [
+    "earth_land_cover"
+  ],
+  "crop_cover": [
+    "earth_land_cover"
+  ],
+  "grass_cover": [
+    "earth_land_cover"
+  ],
+  "mangrove_cover": [
+    "earth_land_cover"
+  ],
+  "moss_cover": [
+    "earth_land_cover"
+  ],
+  "open_water": [
+    "earth_land_cover",
+    "earth_water_mask"
+  ],
+  "shrub_cover": [
+    "earth_land_cover"
+  ],
+  "snow_cover": [
+    "earth_land_cover"
+  ],
+  "tree_cover": [
+    "earth_land_cover"
+  ],
+  "vegetation_cover": [
+    "earth_land_cover"
+  ],
+  "water_mask": [
+    "earth_water_mask"
+  ],
+  "soil_texture": [
+    "earth_soilgrids"
+  ],
+  "soil_rock_fraction": [
+    "earth_soilgrids"
+  ],
+  "mineralogy": [
+    "earth_emit_minerals"
+  ],
+  "vegetation_index": [
+    "earth_modis_vegetation"
+  ],
+  "albedo": [
+    "earth_albedo"
+  ],
+  "channels": [
+    "earth_drainage_channels"
+  ],
+  "dunes": [
+    "earth_dunes"
+  ],
+  "ground_ice": [
+    "earth_ground_ice_abundance",
+    "earth_ice_presence"
+  ],
+  "landform": [
+    "earth_landform_mixture"
+  ],
+  "pressure": [
+    "earth_surface_pressure"
+  ],
+  "relief": [
+    "earth_relief"
+  ],
+  "shortwave_radiation": [
+    "earth_insolation"
+  ],
+  "slope": [
+    "earth_slope_distribution"
+  ],
+  "surface_roughness": [
+    "earth_surface_roughness"
+  ],
+  "terrain_ruggedness": [
+    "earth_surface_roughness"
+  ],
+  "topographic_position": [
+    "earth_landform_mixture"
+  ],
+  "surface_temperature": [
+    "earth_surface_temperature"
+  ],
+  "thermal_inertia": [
+    "earth_thermal_inertia"
+  ],
+  "water_vapour": [
+    "earth_atmospheric_water"
+  ],
+  "wind": [
+    "earth_wind"
+  ]
+}

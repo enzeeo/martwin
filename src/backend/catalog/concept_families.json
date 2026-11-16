@@ -1,0 +1,51 @@
+{
+  "albedo": [
+    "albedo"
+  ],
+  "channels": [
+    "drainage_channels"
+  ],
+  "dunes": [
+    "dunes"
+  ],
+  "ground_ice": [
+    "ground_ice_abundance",
+    "ice_presence"
+  ],
+  "landform": [
+    "landform_mixture"
+  ],
+  "pressure": [
+    "surface_pressure"
+  ],
+  "relief": [
+    "relief"
+  ],
+  "shortwave_radiation": [
+    "insolation"
+  ],
+  "slope": [
+    "slope_distribution"
+  ],
+  "surface_roughness": [
+    "surface_roughness"
+  ],
+  "terrain_ruggedness": [
+    "surface_roughness"
+  ],
+  "topographic_position": [
+    "landform_mixture"
+  ],
+  "surface_temperature": [
+    "surface_temperature"
+  ],
+  "thermal_inertia": [
+    "thermal_inertia"
+  ],
+  "water_vapour": [
+    "atmospheric_water"
+  ],
+  "wind": [
+    "wind"
+  ]
+}

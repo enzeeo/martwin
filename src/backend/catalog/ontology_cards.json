@@ -1,0 +1,1098 @@
+[
+  {
+    "aliases": [
+      "fluvial landform",
+      "canyon",
+      "drainage basin",
+      "watershed",
+      "catchment"
+    ],
+    "anchor_concepts": [
+      "landform"
+    ],
+    "caution": "Fluvial setting does not imply current surface water. Cave subclass axioms are deliberately not imported.",
+    "conditions": {
+      "any": [
+        "\\b(?:fluvial|river\\w*|valley\\w*|drainage|watershed|catchment|stream\\w*|waterways?|flowing water|water.cut)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://sweetontology.net/realmLandform/Landform",
+          "predicate": "rdfs:subClassOf"
+        },
+        "label": "fluvial landform",
+        "uri": "http://sweetontology.net/realmLandFluvial/FluvialLandform"
+      },
+      {
+        "imported_assertion": {
+          "object": "http://sweetontology.net/realmLandFluvial/Watershed",
+          "predicate": "owl:equivalentClass"
+        },
+        "label": "drainage basin",
+        "uri": "http://sweetontology.net/realmLandFluvial/DrainageBasin"
+      },
+      {
+        "label": "canyon",
+        "uri": "http://sweetontology.net/realmLandFluvial/Canyon"
+      }
+    ],
+    "id": "SWEET_fluvial",
+    "label": "Fluvial landform and drainage basin",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:fluvial|river\\w*|valley\\w*|drainage|watershed|catchment|stream\\w*|waterways?|flowing water|water.cut)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "channels"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:shape\\w*|morpholog\\w*|geometry|geometries|terrain|landscape|relief|valleys?|network\\w*|drainage|erosion|eroded|carved)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "relief"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "SWEET",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "SWEET_FLUVIAL"
+    ],
+    "text": "Understand landforms made by flowing water, including river valleys, canyons, drainage basins and watershed networks. Examine landscape geometry and erosion."
+  },
+  {
+    "aliases": [
+      "sediment formation",
+      "compaction",
+      "diagenesis"
+    ],
+    "anchor_concepts": [
+      "geology"
+    ],
+    "caution": "",
+    "conditions": {
+      "any": [
+        "\\b(?:sediment\\w*|particles?|grains?|deposits?|deposition|sand|silt|clay|sorting|sorted|clastic)\\b",
+        "\\bdiagen\\w*\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "sediment formation",
+        "uri": "http://sweetontology.net/phenGeolGeomorphology/SedimentFormation"
+      },
+      {
+        "imported_assertion": {
+          "object": "http://sweetontology.net/phenGeolGeomorphology/SedimentFormation",
+          "predicate": "rdfs:subClassOf"
+        },
+        "label": "compaction",
+        "uri": "http://sweetontology.net/phenGeolGeomorphology/Compaction"
+      },
+      {
+        "imported_assertion": {
+          "object": "http://sweetontology.net/phenGeolGeomorphology/SedimentFormation",
+          "predicate": "rdfs:subClassOf"
+        },
+        "label": "diagenesis",
+        "uri": "http://sweetontology.net/phenGeolGeomorphology/Diagenesis"
+      }
+    ],
+    "id": "SWEET_sediment",
+    "label": "Sediment formation",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:layer\\w*|bedding|stratif\\w*|deposition|deposits?|sedimentary|diagen\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "sedimentary_structure"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:compos\\w*|minerals?|mineralogy|chem\\w*|alter\\w*|weather\\w*|carbonate\\w*|hydrated|diagen\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "mineralogy"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "SWEET",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "SWEET_GEOMORPH"
+    ],
+    "text": "Investigate sediment formation, deposition, compaction and diagenesis in geological deposits."
+  },
+  {
+    "aliases": [
+      "weathering",
+      "chemical weathering"
+    ],
+    "anchor_concepts": [
+      "geology"
+    ],
+    "caution": "",
+    "conditions": {
+      "any": [
+        "\\b(?:weather\\w*|alter\\w*|diagen\\w*|rock\\w*|minerals?)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://sweetontology.net/phenSolid/Erosion",
+          "predicate": "owl:disjointWith"
+        },
+        "label": "weathering",
+        "uri": "http://sweetontology.net/phenGeolGeomorphology/Weathering"
+      }
+    ],
+    "id": "SWEET_weathering",
+    "label": "Weathering",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:compos\\w*|minerals?|mineralogy|chem\\w*|alter\\w*|weather\\w*|carbonate\\w*|hydrated|diagen\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "mineralogy"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "SWEET",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "SWEET_GEOMORPH"
+    ],
+    "text": "Investigate alteration and breakdown of rock in place, including chemical weathering and mineral transformations. Distinguish this from particle transport."
+  },
+  {
+    "aliases": [
+      "mass wasting",
+      "landslide",
+      "rock slope failure",
+      "slope failure"
+    ],
+    "anchor_concepts": [
+      "slope_stability"
+    ],
+    "caution": "Sinking into soft soil and uniform terrain do not automatically imply landslides.",
+    "conditions": {
+      "any": [
+        "\\b(?:landslides?|mass wasting|slope failure|slope stability|ground movement|subsiden\\w*|collaps\\w*|slumping)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://sweetontology.net/phenGeolGeomorphology/MaterialDisplacement",
+          "predicate": "rdfs:subClassOf"
+        },
+        "label": "mass wasting",
+        "uri": "http://sweetontology.net/phenGeolGeomorphology/MassWasting"
+      },
+      {
+        "label": "rock slope failure",
+        "uri": "http://sweetontology.net/phenGeolGeomorphology/RockSlopeFailure"
+      }
+    ],
+    "id": "SWEET_slope_failure",
+    "label": "Mass wasting and rock slope failure",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": []
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "slope"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": []
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "relief"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "SWEET",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "SWEET_GEOMORPH"
+    ],
+    "text": "Investigate moving ground, landslides, rock slope failure and slope stability over time. Static roughness alone does not measure instability."
+  },
+  {
+    "aliases": [
+      "saltation"
+    ],
+    "anchor_concepts": [
+      "grain_size"
+    ],
+    "caution": "A transport process and a measured mass flux are different concepts.",
+    "conditions": {
+      "all": [
+        "\\b(?:wind\\w*|aeolian|eolian|saltation|dunes?|sand|dust|particles?|bedforms?)\\b",
+        "\\b(?:flux\\w*|rates?|transport|moves?|moving|movement|migration|migrat\\w*|entrain\\w*|erosion|erod\\w*|deposition|deposit\\w*)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://sweetontology.net/phenGeolGeomorphology/MaterialDisplacement",
+          "predicate": "rdfs:subClassOf"
+        },
+        "label": "saltation",
+        "uri": "http://sweetontology.net/phenGeolGeomorphology/Saltation"
+      }
+    ],
+    "id": "SWEET_saltation",
+    "label": "Saltation",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:wind\\w*|aeolian|eolian)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "wind"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:flux\\w*|rates?|amounts?|quantif\\w*|how much|transport|moving particles|moves particles)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "sediment_transport_flux"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "SWEET",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "SWEET_GEOMORPH"
+    ],
+    "text": "Study wind-driven bouncing grains, entrainment of sand and particle transport across a dry surface."
+  },
+  {
+    "aliases": [
+      "particle sorting",
+      "well sorted",
+      "poorly sorted",
+      "sorting"
+    ],
+    "anchor_concepts": [
+      "sediment_sorting"
+    ],
+    "caution": "Requires a grain-size distribution; a single size statistic is not sorting.",
+    "conditions": {
+      "all": [
+        "\\b(?:sediment\\w*|particles?|grains?|deposits?|deposition|sand|silt|clay|sorting|sorted|clastic)\\b",
+        "\\b(?:sorting|sorted|uniform\\w*|size distribution|size spread|range of (?:grain|particle)|mixture of sizes)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "note": "See source documentation; object IRI not reasserted here.",
+          "object_label": "Physical_Quality",
+          "predicate": "rdfs:subClassOf"
+        },
+        "label": "particle sorting",
+        "uri": "https://w3id.org/gso/1.0/granularmaterial/Particle_Sorting"
+      }
+    ],
+    "id": "GEO_sorting",
+    "label": "Particle sorting",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": []
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "grain_size"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "GEO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "GSO_GRANULAR",
+      "GEOSCIML"
+    ],
+    "text": "Characterize how narrowly or broadly sediment particle sizes are distributed; distinguish sorting from a typical grain size."
+  },
+  {
+    "aliases": [
+      "particle size",
+      "grain size"
+    ],
+    "anchor_concepts": [
+      "grain_size"
+    ],
+    "caution": "Size, sorting, shape and aspect ratio are separate properties. Do not invent a particle-shape column.",
+    "conditions": {
+      "any": [
+        "\\b(?:sediment\\w*|particles?|grains?|deposits?|deposition|sand|silt|clay|sorting|sorted|clastic)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "ParticleGeometryDescription: particleSize",
+        "uri": "https://geosciml.org/doc/geosciml/2.0/documentation/html/GeoSciML/EarthMaterial/ParticleGeometryDescription.html"
+      }
+    ],
+    "id": "GEO_grains",
+    "label": "Particle size",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:soil|sand|silt|clay|loose|traction)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "soil_texture"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "GEO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "GEOSCIML"
+    ],
+    "text": "Characterize the physical size of particles or grains in a sediment or rock material."
+  },
+  {
+    "aliases": [
+      "clastic",
+      "clastic granular material",
+      "epiclastic"
+    ],
+    "anchor_concepts": [
+      "geology"
+    ],
+    "caution": "",
+    "conditions": {
+      "any": [
+        "\\b(?:sediment\\w*|particles?|grains?|deposits?|deposition|sand|silt|clay|sorting|sorted|clastic)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "https://w3id.org/gso/1.0/granularmaterial/Granular_Particle_Material",
+          "predicate": "rdfs:subClassOf"
+        },
+        "label": "clastic granular material",
+        "uri": "https://w3id.org/gso/1.0/granularmaterial/Clastic_Granular_Material"
+      }
+    ],
+    "id": "GEO_clastic",
+    "label": "Clastic granular material",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:sediment\\w*|particles?|grains?|deposits?|deposition|sand|silt|clay|sorting|sorted|clastic)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "grain_size"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:layer\\w*|bedding|deposit\\w*|stratif\\w*|sedimentary)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "sedimentary_structure"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "GEO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "GSO_GRANULAR"
+    ],
+    "text": "Study transported fragments that form sediments and sedimentary rocks, their particle material and depositional context."
+  },
+  {
+    "aliases": [
+      "geologic material",
+      "geological material"
+    ],
+    "anchor_concepts": [
+      "geology"
+    ],
+    "caution": "",
+    "conditions": {
+      "any": [
+        "\\b(?:compos\\w*|minerals?|mineralogy|chem\\w*|alter\\w*|weather\\w*|carbonate\\w*|hydrated|diagen\\w*)\\b",
+        "\\b(?:geolog\\w*|rock types?|litholog\\w*)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "geologic material",
+        "uri": "https://w3id.org/gso/1.0/geology/Geologic_Material"
+      }
+    ],
+    "id": "GEO_material",
+    "label": "Geologic material",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:compos\\w*|minerals?|mineralogy|chem\\w*|alter\\w*|weather\\w*|carbonate\\w*|hydrated|diagen\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "mineralogy"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "GEO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "GSO_GEOLOGY"
+    ],
+    "text": "Investigate geological materials, rock types and their mineral composition and alteration history."
+  },
+  {
+    "aliases": [
+      "soil"
+    ],
+    "anchor_concepts": [
+      "soil_texture"
+    ],
+    "caution": "Soil is not an exact synonym of Martian regolith. Mechanical strength must be measured separately.",
+    "conditions": {
+      "any": [
+        "\\b(?:soil|sand|silt|clay|loose ground|soft ground|traction|sink\\w*|bogged)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://purl.obolibrary.org/obo/ENVO_01000017",
+          "predicate": "has_part"
+        },
+        "label": "soil",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_00001998"
+      },
+      {
+        "label": "silt",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_01000016"
+      },
+      {
+        "label": "clay",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_00002982"
+      }
+    ],
+    "id": "ENVO_soil",
+    "label": "Soil material",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:grain\\w*|particle\\w*|texture|sand|silt|clay)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "grain_size"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "ENVO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "ENVO_MATERIAL"
+    ],
+    "text": "Investigate the particle mixture in soil: sand, silt and clay, and its physical behavior."
+  },
+  {
+    "aliases": [
+      "sediment",
+      "sedimentation"
+    ],
+    "anchor_concepts": [
+      "grain_size"
+    ],
+    "caution": "The inspected ENVO sediment definition focuses on liquid deposition. This adapter does not infer a modern lake or exclude aeolian sediments.",
+    "conditions": {
+      "any": [
+        "\\b(?:sediment\\w*|particles?|grains?|deposits?|deposition|sand|silt|clay|sorting|sorted|clastic)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://purl.obolibrary.org/obo/ENVO_01000060",
+          "predicate": "is_a"
+        },
+        "label": "sediment",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_00002007"
+      }
+    ],
+    "id": "ENVO_sediment",
+    "label": "Sediment material",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:soil|sand|silt|clay|texture)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "soil_texture"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:ancient|former|lake|lacustrine|delta|deposits?|geolog\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "geology"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "ENVO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "ENVO_MATERIAL"
+    ],
+    "text": "Investigate deposited particles and the environmental material in lake-bottom and water-laid sediments."
+  },
+  {
+    "aliases": [
+      "sand",
+      "silt",
+      "grain of sand"
+    ],
+    "anchor_concepts": [
+      "soil_texture"
+    ],
+    "caution": "",
+    "conditions": {
+      "any": [
+        "\\b(?:sand\\w*|silt|grain\\w*|particle\\w*)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://purl.obolibrary.org/obo/ENVO_00000340",
+          "predicate": "has_part"
+        },
+        "label": "sand",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_01000017"
+      },
+      {
+        "label": "particle of sand",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_00000340"
+      }
+    ],
+    "id": "ENVO_sand",
+    "label": "Sand and silt material",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": []
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "grain_size"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "ENVO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "ENVO_MATERIAL"
+    ],
+    "text": "Study sand and silt as granular surface material and the sizes of their constituent particles."
+  },
+  {
+    "aliases": [
+      "biofilm",
+      "microbial mat",
+      "microbial mats"
+    ],
+    "anchor_concepts": [
+      "biological_activity"
+    ],
+    "caution": "Vegetation cover is not a microbial abundance measurement.",
+    "conditions": {
+      "any": [
+        "\\b(?:microb\\w*|biofilm\\w*|biolog\\w*|biosignature\\w*|life|organisms?)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "http://purl.obolibrary.org/obo/ENVO_01000549",
+          "predicate": "is_a"
+        },
+        "label": "biofilm",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_00002034"
+      },
+      {
+        "label": "microbial mat",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_01000008"
+      }
+    ],
+    "id": "ENVO_biofilm",
+    "label": "Biofilm and microbial mat",
+    "links": [],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "ENVO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "ENVO_MATERIAL"
+    ],
+    "text": "Investigate microbial growth and biological material on surfaces, including biological interference with geological observations."
+  },
+  {
+    "aliases": [
+      "water vapour",
+      "water vapor",
+      "aqueous vapor",
+      "aqueous vapour"
+    ],
+    "anchor_concepts": [
+      "water_vapour"
+    ],
+    "caution": "Do not substitute column water vapour for rainfall or soil moisture.",
+    "conditions": {
+      "any": [
+        "\\b(?:vapou?r|humidity|atmospher\\w*|arid|dryness|very dry)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "imported_assertion": {
+          "object": "water vapor",
+          "predicate": "hasExactSynonym"
+        },
+        "label": "water vapour",
+        "uri": "http://purl.obolibrary.org/obo/ENVO_01000266"
+      }
+    ],
+    "id": "ENVO_water_vapour",
+    "label": "Water vapour",
+    "links": [],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "ENVO",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "ENVO_MATERIAL"
+    ],
+    "text": "Investigate water in the gas phase in the atmosphere, including atmospheric dryness and humidity."
+  },
+  {
+    "aliases": [
+      "ice table",
+      "ice-table depth",
+      "overburden"
+    ],
+    "anchor_concepts": [
+      "ground_ice"
+    ],
+    "caution": "Ice-table depth is not ice thickness. Permafrost classes do not establish ice fraction.",
+    "conditions": {
+      "any": [
+        "\\b(?:ice|frozen water|permafrost)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "Goal III, Investigation B2.1",
+        "uri": "https://www.lpi.usra.edu/mepag/reports/reports/MEPAG_Goals_2025_FullText_Final.pdf#page=53"
+      },
+      {
+        "label": "B2.1: depth to the ice table",
+        "uri": "https://www.lpi.usra.edu/mepag/reports/reports/MEPAG_Goals_2025_FullText_Final.pdf#page=54"
+      }
+    ],
+    "id": "MEPAG_ice_depth",
+    "label": "Buried ice location and vertical structure",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:depth|deep\\w*|burial|buried|overburden|ice table|how far beneath)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "ice_depth"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "MEPAG",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "MEPAG2025"
+    ],
+    "text": "Characterize subsurface water ice and how deeply its upper surface is buried, including ice-table depth and overburden."
+  },
+  {
+    "aliases": [
+      "aeolian sediment",
+      "aeolian sediments",
+      "sediment flux",
+      "sediment fluxes"
+    ],
+    "anchor_concepts": [
+      "wind",
+      "grain_size"
+    ],
+    "caution": "Wind and grain size are context; a flux needs actual transport measurements.",
+    "conditions": {
+      "all": [
+        "\\b(?:wind\\w*|aeolian|eolian|saltation|dunes?|sand|dust|particles?|bedforms?)\\b",
+        "\\b(?:flux\\w*|rates?|transport|moves?|moving|movement|migration|migrat\\w*|entrain\\w*|erosion|erod\\w*|deposition|deposit\\w*)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "Goal III, Investigation B5.3",
+        "uri": "https://www.lpi.usra.edu/mepag/reports/reports/MEPAG_Goals_2025_FullText_Final.pdf#page=60"
+      },
+      {
+        "label": "B5.3: aeolian transport pathways and fluxes",
+        "uri": "https://www.lpi.usra.edu/mepag/reports/reports/MEPAG_Goals_2025_FullText_Final.pdf#page=61"
+      }
+    ],
+    "id": "MEPAG_aeolian_flux",
+    "label": "Modern aeolian sources and fluxes",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:flux\\w*|rates?|transport|moving|moves|motion|migration|quantif\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "sediment_transport_flux"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:dunes?|bedforms?|ripple\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "dunes"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "MEPAG",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "MEPAG2025"
+    ],
+    "text": "Study how wind erodes, transports and deposits sand or dust; determine sediment sources, transport pathways and fluxes."
+  },
+  {
+    "aliases": [
+      "ancient water cycle",
+      "water-related features"
+    ],
+    "anchor_concepts": [
+      "landform",
+      "geology"
+    ],
+    "caution": "Historical water evidence does not impose present-day open water.",
+    "conditions": {
+      "all": [
+        "\\b(?:ancient|past|former|old|once|paleo\\w*)\\b",
+        "\\b(?:water|rivers?|valleys?|lake\\w*|channels?|drainage|streams?)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "Goal II, Investigation C1.1",
+        "uri": "https://www.lpi.usra.edu/mepag/reports/reports/MEPAG_Goals_2025_FullText_Final.pdf#page=40"
+      }
+    ],
+    "id": "MEPAG_paleowater",
+    "label": "Ancient water-related features",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:fluvial|river\\w*|valley\\w*|drainage|watershed|catchment|stream\\w*|waterways?|flowing water|water.cut)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "channels"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:shape\\w*|morpholog\\w*|geometry|geometries|terrain|landscape|relief|valleys?|network\\w*|drainage|erosion|eroded|carved)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "relief"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:compos\\w*|minerals?|mineralogy|chem\\w*|alter\\w*|weather\\w*|carbonate\\w*|hydrated|diagen\\w*)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "mineralogy"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "MEPAG",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "MEPAG2025"
+    ],
+    "text": "Reconstruct ancient water activity from landforms and geological records, using morphology, topography and compositional evidence."
+  },
+  {
+    "aliases": [
+      "thermal inertia",
+      "surface energy budget"
+    ],
+    "anchor_concepts": [
+      "surface_temperature"
+    ],
+    "caution": "Apparent thermal inertia and thermal inertia are not interchangeable physical measurements.",
+    "conditions": {
+      "any": [
+        "\\b(?:heat\\w*|cool\\w*|thermal|temperature\\w*|energy|radiation)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "Goal II, Investigation A2.1",
+        "uri": "https://www.lpi.usra.edu/mepag/reports/reports/MEPAG_Goals_2025_FullText_Final.pdf#page=26"
+      }
+    ],
+    "id": "MEPAG_thermal",
+    "label": "Surface thermal response",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:thermal inertia|heat storage|store\\w*.*heat|release\\w*.*heat|retain\\w*.*heat|thermal response|energy budget)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "thermal_inertia"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:reflect\\w*|albedo|energy budget)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "albedo"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": [
+            "\\b(?:solar forcing|incoming solar|energy budget|solar radiation)\\b"
+          ]
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "shortwave_radiation"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "MEPAG",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "MEPAG2025"
+    ],
+    "text": "Investigate surface heating and cooling, thermal storage and energy exchange with the atmosphere. Distinguish temperature from thermal inertia."
+  },
+  {
+    "aliases": [
+      "biosignature preservation",
+      "preservation of biosignatures"
+    ],
+    "anchor_concepts": [
+      "biological_activity"
+    ],
+    "caution": "Mineral and textural context is not proof of life.",
+    "conditions": {
+      "all": [
+        "\\b(?:life|biosignature\\w*|biolog\\w*)\\b",
+        "\\b(?:preserv\\w*|traces?|evidence|record|ancient|past)\\b"
+      ]
+    },
+    "description_origin": "author paraphrase; not a query-specific answer",
+    "external_terms": [
+      {
+        "label": "Goal I, Sub-Objective A2: preservation context",
+        "uri": "https://www.lpi.usra.edu/mepag/reports/reports/MEPAG_Goals_2025_FullText_Final.pdf#page=12"
+      }
+    ],
+    "id": "MEPAG_biosignatures",
+    "label": "Biosignature preservation",
+    "links": [
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": []
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "mineralogy"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": []
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "geology"
+      },
+      {
+        "approval": "draft_requires_domain_review",
+        "conditions": {
+          "all": [],
+          "any": []
+        },
+        "rationale": "Context-dependent measurement requirement; not an OWL entailment.",
+        "relation_origin": "application-authored conditional requirement",
+        "target_concept": "mineral_texture"
+      }
+    ],
+    "mapping_origin": "application-authored crosswalk; source terms are not Starman requirements",
+    "pack": "MEPAG",
+    "review_status": "source_grounded_application_mapping_NOT_independently_approved",
+    "source_ids": [
+      "MEPAG2025"
+    ],
+    "text": "Investigate preservation of possible evidence of past life in geological materials, minerals and textures."
+  }
+]

@@ -1,0 +1,2013 @@
+{
+  "earth_land_cover": {
+    "description": "Earth-only WorldCover fractions for explicitly stated exposure, access, vegetation or land-cover constraints.",
+    "options": [
+      {
+        "header": "tree_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as tree",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "tree_frac"
+          }
+        }
+      },
+      {
+        "header": "shrub_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as shrub",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "shrub_frac"
+          }
+        }
+      },
+      {
+        "header": "grass_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as grass",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "grass_frac"
+          }
+        }
+      },
+      {
+        "header": "crop_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as crop",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "crop_frac"
+          }
+        }
+      },
+      {
+        "header": "built_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as built",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "built_frac"
+          }
+        }
+      },
+      {
+        "header": "bare_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as bare ground",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "bare_frac"
+          }
+        }
+      },
+      {
+        "header": "snow_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as snow",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "snow_frac"
+          }
+        }
+      },
+      {
+        "header": "water_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as open water",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "water_frac"
+          }
+        }
+      },
+      {
+        "header": "wetland_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as wetland",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "wetland_frac"
+          }
+        }
+      },
+      {
+        "header": "mangrove_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as mangrove",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "mangrove_frac"
+          }
+        }
+      },
+      {
+        "header": "moss_frac",
+        "stat": "area fraction",
+        "meaning": "share of cell mapped as moss and lichen",
+        "compare_mode": "earth_filter",
+        "caution": "WorldCover class fractions are Earth land cover estimates.",
+        "layers": {
+          "earth": "worldcover"
+        },
+        "sources": {
+          "earth": {
+            "layer": "worldcover",
+            "version": "worldcover-v0.1",
+            "column": "moss_frac"
+          }
+        }
+      }
+    ]
+  },
+  "earth_water_mask": {
+    "description": "Earth-only terrain water-mask coverage for stated water-exclusion or exposure constraints.",
+    "options": [
+      {
+        "header": "water_mask_frac",
+        "stat": "fraction",
+        "meaning": "fraction flagged by Earth terrain water mask",
+        "compare_mode": "earth_filter",
+        "caution": "Earth-specific mask; constraint descriptor, not an analog score.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "water_mask_frac"
+          }
+        }
+      }
+    ]
+  },
+  "earth_soilgrids": {
+    "description": "Earth-only SoilGrids fields can constrain stated surface-material preferences; they do not measure traction, strength or wheel-scale obstacles.",
+    "options": [
+      {
+        "header": "sand_pct",
+        "stat": "percent",
+        "meaning": "estimated sand percentage",
+        "compare_mode": "earth_filter",
+        "caution": "SoilGrids estimates are weak or absent in deserts and masked over ice, water, urban cores and Antarctica.",
+        "layers": {
+          "earth": "soilgrids"
+        },
+        "sources": {
+          "earth": {
+            "layer": "soilgrids",
+            "version": "soilgrids-v0.2",
+            "column": "sand_pct"
+          }
+        }
+      },
+      {
+        "header": "silt_pct",
+        "stat": "percent",
+        "meaning": "estimated silt percentage",
+        "compare_mode": "earth_filter",
+        "caution": "SoilGrids estimates are weak or absent in deserts and masked over ice, water, urban cores and Antarctica.",
+        "layers": {
+          "earth": "soilgrids"
+        },
+        "sources": {
+          "earth": {
+            "layer": "soilgrids",
+            "version": "soilgrids-v0.2",
+            "column": "silt_pct"
+          }
+        }
+      },
+      {
+        "header": "clay_pct",
+        "stat": "percent",
+        "meaning": "estimated clay percentage",
+        "compare_mode": "earth_filter",
+        "caution": "SoilGrids estimates are weak or absent in deserts and masked over ice, water, urban cores and Antarctica.",
+        "layers": {
+          "earth": "soilgrids"
+        },
+        "sources": {
+          "earth": {
+            "layer": "soilgrids",
+            "version": "soilgrids-v0.2",
+            "column": "clay_pct"
+          }
+        }
+      },
+      {
+        "header": "rock_frac_pct",
+        "stat": "percent",
+        "meaning": "estimated coarse-fragment percentage",
+        "compare_mode": "earth_filter",
+        "caution": "SoilGrids estimates are weak or absent in deserts and masked over ice, water, urban cores and Antarctica.",
+        "layers": {
+          "earth": "soilgrids"
+        },
+        "sources": {
+          "earth": {
+            "layer": "soilgrids",
+            "version": "soilgrids-v0.2",
+            "column": "rock_frac_pct"
+          }
+        }
+      }
+    ]
+  },
+  "earth_emit_minerals": {
+    "description": "Earth-only EMIT mineral abundance for an explicitly stated mineral-material constraint.",
+    "options": [
+      {
+        "header": "min_abund_feoxide",
+        "stat": "abundance estimate",
+        "meaning": "feoxide abundance estimate",
+        "compare_mode": "earth_filter",
+        "caution": "Source-supported values only; coverage gaps are null. Not a Mars mineral measurement or validated cross-planet conversion.",
+        "layers": {
+          "earth": "emit_minerals"
+        },
+        "sources": {
+          "earth": {
+            "layer": "emit_minerals",
+            "version": "emit_minerals-v0.2",
+            "column": "min_abund_feoxide"
+          }
+        }
+      },
+      {
+        "header": "min_abund_al_clay",
+        "stat": "abundance estimate",
+        "meaning": "al_clay abundance estimate",
+        "compare_mode": "earth_filter",
+        "caution": "Source-supported values only; coverage gaps are null. Not a Mars mineral measurement or validated cross-planet conversion.",
+        "layers": {
+          "earth": "emit_minerals"
+        },
+        "sources": {
+          "earth": {
+            "layer": "emit_minerals",
+            "version": "emit_minerals-v0.2",
+            "column": "min_abund_al_clay"
+          }
+        }
+      },
+      {
+        "header": "min_abund_femg_clay",
+        "stat": "abundance estimate",
+        "meaning": "femg_clay abundance estimate",
+        "compare_mode": "earth_filter",
+        "caution": "Source-supported values only; coverage gaps are null. Not a Mars mineral measurement or validated cross-planet conversion.",
+        "layers": {
+          "earth": "emit_minerals"
+        },
+        "sources": {
+          "earth": {
+            "layer": "emit_minerals",
+            "version": "emit_minerals-v0.2",
+            "column": "min_abund_femg_clay"
+          }
+        }
+      },
+      {
+        "header": "min_abund_sulfate",
+        "stat": "abundance estimate",
+        "meaning": "sulfate abundance estimate",
+        "compare_mode": "earth_filter",
+        "caution": "Source-supported values only; coverage gaps are null. Not a Mars mineral measurement or validated cross-planet conversion.",
+        "layers": {
+          "earth": "emit_minerals"
+        },
+        "sources": {
+          "earth": {
+            "layer": "emit_minerals",
+            "version": "emit_minerals-v0.2",
+            "column": "min_abund_sulfate"
+          }
+        }
+      },
+      {
+        "header": "min_abund_carbonate",
+        "stat": "abundance estimate",
+        "meaning": "carbonate abundance estimate",
+        "compare_mode": "earth_filter",
+        "caution": "Source-supported values only; coverage gaps are null. Not a Mars mineral measurement or validated cross-planet conversion.",
+        "layers": {
+          "earth": "emit_minerals"
+        },
+        "sources": {
+          "earth": {
+            "layer": "emit_minerals",
+            "version": "emit_minerals-v0.2",
+            "column": "min_abund_carbonate"
+          }
+        }
+      }
+    ]
+  },
+  "earth_modis_vegetation": {
+    "description": "Satellite vegetation greenness estimates from Earth MODIS.",
+    "options": [
+      {
+        "header": "ndvi_mean",
+        "stat": "mean",
+        "meaning": "mean normalized difference vegetation index for vegetation greenness",
+        "compare_mode": "earth_filter",
+        "caution": "NDVI measures spectral greenness. It does not measure fractional plant cover.",
+        "layers": {
+          "earth": "modis_albedo_ndvi"
+        },
+        "sources": {
+          "earth": {
+            "layer": "modis_albedo_ndvi",
+            "version": "modis_albedo_ndvi-v0.2",
+            "column": "ndvi_mean"
+          }
+        }
+      },
+      {
+        "header": "ndvi_max",
+        "stat": "maximum",
+        "meaning": "maximum normalized difference vegetation index for vegetation greenness",
+        "compare_mode": "earth_filter",
+        "caution": "NDVI measures spectral greenness. It does not measure fractional plant cover.",
+        "layers": {
+          "earth": "modis_albedo_ndvi"
+        },
+        "sources": {
+          "earth": {
+            "layer": "modis_albedo_ndvi",
+            "version": "modis_albedo_ndvi-v0.2",
+            "column": "ndvi_max"
+          }
+        }
+      }
+    ]
+  },
+  "earth_slope_distribution": {
+    "description": "Earth native Slope distribution inside one 5 km cell. Typical steepness, variability, steep tails and hazard fractions represent different questions.",
+    "options": [
+      {
+        "header": "slope_mean",
+        "stat": "mean",
+        "meaning": "cell-average ground slope in degrees",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_mean"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_mean"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_median",
+        "stat": "median",
+        "meaning": "typical ground slope in degrees",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_median"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_median"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_std",
+        "stat": "std",
+        "meaning": "how uniform or variable slopes are in the cell",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_std"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_std"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_p90",
+        "stat": "p90",
+        "meaning": "upper-tail steepness over much of the cell",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p90"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p90"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_p99",
+        "stat": "p99",
+        "meaning": "rare, very steep patches and cliffs",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p99"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p99"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_2",
+        "stat": "fraction above 2 deg",
+        "meaning": "share of terrain above 2 degrees",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_2"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_5",
+        "stat": "fraction above 5 deg",
+        "meaning": "share of terrain above 5 degrees",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_5"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_5"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_10",
+        "stat": "fraction above 10 deg",
+        "meaning": "share of terrain above 10 degrees",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_10"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_10"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_20",
+        "stat": "fraction above 20 deg",
+        "meaning": "share of terrain above 20 degrees",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_20"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_20"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_30",
+        "stat": "fraction above 30 deg",
+        "meaning": "share of terrain above 30 degrees",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_30"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_30"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_surface_roughness": {
+    "description": "Earth native Vertical roughness and ruggedness. The documented K\u2013H roughness columns are excluded because their cross-planet normalization remains open.",
+    "options": [
+      {
+        "header": "roughness_detrended_std",
+        "stat": "detrended std",
+        "meaning": "vertical irregularity after removing planar tilt",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "roughness_detrended_std"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "roughness_detrended_std"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tri_p50",
+        "stat": "TRI p50",
+        "meaning": "typical terrain ruggedness",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p50"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p50"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tri_p90",
+        "stat": "TRI p90",
+        "meaning": "ruggedness of the rougher part of the cell",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p90"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p90"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_relief": {
+    "description": "Earth native Vertical relief independent of planetary altitude datums.",
+    "options": [
+      {
+        "header": "elev_range",
+        "stat": "range",
+        "meaning": "full max-minus-min elevation range",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "elev_range_robust",
+        "stat": "p95 minus p05",
+        "meaning": "relief resistant to single extreme pixels",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range_robust"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range_robust"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "local_relief_1km",
+        "stat": "local 1 km relief",
+        "meaning": "relief on approximately a kilometre scale",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "local_relief_1km"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "local_relief_1km"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_landform_mixture": {
+    "description": "Earth native Terrain form and topographic position: flats, ridges, valleys, hollows, crests and depressions.",
+    "options": [
+      {
+        "header": "geom_frac_flat",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as flat",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_flat"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_flat"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_peak",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as peak",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_peak"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_peak"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_ridge",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as ridge",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_ridge"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_ridge"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_shoulder",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as shoulder",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_shoulder"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_shoulder"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_spur",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as spur",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_spur"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_spur"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_slope",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as slope",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_slope"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_slope"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_hollow",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as hollow",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_hollow"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_hollow"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_footslope",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as footslope",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_footslope"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_footslope"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_valley",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as valley",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_valley"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_valley"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_pit",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as pit",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_pit"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_pit"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tpi_mean",
+        "stat": "mean TPI",
+        "meaning": "mean relative topographic position",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_mean"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_mean"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tpi_p10",
+        "stat": "TPI p10",
+        "meaning": "lower parts of the topographic-position distribution",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p10"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p10"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tpi_p90",
+        "stat": "TPI p90",
+        "meaning": "upper parts of the topographic-position distribution",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p90"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p90"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_dunes": {
+    "description": "Earth native Presence of mapped dunes and proximity to mapped dune fields. Earth and Mars source catalogues differ.",
+    "options": [
+      {
+        "header": "dune_frac",
+        "stat": "mapped dune presence",
+        "meaning": "Use dune_frac>0 as a presence proxy, not a numerically comparable fraction",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "earth_dunes_fraction"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mgd3_dunes",
+            "version": "mgd3_dunes-v0.2",
+            "column": "dune_frac"
+          },
+          "earth": {
+            "layer": "earth_dunes_fraction",
+            "version": "earth_dunes_fraction-v0.4",
+            "column": "dune_frac"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "dist_dune_km",
+        "stat": "distance to dunes",
+        "meaning": "proximity to the nearest mapped dune area",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "earth_dunes_distance"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mgd3_dunes",
+            "version": "mgd3_dunes-v0.2",
+            "column": "dist_dune_km"
+          },
+          "earth": {
+            "layer": "earth_dunes_distance",
+            "version": "earth_dunes-v0.4",
+            "column": "dist_dune_km"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      },
+      {
+        "header": "earth_dunes_fraction__dune_frac",
+        "stat": "mapped dune presence",
+        "meaning": "Use dune_frac>0 as a presence proxy, not a numerically comparable fraction",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "earth_dunes_fraction"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mgd3_dunes",
+            "version": "mgd3_dunes-v0.2",
+            "column": "dune_frac"
+          },
+          "earth": {
+            "layer": "earth_dunes_fraction",
+            "version": "earth_dunes_fraction-v0.4",
+            "column": "dune_frac"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "earth_dunes_distance__dist_dune_km",
+        "stat": "distance to dunes",
+        "meaning": "proximity to the nearest mapped dune area",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "earth_dunes_distance"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mgd3_dunes",
+            "version": "mgd3_dunes-v0.2",
+            "column": "dist_dune_km"
+          },
+          "earth": {
+            "layer": "earth_dunes_distance",
+            "version": "earth_dunes-v0.4",
+            "column": "dist_dune_km"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_drainage_channels": {
+    "description": "Earth native Mapped channels and valley networks; Mars records ancient networks, Earth predominantly modern rivers.",
+    "options": [
+      {
+        "header": "drain_dens_km_km2",
+        "stat": "mapped drainage density",
+        "meaning": "channel-network density, provisional proxy",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "hydrorivers"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mars_valleys",
+            "version": "mars_valleys-v0.2",
+            "column": "drain_dens_km_km2"
+          },
+          "earth": {
+            "layer": "hydrorivers",
+            "version": "hydrorivers-v0.3",
+            "column": "drain_dens_km_km2"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      },
+      {
+        "header": "dist_channel_km",
+        "stat": "distance to mapped channel",
+        "meaning": "proximity to mapped river/valley network, provisional proxy",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "hydrorivers"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mars_valleys",
+            "version": "mars_valleys-v0.2",
+            "column": "dist_channel_km"
+          },
+          "earth": {
+            "layer": "hydrorivers",
+            "version": "hydrorivers-v0.3",
+            "column": "dist_channel_km"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_ground_ice_abundance": {
+    "description": "Earth native Near-surface mapped ice/water-equivalent abundance. The source products and spatial support differ.",
+    "options": [
+      {
+        "header": "ice_wt_pct",
+        "stat": "ice weight percent",
+        "meaning": "upper near-surface ice estimate",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "ggd318"
+        },
+        "sources": {
+          "mars": {
+            "layer": "grs_h2o",
+            "version": "grs_h2o-v0.1",
+            "column": "ice_wt_pct"
+          },
+          "earth": {
+            "layer": "ggd318",
+            "version": "ggd318-v0.1",
+            "column": "ice_wt_pct"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_ice_presence": {
+    "description": "Earth native Mapped near-surface ice/permafrost spatial coverage; sources measure related but different concepts.",
+    "options": [
+      {
+        "header": "ice_frac",
+        "stat": "mapped presence proxy",
+        "meaning": "ice/permafrost mapped fraction",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "permafrost_cci"
+        },
+        "sources": {
+          "mars": {
+            "layer": "swim2",
+            "version": "swim2-v0.1",
+            "column": "ice_frac"
+          },
+          "earth": {
+            "layer": "permafrost_cci",
+            "version": "permafrost_cci-v0.1",
+            "column": "ice_frac"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_surface_temperature": {
+    "description": "Earth native MCD and ERA5 surface-temperature climatology, with daily and seasonal summaries.",
+    "options": [
+      {
+        "header": "tsurf_mean_K",
+        "stat": "cycle mean",
+        "meaning": "typical surface temperature in kelvin",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_mean_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_mean_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_min_K",
+        "stat": "cycle min",
+        "meaning": "cold end of the climatology",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_min_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_min_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_max_K",
+        "stat": "cycle max",
+        "meaning": "warm end of the climatology",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_max_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_max_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_diurnal_K",
+        "stat": "diurnal range",
+        "meaning": "local day-night temperature swing",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_diurnal_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_diurnal_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_seasonal_K",
+        "stat": "seasonal range",
+        "meaning": "difference across seasons",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_seasonal_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_seasonal_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_surface_pressure": {
+    "description": "Earth native Surface atmospheric pressure; absolute values differ drastically between planets.",
+    "options": [
+      {
+        "header": "psurf_Pa",
+        "stat": "cycle mean",
+        "meaning": "typical surface pressure",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_min_Pa",
+        "stat": "cycle min",
+        "meaning": "lowest pressure",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_min_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_min_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_max_Pa",
+        "stat": "cycle max",
+        "meaning": "highest pressure",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_max_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_max_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_diurnal_Pa",
+        "stat": "diurnal range",
+        "meaning": "day-to-night pressure variation",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_diurnal_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_diurnal_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_seasonal_Pa",
+        "stat": "seasonal range",
+        "meaning": "seasonal pressure variability",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_seasonal_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_seasonal_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_atmospheric_water": {
+    "description": "Earth native Column water vapour; climate ranges are different across planets.",
+    "options": [
+      {
+        "header": "h2o_col_kg_m2",
+        "stat": "cycle mean",
+        "meaning": "mean atmospheric water vapour column",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_min_kg_m2",
+        "stat": "cycle min",
+        "meaning": "minimum atmospheric vapour",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_min_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_min_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_max_kg_m2",
+        "stat": "cycle max",
+        "meaning": "maximum atmospheric vapour",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_max_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_max_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_diurnal_kg_m2",
+        "stat": "diurnal range",
+        "meaning": "daily vapour variation",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_diurnal_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_diurnal_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_seasonal_kg_m2",
+        "stat": "seasonal range",
+        "meaning": "seasonal vapour variation",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_seasonal_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_seasonal_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_wind": {
+    "description": "Earth native Near-surface wind speed and time variability from MCD and ERA5.",
+    "options": [
+      {
+        "header": "wind_mean_ms",
+        "stat": "cycle mean",
+        "meaning": "mean wind speed",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_mean_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_mean_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_min_ms",
+        "stat": "cycle min",
+        "meaning": "calmest wind",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_min_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_min_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_max_ms",
+        "stat": "cycle max",
+        "meaning": "highest modeled wind",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_max_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_max_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_diurnal_ms",
+        "stat": "diurnal range",
+        "meaning": "wind variability by time of day",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_diurnal_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_diurnal_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_seasonal_ms",
+        "stat": "seasonal range",
+        "meaning": "wind variability by season",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_seasonal_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_seasonal_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_insolation": {
+    "description": "Earth native Downwelling surface shortwave flux and its daily/seasonal variability.",
+    "options": [
+      {
+        "header": "sw_down_W_m2",
+        "stat": "cycle mean",
+        "meaning": "mean incoming sunlight",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_min_W_m2",
+        "stat": "cycle min",
+        "meaning": "lowest solar flux",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_min_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_min_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_max_W_m2",
+        "stat": "cycle max",
+        "meaning": "maximum solar flux",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_max_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_max_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_diurnal_W_m2",
+        "stat": "diurnal range",
+        "meaning": "daily solar flux variability",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_diurnal_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_diurnal_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_seasonal_W_m2",
+        "stat": "seasonal range",
+        "meaning": "seasonal solar flux variability",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_seasonal_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_seasonal_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_albedo": {
+    "description": "Earth native Surface reflectance/albedo from Mars TES and Earth MODIS; physical compatibility requires review.",
+    "options": [
+      {
+        "header": "albedo",
+        "stat": "broadband reflectance",
+        "meaning": "surface solar reflectance",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "modis_albedo_ndvi"
+        },
+        "sources": {
+          "mars": {
+            "layer": "tes_albedo",
+            "version": "tes_albedo-v0.2",
+            "column": "albedo"
+          },
+          "earth": {
+            "layer": "modis_albedo_ndvi",
+            "version": "modis_albedo_ndvi-v0.2",
+            "column": "albedo"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ],
+    "requires_prepared_data": true
+  },
+  "earth_thermal_inertia": {
+    "description": "Earth native Thermal storage proxy, expressed only as percentile within each planet; raw TI and Earth ATI are not directly interchangeable.",
+    "options": [
+      {
+        "header": "ti_pct",
+        "stat": "within-planet percentile",
+        "meaning": "relative thermal-inertia percentile on each planet, not physical TI equality",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "modis_ati"
+        },
+        "sources": {
+          "mars": {
+            "layer": "tes_ti",
+            "version": "tes_ti-v0.2",
+            "column": "ti_pct",
+            "extra": "ti_pct"
+          },
+          "earth": {
+            "layer": "modis_ati",
+            "version": "modis_ati-v0.2",
+            "column": "ti_pct",
+            "extra": "ti_pct"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "modis_ati__ti_pct",
+        "stat": "within-planet percentile",
+        "meaning": "relative thermal-inertia percentile on each planet, not physical TI equality",
+        "compare_mode": "earth_filter",
+        "caution": "Native Earth measurement for filtering; not a cross-planet equivalence.",
+        "layers": {
+          "earth": "modis_ati"
+        },
+        "sources": {
+          "mars": {
+            "layer": "tes_ti",
+            "version": "tes_ti-v0.2",
+            "column": "ti_pct",
+            "extra": "ti_pct"
+          },
+          "earth": {
+            "layer": "modis_ati",
+            "version": "modis_ati-v0.2",
+            "column": "ti_pct",
+            "extra": "ti_pct"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ],
+    "requires_prepared_data": true
+  }
+}

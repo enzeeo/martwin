@@ -1,0 +1,37 @@
+{
+  "fresh_dataset_access": "HTTP 401 (unauthenticated check)",
+  "fresh_scoring": "NOT RUN",
+  "reason": "No authenticated dataset access, analysis packages or local population data in this checkout",
+  "recorded_snapshot": {
+    "revision": "317b27de3fd7e27b1cba131a707fd4e2780f169b",
+    "weights": {
+      "slope_dist": 0.45,
+      "relief": 0.3,
+      "roughness": 0.25
+    },
+    "pre_mask": 6009935,
+    "eligible": 5320516,
+    "mask_removals": [
+      {
+        "mask": "perm_ice_frac < 0.5",
+        "basis": "B4 ice-sheet mask, option C (Caden, 2026-11-14)",
+        "nan_policy": "keep",
+        "status": "applied",
+        "removed_total": 552500,
+        "removed_given_previous": 552500,
+        "nan_cells": 0
+      },
+      {
+        "mask": "water_mask_frac <= 0.5",
+        "basis": "R2 hard mask (Caden, 2026-11-15): drop majority-water cells; D17",
+        "nan_policy": "keep",
+        "status": "applied",
+        "removed_total": 136979,
+        "removed_given_previous": 136919,
+        "nan_cells": 0
+      }
+    ]
+  },
+  "metadata_checks": "PASS: weights sum to 1; sequential mask removals reconcile",
+  "scope": "Metadata consistency only; does not validate scientific results or reproduce a data run"
+}

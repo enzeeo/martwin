@@ -1,0 +1,1186 @@
+{
+  "concepts": {
+    "accessibility": {
+      "aliases": [
+        "road access",
+        "access roads",
+        "permits",
+        "permissions",
+        "accessible by vehicle",
+        "reachable by truck"
+      ],
+      "concept_id": "accessibility",
+      "description": "Access routes, permissions and site safety are not measured by built-up land fraction.",
+      "family": "Missing measurements",
+      "label": "Field access and permissions",
+      "measurement_status": "unsupported"
+    },
+    "albedo": {
+      "aliases": [
+        "albedo",
+        "reflectivity",
+        "surface reflectivity",
+        "reflective",
+        "dark surfaces",
+        "bright surfaces"
+      ],
+      "concept_id": "albedo",
+      "description": "Surface reflectivity estimate; sources need compatible definitions and support.",
+      "family": "Albedo",
+      "label": "Surface albedo",
+      "measurement_status": "catalogued"
+    },
+    "apparent_thermal_inertia": {
+      "aliases": [
+        "apparent thermal inertia",
+        "ati"
+      ],
+      "concept_id": "apparent_thermal_inertia",
+      "description": "Earth MODIS apparent thermal inertia is not directly equal to Mars TES thermal inertia.",
+      "family": "MODIS apparent thermal inertia",
+      "label": "Apparent thermal inertia",
+      "measurement_status": "catalogued"
+    },
+    "bare_ground": {
+      "aliases": [
+        "bare",
+        "bare ground",
+        "exposed",
+        "exposure",
+        "exposed ground",
+        "exposed surfaces",
+        "exposed rock",
+        "uncovered ground",
+        "bare surfaces"
+      ],
+      "concept_id": "bare_ground",
+      "description": "Earth-only bare ground cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Bare ground cover",
+      "measurement_status": "catalogued"
+    },
+    "biological_activity": {
+      "aliases": [
+        "microbes",
+        "microbial",
+        "biosignatures",
+        "biological activity",
+        "life detection"
+      ],
+      "concept_id": "biological_activity",
+      "description": "Microbial abundance, activity and biosignatures are not directly measured by land cover or NDVI.",
+      "family": "Missing measurements",
+      "label": "Biological activity and biosignatures",
+      "measurement_status": "unsupported"
+    },
+    "built_cover": {
+      "aliases": [
+        "built",
+        "built-up",
+        "buildings",
+        "urban",
+        "human disturbance",
+        "urban development",
+        "human footprint",
+        "settlements"
+      ],
+      "concept_id": "built_cover",
+      "description": "Earth-only built-up land. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Built-up land",
+      "measurement_status": "catalogued"
+    },
+    "caves": {
+      "aliases": [
+        "cave",
+        "caves",
+        "cavern"
+      ],
+      "concept_id": "caves",
+      "description": "Mars cave candidate classifications and catalog priority, not measured access or terrestrial cave matching.",
+      "family": "MGC3 candidate caves",
+      "label": "Candidate cave observations",
+      "measurement_status": "catalogued"
+    },
+    "channel_geometry": {
+      "aliases": [
+        "channel cross section",
+        "bank height",
+        "channel width",
+        "channel depth"
+      ],
+      "concept_id": "channel_geometry",
+      "description": "Channel cross sections, bank heights, widths and depths are absent from the supplied drainage summaries.",
+      "family": "Missing measurements",
+      "label": "Fine-scale channel shape",
+      "measurement_status": "unsupported"
+    },
+    "channels": {
+      "aliases": [
+        "channel",
+        "channels",
+        "drainage",
+        "river valleys",
+        "riverbeds",
+        "stream order",
+        "river system",
+        "drainage network",
+        "old waterways"
+      ],
+      "concept_id": "channels",
+      "description": "Drainage density, mapped-channel proximity or maximum order. Earth rivers and Mars mapped valleys require support/definition review.",
+      "family": "Channels and valleys",
+      "label": "Channel and valley networks",
+      "measurement_status": "catalogued"
+    },
+    "craters": {
+      "aliases": [
+        "crater",
+        "craters",
+        "cratered"
+      ],
+      "concept_id": "craters",
+      "description": "Mars crater inventory. No Earth crater counterpart is listed in this catalog.",
+      "family": "Robbins impact craters",
+      "label": "Impact crater landscape",
+      "measurement_status": "catalogued"
+    },
+    "crop_cover": {
+      "aliases": [
+        "crop",
+        "cropland"
+      ],
+      "concept_id": "crop_cover",
+      "description": "Earth-only crop cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Crop cover",
+      "measurement_status": "catalogued"
+    },
+    "dunes": {
+      "aliases": [
+        "dune",
+        "dunes",
+        "dune coverage",
+        "sand dunes",
+        "dune fields"
+      ],
+      "concept_id": "dunes",
+      "description": "Mapped dune coverage, proximity and source-specific category; category crosswalk required for type matching.",
+      "family": "Dunes",
+      "label": "Dune landscape",
+      "measurement_status": "catalogued"
+    },
+    "dust_loading": {
+      "aliases": [
+        "dust loading",
+        "airborne dust",
+        "dust storms",
+        "dust concentration"
+      ],
+      "concept_id": "dust_loading",
+      "description": "Airborne dust optical depth, concentration and event statistics are not listed in the schema.",
+      "family": "Missing measurements",
+      "label": "Airborne dust concentration",
+      "measurement_status": "unsupported"
+    },
+    "elevation": {
+      "aliases": [
+        "elevation",
+        "altitude",
+        "height above datum"
+      ],
+      "concept_id": "elevation",
+      "description": "Absolute height relative to the source planetary datum; not local relief. Datums need review.",
+      "family": "Elevation and relief",
+      "label": "Absolute elevation",
+      "measurement_status": "catalogued"
+    },
+    "geology": {
+      "aliases": [
+        "geology",
+        "geologic",
+        "lithology",
+        "lithological",
+        "geological",
+        "bedrock",
+        "sedimentary",
+        "sediment origins"
+      ],
+      "concept_id": "geology",
+      "description": "Source-specific categorical geology. Numeric class IDs are labels, not continuous distances.",
+      "family": "Geology",
+      "label": "Geology and lithology",
+      "measurement_status": "catalogued"
+    },
+    "grain_size": {
+      "aliases": [
+        "grain size",
+        "grain sizes",
+        "grain-size",
+        "particle size",
+        "particles",
+        "grains",
+        "sediment particles",
+        "particle transport"
+      ],
+      "concept_id": "grain_size",
+      "description": "Earth estimated effective grain size; no direct Mars field is listed. Central estimate is not explicitly a median.",
+      "family": "SoilGrids",
+      "label": "Effective soil grain size",
+      "measurement_status": "catalogued"
+    },
+    "grass_cover": {
+      "aliases": [
+        "grass",
+        "grassland"
+      ],
+      "concept_id": "grass_cover",
+      "description": "Earth-only grass cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Grass cover",
+      "measurement_status": "catalogued"
+    },
+    "ground_ice": {
+      "aliases": [
+        "ground ice",
+        "subsurface ice",
+        "permafrost",
+        "ice deposits",
+        "ice consistency",
+        "underground ice",
+        "buried ice",
+        "frozen ground"
+      ],
+      "concept_id": "ground_ice",
+      "description": "Source-dependent ground ice estimates. Ice fraction concepts differ by planet; SWIM depth indices are Mars-only.",
+      "family": "Ground ice and permafrost",
+      "label": "Ground ice and permafrost",
+      "measurement_status": "catalogued"
+    },
+    "ice_depth": {
+      "aliases": [
+        "depth to ice",
+        "ice depth",
+        "buried depth",
+        "how deep the ice"
+      ],
+      "concept_id": "ice_depth",
+      "description": "Actual ice-table depth is not the same as a depth-binned SWIM consistency index; a direct depth measurement is absent.",
+      "family": "Missing measurements",
+      "label": "Depth to actual ground ice",
+      "measurement_status": "unsupported"
+    },
+    "land_cover": {
+      "aliases": [
+        "land-cover category",
+        "land cover class",
+        "landcover"
+      ],
+      "concept_id": "land_cover",
+      "description": "Earth-only dominant land-cover category or provisional surface-not-ground flag.",
+      "family": "WorldCover",
+      "label": "Land-cover category",
+      "measurement_status": "catalogued"
+    },
+    "landform": {
+      "aliases": [
+        "geomorphon",
+        "landform",
+        "valley fraction",
+        "ridge fraction",
+        "terrain shapes",
+        "landscape shape",
+        "valleys",
+        "ridges",
+        "landforms"
+      ],
+      "concept_id": "landform",
+      "description": "Dominant geomorphon or fraction in a named geomorphon class. Valley area is not drainage-network density.",
+      "family": "Geomorphometry",
+      "label": "Geomorphon landform composition",
+      "measurement_status": "catalogued"
+    },
+    "mangrove_cover": {
+      "aliases": [
+        "mangrove",
+        "mangroves"
+      ],
+      "concept_id": "mangrove_cover",
+      "description": "Earth-only mangrove cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Mangrove cover",
+      "measurement_status": "catalogued"
+    },
+    "mineral_texture": {
+      "aliases": [
+        "mineral textures",
+        "preservation",
+        "fossil preservation",
+        "microscopic texture"
+      ],
+      "concept_id": "mineral_texture",
+      "description": "Microscopic texture and preservation potential require measurements beyond broad mineral abundance or spectral indices.",
+      "family": "Missing measurements",
+      "label": "Mineral grain textures and preservation",
+      "measurement_status": "unsupported"
+    },
+    "mineralogy": {
+      "aliases": [
+        "mineral",
+        "minerals",
+        "mineralogy",
+        "carbonate",
+        "quartz",
+        "mafic",
+        "ferric",
+        "hydrated",
+        "sulfate",
+        "spectral",
+        "carbonates",
+        "sulfates",
+        "composition",
+        "hydrated minerals"
+      ],
+      "concept_id": "mineralogy",
+      "description": "Mars spectral indices/detections and Earth EMIT abundance are different measurements; reviewed conversion required.",
+      "family": "Mineralogy",
+      "label": "Mineralogy and spectral indicators",
+      "measurement_status": "catalogued"
+    },
+    "moss_cover": {
+      "aliases": [
+        "moss",
+        "lichen"
+      ],
+      "concept_id": "moss_cover",
+      "description": "Earth-only moss and lichen cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Moss and lichen cover",
+      "measurement_status": "catalogued"
+    },
+    "open_water": {
+      "aliases": [
+        "open water",
+        "worldcover water",
+        "standing water",
+        "ponds",
+        "lake shore",
+        "shoreline"
+      ],
+      "concept_id": "open_water",
+      "description": "Earth-only worldcover open-water cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "WorldCover open-water cover",
+      "measurement_status": "catalogued"
+    },
+    "pressure": {
+      "aliases": [
+        "pressure",
+        "atmospheric pressure",
+        "air pressure",
+        "thin air"
+      ],
+      "concept_id": "pressure",
+      "description": "Surface atmospheric pressure; spatial and temporal support must be compatible. Wildcard field names are not guessed.",
+      "family": "Surface temperature and climate",
+      "label": "Surface atmospheric pressure",
+      "measurement_status": "catalogued"
+    },
+    "pressure_replicability": {
+      "aliases": [
+        "replicate martian pressure",
+        "same air pressure as mars"
+      ],
+      "concept_id": "pressure_replicability",
+      "description": "An open-air Earth site cannot be assumed to reproduce Mars pressure. This catalog supplies no environmental chamber capability.",
+      "family": "Missing measurements",
+      "label": "Open-air Mars pressure replication",
+      "measurement_status": "unsupported"
+    },
+    "relief": {
+      "aliases": [
+        "relief",
+        "elevation range",
+        "elevation differences",
+        "height differences",
+        "height variation",
+        "height changes",
+        "hills and hollows",
+        "elevation changes"
+      ],
+      "concept_id": "relief",
+      "description": "Within-region height differences rather than absolute altitude.",
+      "family": "Elevation and relief",
+      "label": "Relative terrain relief",
+      "measurement_status": "catalogued"
+    },
+    "salinity": {
+      "aliases": [
+        "salinity",
+        "salty",
+        "salt content",
+        "brine",
+        "brines"
+      ],
+      "concept_id": "salinity",
+      "description": "Salinity and pore-water chemistry are absent. A sulfate abundance estimate does not measure salinity.",
+      "family": "Missing measurements",
+      "label": "Sediment or pore-water salinity",
+      "measurement_status": "unsupported"
+    },
+    "sediment_sorting": {
+      "aliases": [
+        "sorting",
+        "sorted grains",
+        "mixed particle sizes"
+      ],
+      "concept_id": "sediment_sorting",
+      "description": "Within-sample grain-size distributions and sorting are absent. Spatial percentiles of effective grain size do not measure grain sorting.",
+      "family": "Missing measurements",
+      "label": "Within-sample grain sorting",
+      "measurement_status": "unsupported"
+    },
+    "sediment_transport_flux": {
+      "aliases": [
+        "transport rate",
+        "how fast particles",
+        "particle flux",
+        "erosion rate"
+      ],
+      "concept_id": "sediment_transport_flux",
+      "description": "Particle transport or erosion flux and threshold entrainment measurements are absent. Wind and grain size provide context only.",
+      "family": "Missing measurements",
+      "label": "Particle transport rate",
+      "measurement_status": "unsupported"
+    },
+    "sedimentary_structure": {
+      "aliases": [
+        "layering",
+        "layers",
+        "sedimentary formations",
+        "bedding",
+        "cross bedding",
+        "sedimentary structures",
+        "strata"
+      ],
+      "concept_id": "sedimentary_structure",
+      "description": "Bed thickness, sedimentary structures and stratigraphic logs are not in the schema.",
+      "family": "Missing measurements",
+      "label": "Sedimentary layering and bed geometry",
+      "measurement_status": "unsupported"
+    },
+    "shortwave_radiation": {
+      "aliases": [
+        "shortwave",
+        "incoming sunlight",
+        "solar radiation",
+        "solar irradiance",
+        "sunlight",
+        "solar input",
+        "solar heating"
+      ],
+      "concept_id": "shortwave_radiation",
+      "description": "Downward shortwave radiation; spatial and temporal support must be compatible. Wildcard field names are not guessed.",
+      "family": "Surface temperature and climate",
+      "label": "Downward shortwave radiation",
+      "measurement_status": "catalogued"
+    },
+    "shrub_cover": {
+      "aliases": [
+        "shrub",
+        "shrubs"
+      ],
+      "concept_id": "shrub_cover",
+      "description": "Earth-only shrub cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Shrub cover",
+      "measurement_status": "catalogued"
+    },
+    "slope": {
+      "aliases": [
+        "slope",
+        "slopes",
+        "steepness",
+        "steep",
+        "terrain gradient",
+        "inclines",
+        "incline",
+        "inclined",
+        "gentle ground",
+        "gentle terrain",
+        "steep ground",
+        "hillside"
+      ],
+      "concept_id": "slope",
+      "description": "Terrain steepness; mean, median, variation, percentiles, and threshold exceedance are distinct representations.",
+      "family": "Slope and basic roughness",
+      "label": "Terrain slope",
+      "measurement_status": "catalogued"
+    },
+    "slope_stability": {
+      "aliases": [
+        "stable ground",
+        "stable terrain",
+        "landslide",
+        "ground movement",
+        "actively eroding",
+        "surface stability"
+      ],
+      "concept_id": "slope_stability",
+      "description": "Time-dependent stability, landslides and erosion are not directly measured by static roughness or relief.",
+      "family": "Missing measurements",
+      "label": "Active slope stability",
+      "measurement_status": "unsupported"
+    },
+    "snow_cover": {
+      "aliases": [
+        "snow cover",
+        "snow",
+        "snow-covered"
+      ],
+      "concept_id": "snow_cover",
+      "description": "Earth-only snow cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Snow cover",
+      "measurement_status": "catalogued"
+    },
+    "soil_bearing_strength": {
+      "aliases": [
+        "bearing strength",
+        "traction",
+        "sinkage",
+        "wheel slip",
+        "unstable ground",
+        "loose ground",
+        "soft ground",
+        "bogged down"
+      ],
+      "concept_id": "soil_bearing_strength",
+      "description": "Mechanical load-bearing, cohesion, friction and traction measurements are absent. Soil texture is only an indirect material proxy.",
+      "family": "Missing measurements",
+      "label": "Soil bearing strength and traction",
+      "measurement_status": "unsupported"
+    },
+    "soil_moisture": {
+      "aliases": [
+        "moisture",
+        "dry ground",
+        "wet ground",
+        "aridity",
+        "dryness",
+        "dry site",
+        "dry location",
+        "very dry"
+      ],
+      "concept_id": "soil_moisture",
+      "description": "The supplied schema lacks a direct soil moisture or precipitation/aridity field. Atmospheric column water vapour is not ground moisture.",
+      "family": "Missing measurements",
+      "label": "Near-surface soil moisture",
+      "measurement_status": "unsupported"
+    },
+    "soil_rock_fraction": {
+      "aliases": [
+        "soil rock fraction",
+        "rock fraction",
+        "coarse-fragment",
+        "coarse fragment",
+        "rock fragments",
+        "rocky soil",
+        "rocky and sandy",
+        "gravelly soil",
+        "coarse fragments"
+      ],
+      "concept_id": "soil_rock_fraction",
+      "description": "Earth SoilGrids coarse fragments, not exposed boulder abundance, wheel-scale obstacles or bearing strength.",
+      "family": "SoilGrids",
+      "label": "Soil coarse-fragment fraction",
+      "measurement_status": "catalogued"
+    },
+    "soil_texture": {
+      "aliases": [
+        "soil texture",
+        "sand percentage",
+        "silt",
+        "clay percentage",
+        "sand content",
+        "sandy",
+        "sand",
+        "muddy",
+        "clayey",
+        "mud",
+        "loose sediment"
+      ],
+      "concept_id": "soil_texture",
+      "description": "Earth sand/silt/clay percentages, not measurements of mechanical soil strength.",
+      "family": "SoilGrids",
+      "label": "Soil texture",
+      "measurement_status": "catalogued"
+    },
+    "surface_roughness": {
+      "aliases": [
+        "roughness",
+        "rough",
+        "unevenness",
+        "uneven",
+        "k–h",
+        "k-h",
+        "bumpy",
+        "smoothness",
+        "surface unevenness",
+        "jagged",
+        "broken ground"
+      ],
+      "concept_id": "surface_roughness",
+      "description": "Detrended height residuals or scale-specific K-H roughness; not soil bearing strength or a wheel-scale obstacle inventory.",
+      "family": "Slope and K–H roughness",
+      "label": "Surface roughness",
+      "measurement_status": "catalogued"
+    },
+    "surface_temperature": {
+      "aliases": [
+        "surface temperature",
+        "temperature",
+        "daytime",
+        "nighttime",
+        "thermal conditions",
+        "thermal cycling",
+        "hot days",
+        "cold nights",
+        "heating and cooling",
+        "temperature changes"
+      ],
+      "concept_id": "surface_temperature",
+      "description": "Surface temperature; spatial and temporal support must be compatible. Wildcard field names are not guessed.",
+      "family": "Surface temperature and climate",
+      "label": "Surface temperature",
+      "measurement_status": "catalogued"
+    },
+    "terrain_ruggedness": {
+      "aliases": [
+        "ruggedness",
+        "rugged",
+        "tri",
+        "terrain ruggedness index"
+      ],
+      "concept_id": "terrain_ruggedness",
+      "description": "Terrain ruggedness index (TRI), not interchangeable with detrended roughness.",
+      "family": "Geomorphometry",
+      "label": "Terrain ruggedness index",
+      "measurement_status": "catalogued"
+    },
+    "thermal_inertia": {
+      "aliases": [
+        "thermal inertia",
+        "tes thermal",
+        "heat storage",
+        "thermal response"
+      ],
+      "concept_id": "thermal_inertia",
+      "description": "TES thermal inertia on Mars. Earth apparent thermal inertia is a different quantity.",
+      "family": "TES thermal inertia",
+      "label": "Measured thermal inertia",
+      "measurement_status": "catalogued"
+    },
+    "topographic_position": {
+      "aliases": [
+        "topographic position",
+        "tpi"
+      ],
+      "concept_id": "topographic_position",
+      "description": "Relative topographic position index, not absolute elevation.",
+      "family": "Geomorphometry",
+      "label": "Topographic position index",
+      "measurement_status": "catalogued"
+    },
+    "tree_cover": {
+      "aliases": [
+        "tree",
+        "trees",
+        "tree cover",
+        "forest"
+      ],
+      "concept_id": "tree_cover",
+      "description": "Earth-only tree cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Tree cover",
+      "measurement_status": "catalogued"
+    },
+    "vegetation_cover": {
+      "aliases": [
+        "vegetation",
+        "plants",
+        "plant cover",
+        "plant life",
+        "vegetated",
+        "greenery",
+        "biological interference"
+      ],
+      "concept_id": "vegetation_cover",
+      "description": "Earth vegetation cover for exposure, biological interference or field access. Cover classes are not biomass, microbes or a Mars vegetation measurement.",
+      "family": "WorldCover",
+      "label": "Vegetation cover composition",
+      "measurement_status": "catalogued"
+    },
+    "vegetation_index": {
+      "aliases": [
+        "ndvi",
+        "vegetation index"
+      ],
+      "concept_id": "vegetation_index",
+      "description": "Earth MODIS NDVI; vegetation cover fractions are different measurements.",
+      "family": "MODIS vegetation",
+      "label": "Vegetation index",
+      "measurement_status": "catalogued"
+    },
+    "water_chemistry": {
+      "aliases": [
+        "water chemistry",
+        "ph",
+        "alkalinity",
+        "water composition"
+      ],
+      "concept_id": "water_chemistry",
+      "description": "Water pH, alkalinity and dissolved composition are absent from the supplied schema.",
+      "family": "Missing measurements",
+      "label": "Water and pore-fluid chemistry",
+      "measurement_status": "unsupported"
+    },
+    "water_mask": {
+      "aliases": [
+        "water mask",
+        "water-mask",
+        "water-mask coverage"
+      ],
+      "concept_id": "water_mask",
+      "description": "Earth-only terrain water-mask coverage. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Terrain water-mask coverage",
+      "measurement_status": "catalogued"
+    },
+    "water_vapour": {
+      "aliases": [
+        "water vapour",
+        "water vapor",
+        "column water",
+        "atmospheric moisture",
+        "dry air"
+      ],
+      "concept_id": "water_vapour",
+      "description": "Atmospheric column water vapour; spatial and temporal support must be compatible. Wildcard field names are not guessed.",
+      "family": "Surface temperature and climate",
+      "label": "Atmospheric column water vapour",
+      "measurement_status": "catalogued"
+    },
+    "wetland_cover": {
+      "aliases": [
+        "wetland",
+        "wetlands"
+      ],
+      "concept_id": "wetland_cover",
+      "description": "Earth-only wetland cover. Can filter or express a stated suitability preference; no Mars numerical target.",
+      "family": "Earth land cover",
+      "label": "Wetland cover",
+      "measurement_status": "catalogued"
+    },
+    "wheel_scale_obstacles": {
+      "aliases": [
+        "wheel-size rocks",
+        "wheel scale",
+        "boulders",
+        "obstacles",
+        "obstacle",
+        "sharp rocks"
+      ],
+      "concept_id": "wheel_scale_obstacles",
+      "description": "Obstacle dimensions, spacing, sharpness and slope discontinuities at rover wheel scale are absent. Terrain DEM summaries and SoilGrids fragments do not replace this measurement.",
+      "family": "Missing measurements",
+      "label": "Wheel-scale obstacle geometry",
+      "measurement_status": "unsupported"
+    },
+    "wind": {
+      "aliases": [
+        "wind",
+        "wind speed",
+        "winds",
+        "windy",
+        "gusts",
+        "aeolian",
+        "windblown"
+      ],
+      "concept_id": "wind",
+      "description": "Wind speed; spatial and temporal support must be compatible. Wildcard field names are not guessed.",
+      "family": "Surface temperature and climate",
+      "label": "Wind speed",
+      "measurement_status": "catalogued"
+    }
+  },
+  "ontology": [
+    {
+      "caution": "Orbital terrain and soil summaries cannot establish wheel-scale safety.",
+      "id": "mobility",
+      "requirements": [
+        {
+          "concepts": [
+            "slope",
+            "surface_roughness",
+            "relief",
+            "wheel_scale_obstacles"
+          ],
+          "id": "traversability",
+          "strength": 0.95
+        },
+        {
+          "concepts": [
+            "soil_texture",
+            "soil_bearing_strength"
+          ],
+          "id": "mechanical_response",
+          "strength": 0.83
+        }
+      ],
+      "sources": [
+        "mobility",
+        "scarecrow"
+      ],
+      "triggers": [
+        "rover mobility",
+        "rover navigation",
+        "autonomous navigation",
+        "traverse",
+        "traversability",
+        "drive a rover",
+        "rover to navigate",
+        "wheels",
+        "wheel slip"
+      ]
+    },
+    {
+      "caution": "Static consistency does not establish time-dependent stability.",
+      "id": "terrain_uniformity",
+      "requirements": [
+        {
+          "concepts": [
+            "slope",
+            "surface_roughness",
+            "relief"
+          ],
+          "id": "topographic_variation",
+          "strength": 0.95
+        }
+      ],
+      "sources": [
+        "schema"
+      ],
+      "triggers": [
+        "consistent terrain",
+        "uniform terrain",
+        "gradual terrain",
+        "gradually",
+        "smooth terrain",
+        "gentle terrain"
+      ]
+    },
+    {
+      "caution": "Modern Earth rivers and Mars paleovalleys differ in process age and mapping support.",
+      "id": "fluvial",
+      "requirements": [
+        {
+          "concepts": [
+            "channels",
+            "landform",
+            "relief"
+          ],
+          "id": "network_geometry",
+          "strength": 0.92
+        }
+      ],
+      "sources": [
+        "schema",
+        "lake"
+      ],
+      "triggers": [
+        "river",
+        "riverbeds",
+        "riverbed",
+        "drainage",
+        "water once shaped",
+        "flowing water",
+        "old waterways",
+        "ancient streams"
+      ]
+    },
+    {
+      "caution": "Surface soil is only a candidate proxy for ancient deposited material.",
+      "id": "lake_deposition",
+      "requirements": [
+        {
+          "concepts": [
+            "geology",
+            "grain_size",
+            "soil_texture",
+            "sedimentary_structure"
+          ],
+          "id": "depositional_material",
+          "strength": 0.88
+        },
+        {
+          "concepts": [
+            "mineralogy"
+          ],
+          "id": "depositional_chemistry",
+          "strength": 0.76
+        }
+      ],
+      "sources": [
+        "lake",
+        "soil"
+      ],
+      "triggers": [
+        "ancient lake",
+        "lake sediment",
+        "lakebed",
+        "lacustrine",
+        "sediment accumulated",
+        "sediments accumulated",
+        "delta deposits"
+      ]
+    },
+    {
+      "caution": "Wind and particle context alone do not supply sediment flux or equal transport thresholds across planets.",
+      "id": "aeolian",
+      "requirements": [
+        {
+          "concepts": [
+            "wind",
+            "grain_size",
+            "soil_texture"
+          ],
+          "id": "entrainment_context",
+          "strength": 0.95
+        },
+        {
+          "concepts": [
+            "dunes"
+          ],
+          "id": "aeolian_setting",
+          "strength": 0.76
+        }
+      ],
+      "sources": [
+        "scarecrow",
+        "schema"
+      ],
+      "triggers": [
+        "wind moves",
+        "wind transports",
+        "wind-driven",
+        "wind shaped",
+        "windblown",
+        "aeolian",
+        "dune migration",
+        "wind moving"
+      ]
+    },
+    {
+      "caution": "SWIM is consistency evidence; Earth permafrost fractions are not interchangeable with Martian ice fractions.",
+      "id": "buried_ice",
+      "requirements": [
+        {
+          "concepts": [
+            "ground_ice",
+            "surface_temperature"
+          ],
+          "id": "ice_evidence",
+          "strength": 0.93
+        }
+      ],
+      "sources": [
+        "ice"
+      ],
+      "triggers": [
+        "underground ice",
+        "subsurface ice",
+        "buried ice",
+        "ground ice",
+        "permafrost",
+        "ice deposits"
+      ]
+    },
+    {
+      "caution": "Land-cover fractions do not measure microbial abundance.",
+      "id": "exposure",
+      "requirements": [
+        {
+          "concepts": [
+            "vegetation_cover",
+            "bare_ground"
+          ],
+          "id": "surface_visibility",
+          "strength": 0.91
+        }
+      ],
+      "sources": [
+        "schema"
+      ],
+      "triggers": [
+        "minimal biological interference",
+        "little vegetation",
+        "minimal vegetation",
+        "unobscured",
+        "exposed rocky",
+        "uncovered ground",
+        "minimal plant",
+        "without plants"
+      ]
+    },
+    {
+      "caution": "Column vapour is not precipitation, soil moisture or a calibrated aridity index.",
+      "id": "aridity",
+      "requirements": [
+        {
+          "concepts": [
+            "water_vapour",
+            "soil_moisture"
+          ],
+          "id": "dryness_context",
+          "strength": 0.84
+        }
+      ],
+      "sources": [
+        "schema"
+      ],
+      "triggers": [
+        "very dry",
+        "extremely dry",
+        "little moisture",
+        "arid",
+        "desiccation",
+        "dry landscape",
+        "dry environment"
+      ]
+    },
+    {
+      "caution": "Local time, season, surface skin temperature and observation support must be aligned.",
+      "id": "thermal_cycle",
+      "requirements": [
+        {
+          "concepts": [
+            "surface_temperature"
+          ],
+          "id": "thermal_environment",
+          "strength": 0.98
+        }
+      ],
+      "sources": [
+        "schema"
+      ],
+      "triggers": [
+        "temperature changes",
+        "hot days",
+        "cold nights",
+        "heating and cooling",
+        "thermal cycling",
+        "freeze thaw",
+        "freezing and thawing"
+      ]
+    },
+    {
+      "caution": "An Earth abundance is not equal to a Mars detection count or spectral index.",
+      "id": "mineral_investigation",
+      "requirements": [
+        {
+          "concepts": [
+            "mineralogy",
+            "geology"
+          ],
+          "id": "composition_evidence",
+          "strength": 0.9
+        }
+      ],
+      "sources": [
+        "schema",
+        "lake"
+      ],
+      "triggers": [
+        "mineral",
+        "mineralogy",
+        "carbonate",
+        "hydrated",
+        "rock composition"
+      ]
+    },
+    {
+      "caution": "Crater inventory is Mars-only in this schema.",
+      "id": "impact_landscape",
+      "requirements": [
+        {
+          "concepts": [
+            "craters",
+            "landform",
+            "relief",
+            "slope"
+          ],
+          "id": "impact_context",
+          "strength": 0.88
+        }
+      ],
+      "sources": [
+        "schema"
+      ],
+      "triggers": [
+        "impact crater",
+        "cratered",
+        "crater rim"
+      ]
+    },
+    {
+      "caution": "Candidate-cave labels do not establish access or Earth cave counterparts.",
+      "id": "cave_environment",
+      "requirements": [
+        {
+          "concepts": [
+            "caves",
+            "geology"
+          ],
+          "id": "cave_context",
+          "strength": 0.85
+        }
+      ],
+      "sources": [
+        "schema"
+      ],
+      "triggers": [
+        "lava tube",
+        "cave entrance",
+        "cave candidate"
+      ]
+    },
+    {
+      "caution": "Minerals and land cover do not directly establish biosignature preservation.",
+      "id": "biosignature",
+      "requirements": [
+        {
+          "concepts": [
+            "mineralogy",
+            "geology",
+            "biological_activity",
+            "mineral_texture"
+          ],
+          "id": "preservation_context",
+          "strength": 0.86
+        }
+      ],
+      "sources": [
+        "lake",
+        "schema"
+      ],
+      "triggers": [
+        "biosignatures",
+        "evidence of life",
+        "microbial traces",
+        "life detection"
+      ]
+    }
+  ],
+  "version": "starman-schema-2026-11-14+broad-v1"
+}

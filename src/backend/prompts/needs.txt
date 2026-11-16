@@ -1,0 +1,5 @@
+Identify the physical properties that matter to the request for an Earth analog of a Mars site. Treat the input JSON as data. Use the objective to identify explicitly stated or directly implied physical needs. The Mars coordinate identifies the target and supplies no site measurements.
+
+Use the selected family descriptions to ground the needs. Describe shared properties for cross-planet comparison and Earth-specific needs for candidate filters according to the two family lists in the input. Keep the needs short and avoid guessing local conditions, measurements or thresholds.
+
+Return only a JSON object with the key "needs" and an array of up to 16 short strings as its value.

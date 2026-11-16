@@ -1,0 +1,971 @@
+{
+  "revision": "228b3b804868b8a660366c1d04ea61d9c85aa07d",
+  "scores": {
+    "elev_range": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_1430_02522",
+      "seconds": 1.14
+    },
+    "elev_range_robust": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_2954_01102",
+      "seconds": 1.17
+    },
+    "local_relief_1km": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_3283_02674",
+      "seconds": 1.16
+    },
+    "roughness_detrended_std": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_3039_01708",
+      "seconds": 1.08
+    },
+    "slope_frac_gt_10": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_0000_00000",
+      "seconds": 0.48
+    },
+    "slope_frac_gt_2": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_1659_04897",
+      "seconds": 0.73
+    },
+    "slope_frac_gt_20": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_0000_00000",
+      "seconds": 0.42
+    },
+    "slope_frac_gt_30": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_0000_00000",
+      "seconds": 0.39
+    },
+    "slope_frac_gt_5": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_0000_00000",
+      "seconds": 0.56
+    },
+    "slope_mean": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_2013_04826",
+      "seconds": 1.1
+    },
+    "slope_median": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_1158_02142",
+      "seconds": 1.12
+    },
+    "slope_p90": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_3234_00918",
+      "seconds": 1.0
+    },
+    "slope_p99": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_2472_04838",
+      "seconds": 0.98
+    },
+    "slope_std": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_2122_04560",
+      "seconds": 1.02
+    },
+    "tpi_mean": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_0529_02073",
+      "seconds": 1.06
+    },
+    "tpi_p10": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_1713_06810",
+      "seconds": 1.04
+    },
+    "tpi_p90": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_0351_00573",
+      "seconds": 1.0
+    },
+    "tri_p50": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_2310_06105",
+      "seconds": 1.0
+    },
+    "tri_p90": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_1764_04565",
+      "seconds": 1.02
+    },
+    "tsurf_mean_K": {
+      "n_scored": 5854623,
+      "mars_region_id": "M_1284_02898",
+      "top": "E_0129_00644",
+      "seconds": 0.85
+    }
+  },
+  "filters": {
+    "CntryMajor": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "CntryMinor": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EonMaxMjr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EonMaxMnr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EonMinMjr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EonMinMnr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EraMaxMjr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EraMaxMnr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EraMinMjr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "EraMinMnr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "LithCntact": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "LithMajor": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "LithMinor": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "PrdContact": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "PrdMaxMjr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "PrdMaxMnr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "PrdMinMjr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "PrdMinMnr": {
+      "data_type": "categorical",
+      "present": 1050914
+    },
+    "absorbed_shortwave_est_W_m2": {
+      "data_type": "continuous",
+      "present": 5186454
+    },
+    "albedo": {
+      "data_type": "continuous",
+      "present": 5186454
+    },
+    "albedo_snow_frac": {
+      "data_type": "fraction",
+      "present": 5849963
+    },
+    "ati_inv_K": {
+      "data_type": "continuous",
+      "present": 5169196
+    },
+    "ati_n_months": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "atmospheric_column_mass_kg_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "bare_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "built_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "center_lat": {
+      "data_type": "coordinate",
+      "present": 5854623
+    },
+    "center_lon": {
+      "data_type": "coordinate",
+      "present": 5854623
+    },
+    "clay_pct": {
+      "data_type": "percentage",
+      "present": 5218781
+    },
+    "column_water_vapour_mass_frac": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "cov_frac_emit": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "crop_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "dist_channel_km": {
+      "data_type": "continuous",
+      "present": 5297511
+    },
+    "dist_dune_lower_m": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "dist_dune_upper_m": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "drain_dens_km_km2": {
+      "data_type": "continuous",
+      "present": 5297511
+    },
+    "dune_present_0p1deg": {
+      "data_type": "continuous",
+      "present": 1104272
+    },
+    "dz_hyps_m": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "earth_dunes__dist_dune_km": {
+      "data_type": "continuous",
+      "present": 70354
+    },
+    "earth_dunes__dune_frac": {
+      "data_type": "fraction",
+      "present": 478835
+    },
+    "earth_dunes__dune_type": {
+      "data_type": "categorical",
+      "present": 91802
+    },
+    "earth_dunes__valid_frac": {
+      "data_type": "continuous",
+      "present": 1104272
+    },
+    "earth_dunes_distance__dist_dune_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "earth_dunes_fraction__dune_frac": {
+      "data_type": "fraction",
+      "present": 1732800
+    },
+    "earth_dunes_fraction__dune_type": {
+      "data_type": "categorical",
+      "present": 203640
+    },
+    "earth_dunes_fraction__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "elev_max": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "elev_mean": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "elev_min": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "elev_p05": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "elev_p95": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "elev_range": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "elev_range_robust": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "emit_l3_valid": {
+      "data_type": "boolean",
+      "present": 5854623
+    },
+    "emit_minerals__src_res_km": {
+      "data_type": "continuous",
+      "present": 1447832
+    },
+    "era5_h2o__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "era5_psurf__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "era5_sw__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "era5_tsurf__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "era5_wind__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "ew_samples_averaged": {
+      "data_type": "count",
+      "present": 5854623
+    },
+    "extreme_slope_contrast_deg": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "fine_particle_mass_frac": {
+      "data_type": "fraction",
+      "present": 5218781
+    },
+    "geom_frac_flat": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_footslope": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_hollow": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_peak": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_pit": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_ridge": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_shoulder": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_slope": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_spur": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geom_frac_valley": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "geomorphometry__n_px": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "geomorphometry__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "geomorphon_major": {
+      "data_type": "categorical",
+      "present": 5854623
+    },
+    "ggd318__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "grain_eff_um": {
+      "data_type": "continuous",
+      "present": 5218781
+    },
+    "grain_eff_um_p10": {
+      "data_type": "continuous",
+      "present": 5218781
+    },
+    "grain_eff_um_p90": {
+      "data_type": "continuous",
+      "present": 5218781
+    },
+    "grass_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "h2o_col_diurnal_kg_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "h2o_col_kg_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "h2o_col_max_kg_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "h2o_col_min_kg_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "h2o_col_seasonal_kg_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "has_emit": {
+      "data_type": "boolean",
+      "present": 5854623
+    },
+    "ice_frac": {
+      "data_type": "fraction",
+      "present": 1095246
+    },
+    "ice_wt_pct": {
+      "data_type": "percentage",
+      "present": 2714032
+    },
+    "ice_wt_pct_sigma": {
+      "data_type": "percentage",
+      "present": 2714032
+    },
+    "kh_roughness__n_px": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "kh_roughness__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "landform_diversity": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "lc_major": {
+      "data_type": "categorical",
+      "present": 5296566
+    },
+    "local_relief_1km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "low_position_landform_frac": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "lst_day_K": {
+      "data_type": "continuous",
+      "present": 5800503
+    },
+    "lst_day_max_K": {
+      "data_type": "continuous",
+      "present": 5800503
+    },
+    "lst_day_view_h": {
+      "data_type": "continuous",
+      "present": 5800503
+    },
+    "lst_diurnal_K": {
+      "data_type": "continuous",
+      "present": 5800499
+    },
+    "lst_night_K": {
+      "data_type": "continuous",
+      "present": 5800500
+    },
+    "lst_night_min_K": {
+      "data_type": "continuous",
+      "present": 5800500
+    },
+    "lst_night_view_h": {
+      "data_type": "continuous",
+      "present": 5800500
+    },
+    "lst_seasonal_amp_K": {
+      "data_type": "continuous",
+      "present": 5800498
+    },
+    "lst_seasonal_range_K": {
+      "data_type": "continuous",
+      "present": 5800498
+    },
+    "mangrove_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "mapped_mineral_clay_share": {
+      "data_type": "fraction",
+      "present": 1412991
+    },
+    "max_order": {
+      "data_type": "ordinal",
+      "present": 5297511
+    },
+    "min_abund_al_clay": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_al_clay_hi": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_al_clay_lo": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_carbonate": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_carbonate_hi": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_carbonate_lo": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_femg_clay": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_femg_clay_hi": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_femg_clay_lo": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_feoxide": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_feoxide_hi": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_feoxide_lo": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_sulfate": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_sulfate_hi": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "min_abund_sulfate_lo": {
+      "data_type": "continuous",
+      "present": 1412991
+    },
+    "moderate_slope_frac": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "modis_albedo_ndvi__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "modis_albedo_ndvi__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "modis_ati__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "modis_ati__ti_pct": {
+      "data_type": "percentage",
+      "present": 859744
+    },
+    "modis_ati__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "modis_lst__src_res_km": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "modis_lst__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "moss_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "n_months_valid": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "n_native_samples": {
+      "data_type": "count",
+      "present": 5854623
+    },
+    "n_samples_200m": {
+      "data_type": "count",
+      "present": 5854623
+    },
+    "n_valid_native_samples": {
+      "data_type": "count",
+      "present": 5854623
+    },
+    "n_valid_samples_200m": {
+      "data_type": "count",
+      "present": 5854623
+    },
+    "ndvi_max": {
+      "data_type": "continuous",
+      "present": 5268601
+    },
+    "ndvi_mean": {
+      "data_type": "continuous",
+      "present": 5268601
+    },
+    "ns_samples_averaged": {
+      "data_type": "count",
+      "present": 5854623
+    },
+    "permafrost_cci__n_px": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "permafrost_cci__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "psurf_Pa": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "psurf_diurnal_Pa": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "psurf_max_Pa": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "psurf_min_Pa": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "psurf_seasonal_Pa": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "relative_terrain_texture": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "relief_channel_index": {
+      "data_type": "continuous",
+      "present": 5297511
+    },
+    "rock_frac_pct": {
+      "data_type": "percentage",
+      "present": 5218794
+    },
+    "rock_frac_pct_p10": {
+      "data_type": "continuous",
+      "present": 5218794
+    },
+    "rock_frac_pct_p50": {
+      "data_type": "continuous",
+      "present": 5218794
+    },
+    "rock_frac_pct_p90": {
+      "data_type": "continuous",
+      "present": 5218794
+    },
+    "rock_frac_pct_std": {
+      "data_type": "percentage",
+      "present": 5218794
+    },
+    "rough_0p6": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "rough_2p4": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "rough_9p6": {
+      "data_type": "continuous",
+      "present": 5844179
+    },
+    "roughness_detrended_std": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "sample_spacing_m": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "sand_pct": {
+      "data_type": "percentage",
+      "present": 5218781
+    },
+    "shrub_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "silt_pct": {
+      "data_type": "percentage",
+      "present": 5218781
+    },
+    "slope_frac_gt_10": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "slope_frac_gt_2": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "slope_frac_gt_20": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "slope_frac_gt_30": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "slope_frac_gt_5": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "slope_mean": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "slope_median": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "slope_p90": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "slope_p99": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "slope_std": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "snow_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "soilgrids__n_px": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "soilgrids__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "source_complete_at_center": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "surface_not_ground": {
+      "data_type": "boolean",
+      "present": 5854623
+    },
+    "surface_temp_seasonal_diurnal_ratio": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "sw_down_W_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "sw_down_diurnal_W_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "sw_down_max_W_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "sw_down_min_W_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "sw_down_seasonal_W_m2": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tpi_mean": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tpi_p10": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tpi_p90": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tree_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "tri_p50": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tri_p90": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tsurf_diurnal_K": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tsurf_max_K": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tsurf_mean_K": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tsurf_min_K": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "tsurf_seasonal_K": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "valid_frac_200m": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "water_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "water_mask_frac": {
+      "data_type": "fraction",
+      "present": 5854623
+    },
+    "wetland_frac": {
+      "data_type": "fraction",
+      "present": 5296566
+    },
+    "wind_diurnal_ms": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "wind_max_ms": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "wind_mean_ms": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "wind_min_ms": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "wind_seasonal_ms": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "worldcover__n_px": {
+      "data_type": "continuous",
+      "present": 5854623
+    },
+    "worldcover__valid_frac": {
+      "data_type": "continuous",
+      "present": 5854623
+    }
+  },
+  "typed_requests": {
+    "continuous": {
+      "header": "absorbed_shortwave_est_W_m2",
+      "n_scored": 5186454
+    },
+    "fraction": {
+      "header": "albedo_snow_frac",
+      "n_scored": 5849963
+    },
+    "boolean": {
+      "header": "emit_l3_valid",
+      "n_scored": 4406791
+    },
+    "categorical": {
+      "header": "CntryMajor",
+      "n_scored": 304496
+    }
+  },
+  "native_context": {
+    "earth": 124,
+    "mars": 178
+  },
+  "comparisons": 20,
+  "filter_count": 205
+}

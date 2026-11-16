@@ -1,0 +1,1572 @@
+{
+  "slope_distribution": {
+    "description": "Slope distribution inside one 5 km cell. Typical steepness, variability, steep tails and hazard fractions represent different questions.",
+    "options": [
+      {
+        "header": "slope_mean",
+        "stat": "mean",
+        "meaning": "cell-average ground slope in degrees",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_mean"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_mean"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_median",
+        "stat": "median",
+        "meaning": "typical ground slope in degrees",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_median"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_median"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_std",
+        "stat": "std",
+        "meaning": "how uniform or variable slopes are in the cell",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_std"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_std"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_p90",
+        "stat": "p90",
+        "meaning": "upper-tail steepness over much of the cell",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p90"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p90"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_p99",
+        "stat": "p99",
+        "meaning": "rare, very steep patches and cliffs",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p99"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_p99"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_2",
+        "stat": "fraction above 2 deg",
+        "meaning": "share of terrain above 2 degrees",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_2"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_5",
+        "stat": "fraction above 5 deg",
+        "meaning": "share of terrain above 5 degrees",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_5"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_5"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_10",
+        "stat": "fraction above 10 deg",
+        "meaning": "share of terrain above 10 degrees",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_10"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_10"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_20",
+        "stat": "fraction above 20 deg",
+        "meaning": "share of terrain above 20 degrees",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_20"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_20"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "slope_frac_gt_30",
+        "stat": "fraction above 30 deg",
+        "meaning": "share of terrain above 30 degrees",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_30"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "slope_frac_gt_30"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ]
+  },
+  "surface_roughness": {
+    "description": "Vertical roughness and ruggedness. The documented K–H roughness columns are excluded because their cross-planet normalization remains open.",
+    "options": [
+      {
+        "header": "roughness_detrended_std",
+        "stat": "detrended std",
+        "meaning": "vertical irregularity after removing planar tilt",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "roughness_detrended_std"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "roughness_detrended_std"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tri_p50",
+        "stat": "TRI p50",
+        "meaning": "typical terrain ruggedness",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p50"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p50"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tri_p90",
+        "stat": "TRI p90",
+        "meaning": "ruggedness of the rougher part of the cell",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p90"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tri_p90"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ]
+  },
+  "relief": {
+    "description": "Vertical relief independent of planetary altitude datums.",
+    "options": [
+      {
+        "header": "elev_range",
+        "stat": "range",
+        "meaning": "full max-minus-min elevation range",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "elev_range_robust",
+        "stat": "p95 minus p05",
+        "meaning": "relief resistant to single extreme pixels",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range_robust"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "elev_range_robust"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "local_relief_1km",
+        "stat": "local 1 km relief",
+        "meaning": "relief on approximately a kilometre scale",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "terrain",
+          "earth": "terrain"
+        },
+        "sources": {
+          "mars": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "local_relief_1km"
+          },
+          "earth": {
+            "layer": "terrain",
+            "version": "terrain-v0.2",
+            "column": "local_relief_1km"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ]
+  },
+  "landform_mixture": {
+    "description": "Terrain form and topographic position: flats, ridges, valleys, hollows, crests and depressions.",
+    "options": [
+      {
+        "header": "geom_frac_flat",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as flat",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_flat"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_flat"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_peak",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as peak",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_peak"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_peak"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_ridge",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as ridge",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_ridge"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_ridge"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_shoulder",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as shoulder",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_shoulder"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_shoulder"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_spur",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as spur",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_spur"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_spur"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_slope",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as slope",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_slope"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_slope"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_hollow",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as hollow",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_hollow"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_hollow"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_footslope",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as footslope",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_footslope"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_footslope"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_valley",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as valley",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_valley"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_valley"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "geom_frac_pit",
+        "stat": "landform fraction",
+        "meaning": "fraction mapped as pit",
+        "compare_mode": "direct_candidate",
+        "caution": "Same geomorphon algorithm/class definitions must be checked; coverage is incomplete.",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_pit"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "geom_frac_pit"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tpi_mean",
+        "stat": "mean TPI",
+        "meaning": "mean relative topographic position",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_mean"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_mean"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tpi_p10",
+        "stat": "TPI p10",
+        "meaning": "lower parts of the topographic-position distribution",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p10"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p10"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tpi_p90",
+        "stat": "TPI p90",
+        "meaning": "upper parts of the topographic-position distribution",
+        "compare_mode": "direct_candidate",
+        "caution": "",
+        "layers": {
+          "mars": "geomorphometry",
+          "earth": "geomorphometry"
+        },
+        "sources": {
+          "mars": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p90"
+          },
+          "earth": {
+            "layer": "geomorphometry",
+            "version": "geomorphometry-v0.1",
+            "column": "tpi_p90"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ]
+  },
+  "dunes": {
+    "description": "Presence of mapped dunes and proximity to mapped dune fields. Earth and Mars source catalogues differ.",
+    "options": [
+      {
+        "header": "dune_frac",
+        "stat": "mapped dune presence",
+        "meaning": "Use dune_frac>0 as a presence proxy, not a numerically comparable fraction",
+        "compare_mode": "presence_proxy",
+        "caution": "Earth GSDP30 fraction counts four mapped dune classes and has footprint/coverage gaps; Mars MGD3 uses different source mapping. Presence is a proxy, not a calibrated cross-planet fraction.",
+        "layers": {
+          "mars": "mgd3_dunes",
+          "earth": "earth_dunes_fraction"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mgd3_dunes",
+            "version": "mgd3_dunes-v0.2",
+            "column": "dune_frac"
+          },
+          "earth": {
+            "layer": "earth_dunes_fraction",
+            "version": "earth_dunes_fraction-v0.4",
+            "column": "dune_frac"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "dist_dune_km",
+        "stat": "distance to dunes",
+        "meaning": "proximity to the nearest mapped dune area",
+        "compare_mode": "proxy_review",
+        "caution": "Earth distance uses the retained mapped dune model. Source gaps and differences in mapping between planets limit scientific comparison.",
+        "layers": {
+          "mars": "mgd3_dunes",
+          "earth": "earth_dunes_distance"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mgd3_dunes",
+            "version": "mgd3_dunes-v0.2",
+            "column": "dist_dune_km"
+          },
+          "earth": {
+            "layer": "earth_dunes_distance",
+            "version": "earth_dunes-v0.4",
+            "column": "dist_dune_km"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ]
+  },
+  "drainage_channels": {
+    "description": "Mapped channels and valley networks; Mars records ancient networks, Earth predominantly modern rivers.",
+    "options": [
+      {
+        "header": "drain_dens_km_km2",
+        "stat": "mapped drainage density",
+        "meaning": "channel-network density, provisional proxy",
+        "compare_mode": "proxy_review",
+        "caution": "Network mapping biases and geological times differ.",
+        "layers": {
+          "mars": "mars_valleys",
+          "earth": "hydrorivers"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mars_valleys",
+            "version": "mars_valleys-v0.2",
+            "column": "drain_dens_km_km2"
+          },
+          "earth": {
+            "layer": "hydrorivers",
+            "version": "hydrorivers-v0.3",
+            "column": "drain_dens_km_km2"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      },
+      {
+        "header": "dist_channel_km",
+        "stat": "distance to mapped channel",
+        "meaning": "proximity to mapped river/valley network, provisional proxy",
+        "compare_mode": "proxy_review",
+        "caution": "Earth active networks and ancient Mars valleys are not directly equivalent.",
+        "layers": {
+          "mars": "mars_valleys",
+          "earth": "hydrorivers"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mars_valleys",
+            "version": "mars_valleys-v0.2",
+            "column": "dist_channel_km"
+          },
+          "earth": {
+            "layer": "hydrorivers",
+            "version": "hydrorivers-v0.3",
+            "column": "dist_channel_km"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ]
+  },
+  "ground_ice_abundance": {
+    "description": "Near-surface mapped ice/water-equivalent abundance. The source products and spatial support differ.",
+    "options": [
+      {
+        "header": "ice_wt_pct",
+        "stat": "ice weight percent",
+        "meaning": "upper near-surface ice estimate",
+        "compare_mode": "proxy_review",
+        "caution": "Mars GRS and Earth ground-ice map have different measurement models; not yet a calibrated physical comparison.",
+        "layers": {
+          "mars": "grs_h2o",
+          "earth": "ggd318"
+        },
+        "sources": {
+          "mars": {
+            "layer": "grs_h2o",
+            "version": "grs_h2o-v0.1",
+            "column": "ice_wt_pct"
+          },
+          "earth": {
+            "layer": "ggd318",
+            "version": "ggd318-v0.1",
+            "column": "ice_wt_pct"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ]
+  },
+  "ice_presence": {
+    "description": "Mapped near-surface ice/permafrost spatial coverage; sources measure related but different concepts.",
+    "options": [
+      {
+        "header": "ice_frac",
+        "stat": "mapped presence proxy",
+        "meaning": "ice/permafrost mapped fraction",
+        "compare_mode": "presence_proxy",
+        "caution": "Mars SWIM2 versus Earth Permafrost CCI are not identical physical quantities.",
+        "layers": {
+          "mars": "swim2",
+          "earth": "permafrost_cci"
+        },
+        "sources": {
+          "mars": {
+            "layer": "swim2",
+            "version": "swim2-v0.1",
+            "column": "ice_frac"
+          },
+          "earth": {
+            "layer": "permafrost_cci",
+            "version": "permafrost_cci-v0.1",
+            "column": "ice_frac"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ]
+  },
+  "surface_temperature": {
+    "description": "MCD and ERA5 surface-temperature climatology, with daily and seasonal summaries.",
+    "options": [
+      {
+        "header": "tsurf_mean_K",
+        "stat": "cycle mean",
+        "meaning": "typical surface temperature in kelvin",
+        "compare_mode": "direct_candidate",
+        "caution": "MCD vs ERA5 temporal/spatial definitions need a reviewed cross-planet comparison.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_mean_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_mean_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_min_K",
+        "stat": "cycle min",
+        "meaning": "cold end of the climatology",
+        "compare_mode": "direct_candidate",
+        "caution": "MCD vs ERA5 temporal/spatial definitions need a reviewed cross-planet comparison.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_min_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_min_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_max_K",
+        "stat": "cycle max",
+        "meaning": "warm end of the climatology",
+        "compare_mode": "direct_candidate",
+        "caution": "MCD vs ERA5 temporal/spatial definitions need a reviewed cross-planet comparison.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_max_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_max_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_diurnal_K",
+        "stat": "diurnal range",
+        "meaning": "local day-night temperature swing",
+        "compare_mode": "direct_candidate",
+        "caution": "MCD vs ERA5 temporal/spatial definitions need a reviewed cross-planet comparison.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_diurnal_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_diurnal_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "tsurf_seasonal_K",
+        "stat": "seasonal range",
+        "meaning": "difference across seasons",
+        "compare_mode": "direct_candidate",
+        "caution": "MCD vs ERA5 temporal/spatial definitions need a reviewed cross-planet comparison.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_tsurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "tsurf_seasonal_K"
+          },
+          "earth": {
+            "layer": "era5_tsurf",
+            "version": "era5_tsurf-v0.2",
+            "column": "tsurf_seasonal_K"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ]
+  },
+  "surface_pressure": {
+    "description": "Surface atmospheric pressure; absolute values differ drastically between planets.",
+    "options": [
+      {
+        "header": "psurf_Pa",
+        "stat": "cycle mean",
+        "meaning": "typical surface pressure",
+        "compare_mode": "planet_rank",
+        "caution": "Rank comparison is a proxy; direct absolute Mars–Earth pressure matching is not physically attainable.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_min_Pa",
+        "stat": "cycle min",
+        "meaning": "lowest pressure",
+        "compare_mode": "planet_rank",
+        "caution": "Rank comparison is a proxy; direct absolute Mars–Earth pressure matching is not physically attainable.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_min_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_min_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_max_Pa",
+        "stat": "cycle max",
+        "meaning": "highest pressure",
+        "compare_mode": "planet_rank",
+        "caution": "Rank comparison is a proxy; direct absolute Mars–Earth pressure matching is not physically attainable.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_max_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_max_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_diurnal_Pa",
+        "stat": "diurnal range",
+        "meaning": "day-to-night pressure variation",
+        "compare_mode": "planet_rank",
+        "caution": "Rank comparison is a proxy; direct absolute Mars–Earth pressure matching is not physically attainable.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_diurnal_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_diurnal_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "psurf_seasonal_Pa",
+        "stat": "seasonal range",
+        "meaning": "seasonal pressure variability",
+        "compare_mode": "planet_rank",
+        "caution": "Rank comparison is a proxy; direct absolute Mars–Earth pressure matching is not physically attainable.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_psurf"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "psurf_seasonal_Pa"
+          },
+          "earth": {
+            "layer": "era5_psurf",
+            "version": "era5_psurf-v0.2",
+            "column": "psurf_seasonal_Pa"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ]
+  },
+  "atmospheric_water": {
+    "description": "Column water vapour; climate ranges are different across planets.",
+    "options": [
+      {
+        "header": "h2o_col_kg_m2",
+        "stat": "cycle mean",
+        "meaning": "mean atmospheric water vapour column",
+        "compare_mode": "planet_rank",
+        "caution": "Within-planet relative rank is only a proposed proxy; do not compare absolute vapour masses.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_min_kg_m2",
+        "stat": "cycle min",
+        "meaning": "minimum atmospheric vapour",
+        "compare_mode": "planet_rank",
+        "caution": "Within-planet relative rank is only a proposed proxy; do not compare absolute vapour masses.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_min_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_min_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_max_kg_m2",
+        "stat": "cycle max",
+        "meaning": "maximum atmospheric vapour",
+        "compare_mode": "planet_rank",
+        "caution": "Within-planet relative rank is only a proposed proxy; do not compare absolute vapour masses.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_max_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_max_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_diurnal_kg_m2",
+        "stat": "diurnal range",
+        "meaning": "daily vapour variation",
+        "compare_mode": "planet_rank",
+        "caution": "Within-planet relative rank is only a proposed proxy; do not compare absolute vapour masses.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_diurnal_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_diurnal_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      },
+      {
+        "header": "h2o_col_seasonal_kg_m2",
+        "stat": "seasonal range",
+        "meaning": "seasonal vapour variation",
+        "compare_mode": "planet_rank",
+        "caution": "Within-planet relative rank is only a proposed proxy; do not compare absolute vapour masses.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_h2o"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "h2o_col_seasonal_kg_m2"
+          },
+          "earth": {
+            "layer": "era5_h2o",
+            "version": "era5_h2o-v0.2",
+            "column": "h2o_col_seasonal_kg_m2"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ]
+  },
+  "wind": {
+    "description": "Near-surface wind speed and time variability from MCD and ERA5.",
+    "options": [
+      {
+        "header": "wind_mean_ms",
+        "stat": "cycle mean",
+        "meaning": "mean wind speed",
+        "compare_mode": "direct_candidate",
+        "caution": "Model products differ in spatial support and physical regime.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_mean_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_mean_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_min_ms",
+        "stat": "cycle min",
+        "meaning": "calmest wind",
+        "compare_mode": "direct_candidate",
+        "caution": "Model products differ in spatial support and physical regime.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_min_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_min_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_max_ms",
+        "stat": "cycle max",
+        "meaning": "highest modeled wind",
+        "compare_mode": "direct_candidate",
+        "caution": "Model products differ in spatial support and physical regime.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_max_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_max_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_diurnal_ms",
+        "stat": "diurnal range",
+        "meaning": "wind variability by time of day",
+        "compare_mode": "direct_candidate",
+        "caution": "Model products differ in spatial support and physical regime.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_diurnal_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_diurnal_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "wind_seasonal_ms",
+        "stat": "seasonal range",
+        "meaning": "wind variability by season",
+        "compare_mode": "direct_candidate",
+        "caution": "Model products differ in spatial support and physical regime.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_wind"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "wind_seasonal_ms"
+          },
+          "earth": {
+            "layer": "era5_wind",
+            "version": "era5_wind-v0.2",
+            "column": "wind_seasonal_ms"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ]
+  },
+  "insolation": {
+    "description": "Downwelling surface shortwave flux and its daily/seasonal variability.",
+    "options": [
+      {
+        "header": "sw_down_W_m2",
+        "stat": "cycle mean",
+        "meaning": "mean incoming sunlight",
+        "compare_mode": "direct_candidate",
+        "caution": "Mars MCD and Earth ERA5 forcing require a scientific comparison protocol.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_min_W_m2",
+        "stat": "cycle min",
+        "meaning": "lowest solar flux",
+        "compare_mode": "direct_candidate",
+        "caution": "Mars MCD and Earth ERA5 forcing require a scientific comparison protocol.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_min_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_min_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_max_W_m2",
+        "stat": "cycle max",
+        "meaning": "maximum solar flux",
+        "compare_mode": "direct_candidate",
+        "caution": "Mars MCD and Earth ERA5 forcing require a scientific comparison protocol.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_max_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_max_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_diurnal_W_m2",
+        "stat": "diurnal range",
+        "meaning": "daily solar flux variability",
+        "compare_mode": "direct_candidate",
+        "caution": "Mars MCD and Earth ERA5 forcing require a scientific comparison protocol.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_diurnal_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_diurnal_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      },
+      {
+        "header": "sw_down_seasonal_W_m2",
+        "stat": "seasonal range",
+        "meaning": "seasonal solar flux variability",
+        "compare_mode": "direct_candidate",
+        "caution": "Mars MCD and Earth ERA5 forcing require a scientific comparison protocol.",
+        "layers": {
+          "mars": "mcd",
+          "earth": "era5_sw"
+        },
+        "sources": {
+          "mars": {
+            "layer": "mcd",
+            "version": "mcd-v0.2.1",
+            "column": "sw_down_seasonal_W_m2"
+          },
+          "earth": {
+            "layer": "era5_sw",
+            "version": "era5_sw-v0.2",
+            "column": "sw_down_seasonal_W_m2"
+          }
+        },
+        "scoring_status": "candidate_requires_review"
+      }
+    ]
+  },
+  "albedo": {
+    "description": "Surface reflectance/albedo from Mars TES and Earth MODIS; physical compatibility requires review.",
+    "options": [
+      {
+        "header": "albedo",
+        "stat": "broadband reflectance",
+        "meaning": "surface solar reflectance",
+        "compare_mode": "proxy_review",
+        "caution": "TES and MODIS retrievals and wavelength bands differ.",
+        "layers": {
+          "mars": "tes_albedo",
+          "earth": "modis_albedo_ndvi"
+        },
+        "sources": {
+          "mars": {
+            "layer": "tes_albedo",
+            "version": "tes_albedo-v0.2",
+            "column": "albedo"
+          },
+          "earth": {
+            "layer": "modis_albedo_ndvi",
+            "version": "modis_albedo_ndvi-v0.2",
+            "column": "albedo"
+          }
+        },
+        "scoring_status": "non_scoring_review_required",
+        "non_scoring_reason": "Source definitions, spatial support or cross-planet interpretation remain unresolved; keep as context until reviewed."
+      }
+    ]
+  },
+  "thermal_inertia": {
+    "description": "Thermal storage proxy, expressed only as percentile within each planet; raw TI and Earth ATI are not directly interchangeable.",
+    "options": [
+      {
+        "header": "ti_pct",
+        "stat": "within-planet percentile",
+        "meaning": "relative thermal-inertia percentile on each planet, not physical TI equality",
+        "compare_mode": "planet_rank",
+        "caution": "Mars TES thermal-inertia percentile and Earth MODIS apparent thermal-inertia percentile are distinct source-derived rankings; Earth bare-cell coverage only. Do not treat as physical equality.",
+        "layers": {
+          "mars": "tes_ti",
+          "earth": "modis_ati"
+        },
+        "sources": {
+          "mars": {
+            "layer": "tes_ti",
+            "version": "tes_ti-v0.2",
+            "column": "ti_pct",
+            "extra": "ti_pct"
+          },
+          "earth": {
+            "layer": "modis_ati",
+            "version": "modis_ati-v0.2",
+            "column": "ti_pct",
+            "extra": "ti_pct"
+          }
+        },
+        "scoring_status": "proxy_requires_review"
+      }
+    ]
+  }
+}

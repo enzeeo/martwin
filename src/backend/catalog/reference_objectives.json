@@ -1,0 +1,291 @@
+[
+  {
+    "caution": "Orbital terrain and soil summaries cannot establish wheel-scale safety.",
+    "concept_ids": [
+      "slope",
+      "surface_roughness",
+      "relief",
+      "wheel_scale_obstacles"
+    ],
+    "doc_id": "objective:mobility:traversability",
+    "kind": "objective",
+    "objective_id": "mobility",
+    "requirement_id": "traversability",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "mobility",
+      "scarecrow"
+    ],
+    "strength": 0.95,
+    "text": "Rover mobility and vehicle passage over natural terrain. Requirement: Obstacle avoidance and traversal of uneven ground, inclines, ridges, and depressions by a wheeled robot."
+  },
+  {
+    "caution": "Orbital terrain and soil summaries cannot establish wheel-scale safety.",
+    "concept_ids": [
+      "soil_texture",
+      "soil_bearing_strength"
+    ],
+    "doc_id": "objective:mobility:mechanical_response",
+    "kind": "objective",
+    "objective_id": "mobility",
+    "requirement_id": "mechanical_response",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "mobility",
+      "scarecrow"
+    ],
+    "strength": 0.83,
+    "text": "Rover mobility and vehicle passage over natural terrain. Requirement: Wheel interaction with loose surface material: traction, slipping, sinking and getting stuck."
+  },
+  {
+    "caution": "Static consistency does not establish time-dependent stability.",
+    "concept_ids": [
+      "slope",
+      "surface_roughness",
+      "relief"
+    ],
+    "doc_id": "objective:terrain_uniformity:topographic_variation",
+    "kind": "objective",
+    "objective_id": "terrain_uniformity",
+    "requirement_id": "topographic_variation",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema"
+    ],
+    "strength": 0.95,
+    "text": "Spatial consistency of terrain across a site. Requirement: Gradual changes in ground shape and elevation, uniform gradients and limited unevenness."
+  },
+  {
+    "caution": "Modern Earth rivers and Mars paleovalleys differ in process age and mapping support.",
+    "concept_ids": [
+      "channels",
+      "landform",
+      "relief"
+    ],
+    "doc_id": "objective:fluvial:network_geometry",
+    "kind": "objective",
+    "objective_id": "fluvial",
+    "requirement_id": "network_geometry",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema",
+      "lake"
+    ],
+    "strength": 0.92,
+    "text": "Reconstruct how flowing water carved and organized a landscape. Requirement: River-valley shape, channel networks, drainage organization and elevation differences along water-cut terrain."
+  },
+  {
+    "caution": "Surface soil is only a candidate proxy for ancient deposited material.",
+    "concept_ids": [
+      "geology",
+      "grain_size",
+      "soil_texture",
+      "sedimentary_structure"
+    ],
+    "doc_id": "objective:lake_deposition:depositional_material",
+    "kind": "objective",
+    "objective_id": "lake_deposition",
+    "requirement_id": "depositional_material",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "lake",
+      "soil"
+    ],
+    "strength": 0.88,
+    "text": "Investigate deposits left by lakes and deltas in the geological past. Requirement: Lake-bottom and delta sediment deposits, particle material, geological setting and depositional layering."
+  },
+  {
+    "caution": "Surface soil is only a candidate proxy for ancient deposited material.",
+    "concept_ids": [
+      "mineralogy"
+    ],
+    "doc_id": "objective:lake_deposition:depositional_chemistry",
+    "kind": "objective",
+    "objective_id": "lake_deposition",
+    "requirement_id": "depositional_chemistry",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "lake",
+      "soil"
+    ],
+    "strength": 0.76,
+    "text": "Investigate deposits left by lakes and deltas in the geological past. Requirement: Mineral composition associated with lake sediment formation and chemical alteration."
+  },
+  {
+    "caution": "Wind and particle context alone do not supply sediment flux or equal transport thresholds across planets.",
+    "concept_ids": [
+      "wind",
+      "grain_size",
+      "soil_texture"
+    ],
+    "doc_id": "objective:aeolian:entrainment_context",
+    "kind": "objective",
+    "objective_id": "aeolian",
+    "requirement_id": "entrainment_context",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "scarecrow",
+      "schema"
+    ],
+    "strength": 0.95,
+    "text": "Study movement and deposition of surface particles by wind. Requirement: Conditions under which wind entrains and transports loose particles, including grain size and surface material."
+  },
+  {
+    "caution": "Wind and particle context alone do not supply sediment flux or equal transport thresholds across planets.",
+    "concept_ids": [
+      "dunes"
+    ],
+    "doc_id": "objective:aeolian:aeolian_setting",
+    "kind": "objective",
+    "objective_id": "aeolian",
+    "requirement_id": "aeolian_setting",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "scarecrow",
+      "schema"
+    ],
+    "strength": 0.76,
+    "text": "Study movement and deposition of surface particles by wind. Requirement: Dune deposits, dune morphology and environments shaped by wind-driven sand."
+  },
+  {
+    "caution": "SWIM is consistency evidence; Earth permafrost fractions are not interchangeable with Martian ice fractions.",
+    "concept_ids": [
+      "ground_ice",
+      "surface_temperature"
+    ],
+    "doc_id": "objective:buried_ice:ice_evidence",
+    "kind": "objective",
+    "objective_id": "buried_ice",
+    "requirement_id": "ice_evidence",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "ice"
+    ],
+    "strength": 0.93,
+    "text": "Study frozen water beneath the ground surface. Requirement: Evidence of buried ice, permafrost and the surrounding temperature conditions."
+  },
+  {
+    "caution": "Land-cover fractions do not measure microbial abundance.",
+    "concept_ids": [
+      "vegetation_cover",
+      "bare_ground"
+    ],
+    "doc_id": "objective:exposure:surface_visibility",
+    "kind": "objective",
+    "objective_id": "exposure",
+    "requirement_id": "surface_visibility",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema"
+    ],
+    "strength": 0.91,
+    "text": "Find unobscured surface material for field observation. Requirement: Exposed ground and limited covering by plants; vegetation cover and surface visibility."
+  },
+  {
+    "caution": "Column vapour is not precipitation, soil moisture or a calibrated aridity index.",
+    "concept_ids": [
+      "water_vapour",
+      "soil_moisture"
+    ],
+    "doc_id": "objective:aridity:dryness_context",
+    "kind": "objective",
+    "objective_id": "aridity",
+    "requirement_id": "dryness_context",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema"
+    ],
+    "strength": 0.84,
+    "text": "Study dryness and limited moisture in the environment. Requirement: Low water content in soil and limited atmospheric water vapour in dry environments."
+  },
+  {
+    "caution": "Local time, season, surface skin temperature and observation support must be aligned.",
+    "concept_ids": [
+      "surface_temperature"
+    ],
+    "doc_id": "objective:thermal_cycle:thermal_environment",
+    "kind": "objective",
+    "objective_id": "thermal_cycle",
+    "requirement_id": "thermal_environment",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema"
+    ],
+    "strength": 0.98,
+    "text": "Study changing thermal conditions at the surface. Requirement: Heating and cooling, day-to-night temperature swings, thermal stress and freezing and thawing."
+  },
+  {
+    "caution": "An Earth abundance is not equal to a Mars detection count or spectral index.",
+    "concept_ids": [
+      "mineralogy",
+      "geology"
+    ],
+    "doc_id": "objective:mineral_investigation:composition_evidence",
+    "kind": "objective",
+    "objective_id": "mineral_investigation",
+    "requirement_id": "composition_evidence",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema",
+      "lake"
+    ],
+    "strength": 0.9,
+    "text": "Investigate rock mineral composition and geological context. Requirement: Mineral assemblages, chemical alteration and rock types, including carbonate and hydrated minerals."
+  },
+  {
+    "caution": "Crater inventory is Mars-only in this schema.",
+    "concept_ids": [
+      "craters",
+      "landform",
+      "relief",
+      "slope"
+    ],
+    "doc_id": "objective:impact_landscape:impact_context",
+    "kind": "objective",
+    "objective_id": "impact_landscape",
+    "requirement_id": "impact_context",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema"
+    ],
+    "strength": 0.88,
+    "text": "Study landscapes formed by impact cratering. Requirement: Impact structures and crater rims, surrounding landforms, steepness and elevation differences."
+  },
+  {
+    "caution": "Candidate-cave labels do not establish access or Earth cave counterparts.",
+    "concept_ids": [
+      "caves",
+      "geology"
+    ],
+    "doc_id": "objective:cave_environment:cave_context",
+    "kind": "objective",
+    "objective_id": "cave_environment",
+    "requirement_id": "cave_context",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "schema"
+    ],
+    "strength": 0.85,
+    "text": "Investigate caves, lava tubes and entrances. Requirement: Subsurface cavities, entrance settings and the geology in which caves or lava tubes occur."
+  },
+  {
+    "caution": "Minerals and land cover do not directly establish biosignature preservation.",
+    "concept_ids": [
+      "mineralogy",
+      "geology",
+      "biological_activity",
+      "mineral_texture"
+    ],
+    "doc_id": "objective:biosignature:preservation_context",
+    "kind": "objective",
+    "objective_id": "biosignature",
+    "requirement_id": "preservation_context",
+    "source": "New author-written description of an unchanged ontology edge; review required",
+    "source_ids": [
+      "lake",
+      "schema"
+    ],
+    "strength": 0.86,
+    "text": "Investigate preservation of evidence of past life. Requirement: Biological traces and their preservation in rock mineralogy, geology and mineral textures."
+  }
+]

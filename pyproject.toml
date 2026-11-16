@@ -1,0 +1,21 @@
+[project]
+name = "guardians-deploy"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1"]
+
+[dependency-groups]
+indus = [
+    "numpy>=1.26,<3",
+    "sentence-transformers>=5.1,<6",
+    "torch==2.9.1",
+]
+dev = ["httpx>=0.28,<1"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

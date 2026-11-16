@@ -1,0 +1,10 @@
+.DS_Store
+.env
+.env.*
+.venv/
+__pycache__/
+*.py[cod]
+.gstack/
+
+# Machine-local prepared scoring bundle (never commit arrays).
+/data/scoring
