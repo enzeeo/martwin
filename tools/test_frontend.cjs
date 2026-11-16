@@ -23,7 +23,10 @@ const assert = require('assert');
     window.testScoreMode = 'normal';
     window.fetch = async (url, options = {}) => {
       if (url.startsWith('/api/catalog')) return new Response(JSON.stringify({
-        comparisons: [{ feature_id: 'terrain', options: [{ header: 'slope', label: 'Mean terrain slope', unit: '°', meaning: 'Slope', score_available: true }, { header: 'relief', label: 'Local relief', unit: 'm', meaning: 'Relief', score_available: true }] }],
+        comparisons: [
+          { feature_id: 'terrain', options: [{ header: 'slope', label: 'Mean terrain slope', unit: '°', meaning: 'Slope', score_available: true }, { header: 'relief', label: 'Local relief', unit: 'm', meaning: 'Relief', score_available: true }] },
+          { feature_id: 'surface', options: [{ header: 'tes_albedo', label: 'Albedo', score_available: true }] }
+        ],
         filters: [],
         continent_filter: { available: true, continents: ['Africa', 'Antarctica', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'] },
         dataset_fields: [{ header: 'elev_mean', label: 'Mean elevation', unit: 'm', data_type: 'continuous', filter_available: true }, { header: 'tree_cover', label: 'Tree cover', unit: 'fraction (0–1)', display_unit: '%', display_scale: 100, data_type: 'fraction', filter_available: true }, { header: 'lc_major', label: 'Land-cover class', data_type: 'categorical', choices: [{value:'Bare ground',label:'Bare ground'},{value:'Grassland',label:'Grassland'}], filter_available: true }, { header: 'surface_not_ground', label: 'Surface rather than ground', data_type: 'boolean', filter_available: true }]
@@ -97,8 +100,21 @@ const assert = require('assert');
   await page.locator('#comparisons li').filter({ hasText: 'unsupported' }).getByRole('button', { name: 'Remove' }).click();
   await page.locator('[aria-label="Weight for Mean terrain slope"]').fill('100');
   await page.locator('#toggleFamily').click();
-  await page.locator('#addFamily').selectOption('terrain/relief');
+  const featureSearch = page.getByLabel('Search features', { exact: true });
+  const featureOptions = page.locator('#addFamily option');
+  assert.deepEqual(await featureOptions.allTextContents(), ['Albedo', 'Local relief']);
+  await featureSearch.fill(' TES_ALB ');
+  assert.deepEqual(await featureOptions.allTextContents(), ['Albedo']);
+  await featureSearch.fill('nothing matches');
+  assert.deepEqual(await featureOptions.allTextContents(), ['No matching features']);
+  assert.equal(await page.locator('#addFamilyBtn').isDisabled(), true);
+  await featureSearch.fill('RELIEF');
+  assert.deepEqual(await featureOptions.allTextContents(), ['Local relief']);
   await page.locator('#addFamilyBtn').click();
+  await page.locator('#toggleFamily').click();
+  assert.equal(await featureSearch.inputValue(), '');
+  assert.deepEqual(await featureOptions.allTextContents(), ['Albedo']);
+  await page.locator('#toggleFamily').click();
   await page.locator('[aria-label="Weight for Local relief"]').fill('70');
   await page.locator('#toggleFilter').click();
   await page.locator('#addFilter').selectOption('dataset_field/elev_mean');

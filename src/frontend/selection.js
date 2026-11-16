@@ -122,16 +122,21 @@
       value.onchange = value.oninput = () => { if (numeric) item.value = value.value === '' ? undefined : Number(value.value) / (item.display_scale || 1); else if (boolean) item.value = value.value === '' ? undefined : value.value === 'true'; else item.value = value.multiple ? [...value.selectedOptions].map(option => option.value).filter(Boolean) : value.value || undefined; changed(); };
       max.oninput = () => { item.value_max = max.value === '' ? undefined : Number(max.value) / (item.display_scale || 1); changed(); }; sync(); row.append(op, choiceSearch, value, max, unit); header.append(row, details.button, remove); filters.append(li);
     }
-    const used = new Set(plan.comparisons.map(item => item.header));
-    const term = $('featureSearch').value.toLowerCase();
-    fillSelect('addFamily', menu.comparisons.flatMap(family => family.options
-      .filter(option => !used.has(option.header) && option.score_available && `${friendly(option)} ${option.header}`.toLowerCase().includes(term))
-      .map(option => [`${family.feature_id}/${option.header}`, friendly(option)])));
+    renderFeatureOptions();
     const chosen = new Set(plan.filters.map(item => `${item.feature_id}/${item.header}`));
     const query = $('filterSearch').value.toLowerCase();
     const filterOptions = [...menu.filters.flatMap(family => family.options.map(option => ({...option, feature_id: family.feature_id}))), ...(menu.dataset_fields || []).map(option => ({...option, feature_id:'dataset_field'}))];
     fillSelect('addFilter', filterOptions.filter(option => !chosen.has(`${option.feature_id}/${option.header}`) && `${friendly(option)} ${option.header}`.toLowerCase().includes(query))
       .map(option => [`${option.feature_id}/${option.header}`, `${friendly(option)}${option.filter_available === false ? ' · unavailable' : ''}`]));
+  }
+  function renderFeatureOptions() {
+    const used = new Set(plan.comparisons.map(item => item.header));
+    const term = $('featureSearch').value.trim().toLowerCase();
+    fillSelect('addFamily', menu.comparisons.flatMap(family => family.options
+      .filter(option => !used.has(option.header) && option.score_available && `${friendly(option)} ${option.header}`.toLowerCase().includes(term))
+      .map(option => [`${family.feature_id}/${option.header}`, friendly(option)]))
+      .sort((a, b) => a[1].localeCompare(b[1], 'en', { sensitivity: 'base', numeric: true })));
+    if ($('addFamily').disabled) $('addFamily').add(new Option(term ? 'No matching features' : 'No features available'));
   }
   $('addFamilyBtn').onclick = () => {
     const [feature_id, header] = $('addFamily').value.split('/');
@@ -148,8 +153,16 @@
   const continents = ['Africa', 'Antarctica', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'];
   for (const name of continents) { const label = el('label'); const input = document.createElement('input'); input.type = 'checkbox'; input.value = name; input.checked = true; input.onchange = () => { changed(); $('continents').previousElementSibling.previousElementSibling.querySelector('span').textContent = `· ${$('continents').querySelectorAll('input:checked').length} of 7 selected`; }; label.append(input, document.createTextNode(name)); $('continents').append(label); }
   $('resultLimit').oninput = changed; $('separation').oninput = changed;
-  for (const [button, panel, search] of [['toggleFamily','familyMenu','featureSearch'], ['toggleFilter','filterMenu','filterSearch']]) $(button).onclick = () => { const open = $(panel).hidden; $(panel).hidden = !open; $(button).setAttribute('aria-expanded', String(open)); if (open) $(search).focus(); };
-  $('featureSearch').oninput = renderPlan; $('filterSearch').oninput = renderPlan;
+  for (const [button, panel, search] of [['toggleFamily','familyMenu','featureSearch'], ['toggleFilter','filterMenu','filterSearch']]) $(button).onclick = () => {
+    const open = $(panel).hidden;
+    $(panel).hidden = !open;
+    $(button).setAttribute('aria-expanded', String(open));
+    if (open) {
+      if (search === 'featureSearch') { $(search).value = ''; renderFeatureOptions(); }
+      $(search).focus();
+    }
+  };
+  $('featureSearch').oninput = renderFeatureOptions; $('filterSearch').oninput = renderPlan;
   $('runScore').onclick = async () => {
     const status = $('scoreStatus'), output = $('scoreResult');
     output.hidden = true; output.textContent = '';
