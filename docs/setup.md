@@ -6,7 +6,7 @@ Use the existing Python 3.12+ environment and installed project dependencies. No
 
 Selection tests use injected model outputs. Browser checks use fixture responses to verify progress, review, add/remove, weights and submission. Method D tests use numeric fixtures to verify the existing formula and the feature-weight adapter.
 
-Real local scoring additionally uses a prepared data directory built from the existing terrain benchmark artifacts and fixed reference population. Preparation runs in the research environment that already has Parquet support; serving uses NumPy. The source revision, eligibility, reference IDs and supported representations must be retained in the prepared manifest. The README records the preparation and serving commands.
+Real local scoring additionally uses a prepared data directory built from the existing terrain benchmark artifacts and fixed reference population. Preparation runs in the research environment that already has Parquet support; serving uses NumPy. The source revision, eligibility, reference IDs and supported representations must be retained in the prepared manifest. The [developer reference](deployment-reference.md#prepare-local-scoring-data) records the preparation and serving commands.
 
 Live OpenRouter verification requires the user-configured server environment. Fixture verification must not be reported as a live provider run.
 
