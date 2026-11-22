@@ -131,8 +131,8 @@ or any of its branches.
 
 1. Open [huggingface.co/spaces/enzeeoai/martwin](https://huggingface.co/spaces/enzeeoai/martwin).
    The status badge says **Building**. Choose **Logs** to watch.
-2. The first build takes about 10–20 minutes because it installs PyTorch and
-   bakes the INDUS encoder into the image.
+2. The first build takes about 10–20 minutes. A temporary build step installs
+   PyTorch to convert the INDUS encoder to ONNX; the final image doesn't include PyTorch.
 3. Once it's built, the container downloads the scoring data. Look for
    `Scoring bundle ready.` in the logs, followed by `Uvicorn running`.
 4. The status changes to **Running** and the app appears. Do a full search to

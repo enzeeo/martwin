@@ -12,7 +12,7 @@ Live OpenRouter verification requires the user-configured server environment. Fi
 
 Python version: 3.12 or 3.13
 Lockfile: uv.lock
-Setup command: uv sync --locked --group indus
+Setup command: uv sync --locked --group indus --group export && uv run --no-sync python tools/export_encoder_onnx.py data/encoder
 Test command: python -m unittest discover -s src/backend -t .
 Lint command: git diff --check
 Contract test command: python -m unittest src.backend.test_web
@@ -20,7 +20,7 @@ Smoke test command: node tools/test_frontend.cjs
 Sample data: Numeric fixtures in backend tests and browser API fixtures in tools/test_frontend.cjs
 Artifact storage: Local prepared terrain directory selected by GUARDIANS_TERRAIN_DIR
 Artifact version: pixel-observatory-v1
-Environment variables: GUARDIANS_TERRAIN_DIR, OPENROUTER_API_KEY, OPENROUTER_MODEL
+Environment variables: GUARDIANS_TERRAIN_DIR, MARTWIN_ENCODER_DIR, OPENROUTER_API_KEY, OPENROUTER_MODEL
 
 Issue #76 verification uses injected responses to assert two calls, separate catalog menus, rejection of invalid output without retries, and a 1,200-second timeout on both requests.
 

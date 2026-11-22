@@ -2,7 +2,8 @@
 .venv
 data
 docs
-tools
+tools/*
+!tools/export_encoder_onnx.py
 **/__pycache__
 .env
 .env.*

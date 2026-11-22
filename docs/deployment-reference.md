@@ -1,7 +1,17 @@
 # Martwin developer reference
 
-The first feature selection downloads and caches the pinned INDUS encoder from
-Hugging Face. OpenRouter receives the objective, Mars coordinates, and relevant
+Feature selection runs the pinned INDUS encoder with ONNX Runtime; serving does
+not need PyTorch. Export it once with the `export` dependency group:
+
+```sh
+uv run --no-sync python tools/export_encoder_onnx.py data/encoder
+```
+
+The export writes `model.onnx`, the tokenizer and `encoder.json` (model revision
+and checksums) to `data/encoder`, or to the directory named by
+`MARTWIN_ENCODER_DIR`. The server checks the revision and checksums on load.
+The Docker image runs this export in a separate build stage, so the final image
+has no PyTorch. OpenRouter receives the objective, Mars coordinates, and relevant
 catalog descriptions. Set `OPENROUTER_MODEL` before launching the app to override
 the default model.
 

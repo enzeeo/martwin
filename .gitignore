@@ -8,3 +8,6 @@ __pycache__/
 
 # Machine-local prepared scoring bundle (never commit arrays).
 /data/scoring
+
+# Exported ONNX encoder (rebuild with tools/export_encoder_onnx.py).
+/data/encoder

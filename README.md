@@ -11,7 +11,13 @@
    Paste this command into the terminal and press Enter. It downloads Python if needed and sets up the app’s virtual environment (`.venv`). This may take a few minutes.
 
    ```sh
-   uv sync --locked --no-dev --group indus --python 3.12
+   uv sync --locked --no-dev --group indus --group export --python 3.12
+   ```
+
+   Then paste this command and press Enter. It prepares the app's language model in `data/encoder`. You only need to do this once.
+
+   ```sh
+   uv run --no-sync python tools/export_encoder_onnx.py data/encoder
    ```
 
 3. **Start Martwin.** Paste this command into the same terminal and press Enter:

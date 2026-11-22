@@ -1,9 +1,21 @@
-# Martwin image for a Hugging Face Docker Space (also runs anywhere Docker does).
-FROM python:3.12-slim
+# Martwin image. Runs on any Docker host (Cloud Run, Fly.io, a VPS, HF Spaces).
 
+# Stage 1: export the pinned INDUS encoder to ONNX. PyTorch lives only here.
+FROM python:3.12-slim AS encoder
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+ENV UV_LINK_MODE=copy
+WORKDIR /build
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --no-dev --only-group export --no-install-project
+COPY src ./src
+COPY tools/export_encoder_onnx.py ./tools/
+RUN .venv/bin/python tools/export_encoder_onnx.py /encoder
+
+# Stage 2: the server, with ONNX Runtime and no PyTorch.
+FROM python:3.12-slim
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-# Spaces run the container as user 1000.
+# Hugging Face Spaces run the container as user 1000; elsewhere this is harmless.
 RUN useradd -m -u 1000 user
 USER user
 ENV HOME=/home/user \
@@ -16,12 +28,7 @@ WORKDIR /home/user/app
 COPY --chown=user pyproject.toml uv.lock ./
 RUN uv sync --locked --no-dev --group indus --no-install-project
 
-# Bake the pinned INDUS encoder into the image so the first search is not slow.
-COPY --chown=user src/backend/feature_selection.py /tmp/feature_selection.py
-RUN python -c "import re, pathlib; from huggingface_hub import snapshot_download; \
-s = pathlib.Path('/tmp/feature_selection.py').read_text(); \
-snapshot_download(re.search(r'MODEL_ID = \"(.+?)\"', s).group(1), revision=re.search(r'MODEL_REVISION = \"(.+?)\"', s).group(1))"
-
+COPY --chown=user --from=encoder /encoder ./data/encoder
 COPY --chown=user src ./src
 COPY --chown=user deploy ./deploy
 
