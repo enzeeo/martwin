@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Martwin · stage mockups (B / C / E)</title>
+<style>
+@font-face{font-family:'Geist Sans';font-weight:100 900;src:url('/fonts/geist-sans-latin.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Geist Mono';font-weight:100 900;src:url('/fonts/geist-mono-latin.woff2') format('woff2');font-display:swap}
+:root{color-scheme:dark;--bg:#101214;--surface:#191c1e;--sunk:#0c0e0f;--line:#393d3e;--line2:#656760;--text:#f1eee7;--muted:#aaa9a3;--dim:#6f716c;--mars:#eba078;--earth:#91bacb;--mono:'Geist Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 'Geist Sans',system-ui,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--earth);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 4vw 60px}
+.mock-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin-bottom:22px}
+.mock-head h1{margin:0;font-size:20px;font-weight:600;letter-spacing:-.02em}
+.mock-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.controls{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.seg{display:flex;border:1px solid var(--line)}
+.seg button{background:transparent;border:0;border-right:1px solid var(--line);padding:8px 13px;font:12px var(--mono);letter-spacing:.04em;color:var(--muted)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:#283a41;color:var(--text)}
+.seg-label{font:10px var(--mono);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-right:8px}
+.play{background:var(--mars);color:#101214;border:0;padding:8px 14px;font:600 12px var(--mono)}
+.note{font:12px/1.6 var(--mono);color:var(--dim);border-left:2px solid var(--line);padding:2px 0 2px 12px;margin:0 0 18px}
+
+/* shared panel */
+.panel{background:var(--surface);border:1px solid var(--line);padding:26px 28px;min-height:320px;position:relative}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:22px}
+.eyebrow{font:11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mars)}
+.panel-head h2{margin:4px 0 0;font-size:21px;font-weight:600;letter-spacing:-.02em}
+.target{font:12px var(--mono);color:var(--muted)}
+.tag{display:inline-block;font:10px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border:1px solid currentColor}
+.tag.comparison{color:var(--mars)}.tag.filter{color:var(--earth)}.tag.inferred{color:var(--muted);border-style:dashed}
+.status{font:12px var(--mono);color:var(--muted);display:flex;align-items:center;gap:10px;margin-top:22px}
+.dot{width:7px;height:7px;background:var(--mars);display:inline-block;animation:blink 1s steps(2,start) infinite}
+.done-dot{width:7px;height:7px;background:var(--earth);display:inline-block}
+@keyframes blink{to{visibility:hidden}}
+
+/* ---------- B: question highlight ---------- */
+.b-question{font:400 clamp(20px,2.6vw,30px)/1.55 var(--mono);letter-spacing:-.01em;margin:0;position:relative;color:var(--text);transition:color .4s}
+.b-question.dim{color:var(--dim)}
+.b-question .w{position:relative;transition:color .08s,background-color .12s}
+.b-question.scanning .w.lit{color:var(--text);background:#2a3a40}
+.b-question .hit{border-bottom:2px solid var(--mars);padding-bottom:1px;cursor:default;transition:background-color .2s;animation:hitIn .5s ease both}
+.b-question .hit.filter{border-color:var(--earth)}
+.b-question .hit sup{font-size:.42em;color:var(--mars);margin-left:2px;vertical-align:super}
+.b-question .hit.filter sup{color:var(--earth)}
+.b-question .hit.on{background:#3b2a20}.b-question .hit.filter.on{background:#21343b}
+@keyframes hitIn{from{border-bottom-color:transparent;background:#3b2a20}}
+.b-caret{display:inline-block;width:.55em;height:1.1em;background:var(--mars);vertical-align:-.18em;margin-left:4px;animation:blink 1s steps(2,start) infinite}
+.b-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:28px}
+.b-chip{display:block;width:100%;text-align:left;background:var(--sunk);border:1px solid var(--line);padding:12px 14px;animation:chipIn .4s ease both}
+.b-chip.on,.b-chip:hover{border-color:var(--line2)}
+.b-chip .from{font:11px var(--mono);color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.b-chip .from b{font-weight:500;color:var(--text)}
+.b-chip .num{font:11px var(--mono);color:var(--mars)}.b-chip.filter .num{color:var(--earth)}
+.b-chip strong{display:block;font-size:15px;font-weight:500}
+.b-chip p{margin:6px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5}
+.b-chip.inferred{border-style:dashed}
+.b-sub{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:26px 0 -16px}
+.b-ghosts{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:28px}
+.b-ghost{height:86px;border:1px dashed var(--line);background:linear-gradient(90deg,transparent,#ffffff08,transparent) 0 0/200% 100%;animation:shimmer 1.6s linear infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+@keyframes chipIn{from{opacity:0;transform:translateY(8px)}}
+.head-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.simple-toggle{display:flex;align-items:center;gap:8px;background:none;border:0;padding:2px 0;font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.simple-toggle .switch{width:26px;height:14px;border:1px solid var(--line2);position:relative;transition:background-color .2s}
+.simple-toggle .switch:after{content:'';position:absolute;top:2px;left:2px;width:8px;height:8px;background:var(--muted);transition:transform .2s,background-color .2s}
+.simple-toggle[aria-pressed=true]{color:var(--text)}
+.simple-toggle[aria-pressed=true] .switch{background:#283a41;border-color:var(--earth)}
+.simple-toggle[aria-pressed=true] .switch:after{transform:translateX(12px);background:var(--earth)}
+.b-question .q-end{display:inline-block;width:0}
+/* star field + feature list */
+.sf-chart{position:relative;height:200px;margin-top:16px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.sf-chart svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.sf circle{fill:#e9e6dc;transform-box:fill-box;transform-origin:center}
+.sf.fade circle{animation:fieldIn .7s ease-out backwards}
+@keyframes fieldIn{from{opacity:0}}
+.sf-link{stroke:#ffe2c9;stroke-width:1}
+.cn-edge{stroke:#eba078c0;stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;animation:threadDraw .4s ease-out forwards;transition:stroke .2s,stroke-width .2s}
+.cn.filter .cn-edge{stroke:#91bacbc0}
+.cn.inferred .cn-edge{stroke:#c9c6bb8c}
+.cn-star{fill:#fff8ea;opacity:0;animation:starPop .5s ease-out forwards;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 3px #eba078aa)}
+.cn.filter .cn-star{filter:drop-shadow(0 0 3px #91bacbaa)}
+.cn.inferred .cn-star{filter:drop-shadow(0 0 3px #fff8ea66)}
+.cn-num{font:10px var(--mono);fill:var(--mars);opacity:0;animation:fadeIn .4s ease forwards}
+.cn.filter .cn-num{fill:var(--earth)}.cn.inferred .cn-num{fill:var(--muted)}
+@keyframes starPop{0%{opacity:0;transform:scale(2.8)}60%{opacity:1}100%{opacity:1;transform:scale(1)}}
+@keyframes threadDraw{to{stroke-dashoffset:0}}
+@keyframes fadeIn{to{opacity:1}}
+.cn.on .cn-edge{stroke:var(--mars);stroke-width:2}.cn.filter.on .cn-edge{stroke:var(--earth)}
+.settled .cn-edge,.settled .cn-star,.settled .cn-num{animation:none;opacity:1;stroke-dashoffset:0}
+.fl{list-style:none;margin:8px 0 0;padding:0;border-top:1px solid var(--line)}
+.fl-row{display:grid;grid-template-columns:34px minmax(0,auto) 1fr auto;gap:4px 14px;align-items:center;padding:11px 4px;border-bottom:1px solid #2a2e30;transition:background-color .15s}
+.fl-row.on{background:#1f2427}
+.fl-num{font:12px var(--mono);color:var(--mars)}.fl-row.filter .fl-num{color:var(--earth)}.fl-row.inferred .fl-num{color:var(--muted)}
+.fl-name{justify-self:start;background:none;border:0;padding:0;font:500 15px 'Geist Sans',system-ui,sans-serif;color:var(--text);text-align:left;border-bottom:1px dotted #6f716c}
+.fl-name:hover,.fl-name[aria-expanded=true]{color:var(--mars);border-bottom-color:currentColor}
+.fl-row.filter .fl-name:hover,.fl-row.filter .fl-name[aria-expanded=true]{color:var(--earth)}
+.fl-from{font:12px var(--mono);color:var(--dim)}
+.fl-desc{grid-column:2/-1;margin:2px 0 2px;font-size:13px;line-height:1.55;color:var(--muted);max-width:640px}
+.fl-ghost{position:absolute;z-index:20;pointer-events:none;white-space:nowrap;font:500 15px 'Geist Sans',system-ui,sans-serif;color:var(--mars);text-shadow:0 0 12px #eba07866}
+.fl-ghost.filter{color:var(--earth);text-shadow:0 0 12px #91bacb66}
+@media(max-width:620px){.fl-row{grid-template-columns:30px 1fr auto}.fl-from{grid-column:2/-1;grid-row:2}}
+/* B · simple view: log rows */
+.b-question.compact{font-size:16px;line-height:1.6;color:var(--text)}
+.b-question.settled .hit{animation:none}
+.b-log{margin-top:22px}
+.b-logrow summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.b-logrow summary::-webkit-details-marker{display:none}
+.b-logrow summary:after{content:'[+]';color:var(--dim)}
+.b-logrow details[open] summary:after{content:'[−]'}
+.b-logrow .num{color:var(--mars)}.b-logrow.filter .num{color:var(--earth)}
+.b-logrow .from{color:var(--dim)}.b-logrow .from b{color:var(--muted);font-weight:400}
+.b-logrow.on summary b{color:var(--mars)}.b-logrow.filter.on summary b{color:var(--earth)}
+.c-log .c-child.b-logrow{animation:none}
+.morph-ghost{position:fixed;z-index:50;margin:0;overflow:hidden;pointer-events:none;animation:none!important;box-sizing:border-box}
+
+/* ---------- C: mission log ---------- */
+.c-log{list-style:none;margin:0;padding:0;font:13px/1.6 var(--mono)}
+.c-row{display:grid;grid-template-columns:78px 18px 1fr auto;gap:12px;align-items:start;padding:10px 0;border-top:1px dashed #2c3032;animation:rowIn .3s steps(3,end) both}
+.c-row:first-child{border-top:0}
+.c-t{color:var(--dim);font-variant-numeric:tabular-nums}
+.c-mark{color:var(--earth)}
+.c-row.live .c-mark{color:var(--mars)}
+.c-row.pending{opacity:.4}
+.c-msg b{font-weight:500;color:var(--text)}
+.c-msg span{color:var(--muted)}
+.c-right{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.c-bar{height:2px;background:#2a2e30;margin-top:8px;overflow:hidden;position:relative}
+.c-bar:after{content:'';position:absolute;inset:0 auto 0 0;width:30%;background:var(--mars);animation:indet 1.4s ease-in-out infinite}
+@keyframes indet{0%{left:-30%}100%{left:100%}}
+.c-children{list-style:none;margin:8px 0 0;padding:0 0 0 2px;border-left:1px solid var(--line)}
+.c-child{padding:0 0 0 14px;margin:6px 0;animation:rowIn .3s steps(3,end) both}
+.c-child details summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:center}
+.c-child details summary::-webkit-details-marker{display:none}
+.c-child details summary:after{content:'[+]';color:var(--dim)}
+.c-child details[open] summary:after{content:'[−]'}
+.c-child p{margin:6px 0 4px 0;color:var(--muted);font-size:12px;max-width:640px}
+.c-child .why{color:var(--dim)}
+@keyframes rowIn{from{opacity:0}}
+
+/* ---------- E: tightened diagram ---------- */
+.e-bar{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);background:var(--sunk);font:13px var(--mono)}
+.e-bar q{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.e-bar .t{color:var(--dim);font-variant-numeric:tabular-nums}
+.e-canvas{position:relative;display:grid;grid-template-columns:minmax(180px,250px) minmax(240px,1fr) 150px;gap:clamp(36px,6vw,90px);align-items:center;padding:30px 2px;min-height:220px}
+.e-canvas svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
+.e-node{position:relative;z-index:1;border:1px solid var(--line2);background:var(--surface);padding:11px 13px;font:12px/1.5 var(--mono)}
+.e-node small{display:block;font:9.5px var(--mono);letter-spacing:.1em;color:var(--muted);margin-bottom:5px;text-transform:uppercase}
+.e-node.input q{color:var(--text);quotes:'“' '”'}
+.e-node.input .coords{display:block;color:var(--dim);margin-top:6px}
+.e-node.active{border-color:var(--text)}
+.e-node.active small:after{content:' ■';animation:blink 1s steps(2,start) infinite}
+.e-node.thinking{background:linear-gradient(90deg,var(--surface),#22282a,var(--surface)) 0 0/200% 100%;animation:shimmer 1.6s linear infinite}
+.e-node.ghost{border-style:dashed;color:var(--dim);background:transparent}
+.e-node.ghost small{color:var(--dim)}
+.e-lanes{display:grid;gap:10px;position:relative;z-index:1}
+.e-lane{display:flex;justify-content:space-between;align-items:center;gap:10px;animation:chipIn .35s ease both}
+.e-lane .tag{flex:none}
+.e-lane.inferred{border-style:dashed}
+.e-edge{fill:none;stroke:#85867d;stroke-width:1;vector-effect:non-scaling-stroke}
+.e-edge.ghost{stroke-dasharray:3 4;stroke:#55585a}
+.e-edge.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:edgeDraw .6s ease-out forwards}
+@keyframes edgeDraw{to{stroke-dashoffset:0}}
+.e-packet{fill:var(--mars)}
+
+@media(max-width:760px){.e-canvas{grid-template-columns:1fr;gap:18px}.e-canvas svg{display:none}.c-row{grid-template-columns:60px 14px 1fr}.c-right{grid-column:3}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mock-head">
+    <div><h1>Stage mockups · connecting &amp; select features</h1><p>Sample data only. Nothing is sent. Pick a design and a stage, or press Play to run the timing.</p></div>
+    <div class="controls">
+      <div style="display:flex;align-items:center"><span class="seg-label">Design</span><div class="seg" id="variantSeg">
+        <button data-v="B" aria-pressed="true">B · Highlight</button><button data-v="C" aria-pressed="false">C · Mission log</button><button data-v="E" aria-pressed="false">E · Diagram</button></div></div>
+      <div style="display:flex;align-items:center"><span class="seg-label">Stage</span><div class="seg" id="stageSeg">
+        <button data-s="connecting" aria-pressed="false">Connecting</button><button data-s="selecting" aria-pressed="false">Selecting</button><button data-s="selected" aria-pressed="true">Selected</button></div></div>
+      <button class="play" id="play">▶ Play</button>
+    </div>
+  </div>
+  <p class="note" id="note"></p>
+  <section class="panel" id="panel" aria-live="polite"><noscript><p class="note">This mockup is drawn with JavaScript. Open it through the dev server in a browser: http://localhost:8765/mockups/stages.html</p></noscript></section>
+</div>
+<script>
+'use strict';
+const QUESTION = 'Find Earth sites like Jezero for field-testing a subsurface ice drill.';
+const TARGET = { lat: 18.4446, lon: 77.4509, name: 'Jezero crater floor' };
+// Families as the backend's features_selected event reports them; `phrase` is
+// the alias match in the question (null = inferred, no matching words).
+const FEATURES = [
+  { id: 'drainage_channels', label: 'Drainage channels', kind: 'comparison', phrase: 'like Jezero', concept: 'channels', desc: 'Mapped channels and valley networks; Mars records ancient networks, Earth predominantly modern rivers.' },
+  { id: 'slope_distribution', label: 'Slope distribution', kind: 'comparison', phrase: 'field-testing', concept: 'slope', desc: 'Slope distribution inside one 5 km cell. Typical steepness, variability, steep tails and hazard fractions.' },
+  { id: 'ground_ice_abundance', label: 'Ground ice abundance', kind: 'comparison', phrase: 'subsurface ice', concept: 'ground_ice', desc: 'Near-surface mapped ice/water-equivalent abundance. The source products and spatial support differ.' },
+  { id: 'surface_temperature', label: 'Surface temperature', kind: 'comparison', phrase: null, concept: 'surface_temperature', desc: 'MCD and ERA5 surface-temperature climatology, with daily and seasonal summaries.' },
+  { id: 'earth_land_cover', label: 'Earth land cover', kind: 'filter', phrase: null, concept: 'land_cover', desc: 'Earth-only WorldCover fractions for explicitly stated exposure, access, vegetation or land-cover constraints.' }
+];
+const NOTES = {
+  B: 'B · Star field. A faint generated star field sits under the question. While the model reads, the stars under each scanned word light up and briefly join. On features_selected, each feature forms a constellation from the stars under its phrase (inferred ones in open sky), then its name pops out and drops into the list below. Click a name for its description. Simple view swaps it for a plain log.',
+  C: 'C · A timestamped log. Every stream event becomes a line, the model call shows a live timer, and each selected family can be expanded. After the run this same log becomes the “View selection trace” in review, replacing the cloned diagram.',
+  E: 'E · The current diagram, tightened: connecting is a slim bar instead of three empty boxes, the input node shows the actual question and target, and the plan node stays a dashed placeholder until the representations stage.'
+};
+
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+let variant = 'B', stage = 'selected', timers = [], t0 = performance.now(), ticks = [];
+const fmt = s => s.toFixed(1).padStart(4, '0');
+const elapsed = () => (performance.now() - t0) / 1000;
+// Fixed times when a stage is picked by hand, live ones while playing.
+let playing = false, connectAt = 0.0, selectAt = 0.4, doneAt = 6.2;
+
+function clearTimers() { timers.forEach(clearTimeout); timers = []; ticks.forEach(clearInterval); ticks = []; }
+function setPressed(seg, attr, value) { $(seg).querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset[attr] === value))); }
+
+function head(title) {
+  const h = el('div', 'panel-head'), left = el('div');
+  left.append(el('div', 'eyebrow', 'Research plan'), el('h2', '', title));
+  const right = el('div', 'head-right'); right.append(el('span', 'target', `${TARGET.name} · ${TARGET.lat.toFixed(2)}°N ${TARGET.lon.toFixed(2)}°E`));
+  if (variant === 'B') {
+    const t = el('button', 'simple-toggle'); t.type = 'button'; t.setAttribute('aria-pressed', String(simple));
+    t.append(el('span', 'switch'), el('span', '', 'Simple view')); t.onclick = toggleSimple; right.append(t);
+  }
+  h.append(left, right);
+  return h;
+}
+const titles = { connecting: 'Connecting to the selection model', selecting: 'Reading your question', selected: `${FEATURES.length} features selected`, logged: 'Feature log' };
+function status(text, done) { const s = el('div', 'status'); s.append(el('span', done ? 'done-dot' : 'dot'), el('span', '', text)); return s; }
+function liveTimer(node, from) { const update = () => { node.textContent = fmt(elapsed() - from) + 's'; }; update(); ticks.push(setInterval(update, 100)); }
+
+/* ---------- B: question + star chart ---------- */
+const SVG = 'http://www.w3.org/2000/svg';
+const svgEl = (tag, attrs = {}) => { const n = document.createElementNS(SVG, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); return n; };
+let simple = localStorage.getItem('martwin-simple-view') === '1';
+
+// Question with matched phrases underlined and numbered; .q-end marks where
+// threads for inferred features start.
+function highlightedQuestion(q, settled) {
+  const hits = FEATURES.map((f, i) => ({ f, i, at: f.phrase ? QUESTION.indexOf(f.phrase) : -1 })).filter(h => h.at >= 0).sort((a, b) => a.at - b.at);
+  let pos = 0;
+  hits.forEach((h, k) => {
+    q.append(QUESTION.slice(pos, h.at));
+    const span = el('span', `hit ${h.f.kind}`, h.f.phrase); span.dataset.f = h.f.id; span.style.animationDelay = `${k * .18}s`;
+    span.append(el('sup', '', String(h.i + 1))); q.append(span); pos = h.at + h.f.phrase.length;
+  });
+  q.append(QUESTION.slice(pos), el('span', 'q-end'));
+  if (settled) q.classList.add('settled');
+}
+function linkHover(panel) {
+  const link = (id, on) => panel.querySelectorAll(`[data-f="${id}"]`).forEach(n => n.classList.toggle('on', on));
+  panel.querySelectorAll('[data-f]').forEach(n => { for (const [ev, on] of [['mouseenter', true], ['mouseleave', false], ['focus', true], ['blur', false]]) n.addEventListener(ev, () => link(n.dataset.f, on)); });
+}
+// ---- seeded randomness: the same question always draws the same sky ----
+const hash = s => { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; };
+const rng = seed => () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+let settleNext = false;
+const FIELD_H = 200;
+
+// Seeded star field: same question + width → same stars in every stage, so
+// the sky the scan lit up is the same sky the constellations form in.
+function starField(W) {
+  const r = rng(hash(QUESTION)), n = Math.round(W * FIELD_H / 820), stars = [];
+  for (let i = 0; i < n; i++) { const m = Math.pow(r(), 3); stars.push({ x: 8 + r() * (W - 16), y: 10 + r() * (FIELD_H - 20), m, r: .5 + m * 1.7 }); }
+  return stars;
+}
+function drawField(svg, stars, W, fade) {
+  const g = svgEl('g', { class: `sf${fade ? ' fade' : ''}` });
+  for (const s of stars) {
+    const c = svgEl('circle', { cx: s.x.toFixed(1), cy: s.y.toFixed(1), r: s.r.toFixed(2), opacity: (.16 + s.m * .6).toFixed(2) });
+    if (fade) c.style.animationDelay = `${(s.x / W * .8).toFixed(2)}s`;
+    s.el = c; g.append(c);
+  }
+  svg.append(g);
+}
+function fieldChart(panel) {
+  const chart = el('div', 'sf-chart'), svg = svgEl('svg'); chart.append(svg); panel.append(chart);
+  return { chart, svg };
+}
+function fieldGeometry(chart, svg) { const W = chart.clientWidth; svg.setAttribute('viewBox', `0 0 ${W} ${FIELD_H}`); return W; }
+const relX = (node, cb) => { const r = [...node.getClientRects()].pop(); return [r.left - cb.left, r.right - cb.left]; };
+
+// While the model reads, each word a scan reaches lights the stars beneath
+// it. Returns those stars so the scan can join a random few of them.
+function lightUnder(chart, stars, word) {
+  const [x0, x1] = relX(word, chart.getBoundingClientRect());
+  const hit = shuffle(stars.filter(s => s.x >= x0 - 6 && s.x <= x1 + 6)).slice(0, 2); // cap: a dense sky stays calm
+  for (const s of hit) s.el.animate([
+    { transform: 'scale(1)' }, { transform: `scale(${2 + s.m * 1.5})`, opacity: 1, fill: '#ffe2c9', offset: .18 }, { transform: 'scale(1)' }
+  ], { duration: 880, easing: 'ease-out' });
+  return hit;
+}
+// Each scan builds its own random figure as it sweeps: every star it lights
+// (up to 5) joins a small cluster as it lights, so lines arrive with the stars.
+const liveLinks = new Set();
+const linesCross = (a, b, c, d) => { const x = (o, p, q) => (p.x - o.x) * (q.y - o.y) - (p.y - o.y) * (q.x - o.x); return x(a, b, c) * x(a, b, d) < 0 && x(c, d, a) * x(c, d, b) < 0; };
+const shuffle = arr => { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function linkStar(svgNode, fig, star) {
+  if (fig.stars.length >= 5 || fig.stars.includes(star)) return;
+  if (!fig.stars.length) { fig.stars.push(star); return; }
+  if (svgNode.querySelectorAll('.sf-link').length >= 7) return; // cap lines on screen
+  const d = (a, b) => Math.hypot(a.x - b.x, a.y - b.y), anchor = fig.stars[0];
+  if (d(star, anchor) > 160) return; // a figure is a tight cluster, not a stroke across the sentence
+  // Mostly the nearest earlier star, so segments are short and the figure bends;
+  // now and then the farthest, for one long reach.
+  const cands = fig.stars.filter(c => d(c, star) >= 16).sort((a, b) => d(a, star) - d(b, star));
+  if (Math.random() < .15) cands.reverse();
+  const bearing = (o, t) => Math.atan2(t.y - o.y, t.x - o.x);
+  const ok = c => fig.edges.every(([u, v]) => {
+    if (c !== u && c !== v) return true;
+    const o = c === u ? v : u, turn = Math.abs(bearing(c, o) - bearing(c, star)) % (2 * Math.PI);
+    return Math.min(turn, 2 * Math.PI - turn) * 180 / Math.PI >= 35; // no near-straight or hairpin joints
+  }) && ![...liveLinks, ...fig.edges].some(([a, b]) => a !== c && b !== c && a !== star && b !== star && linesCross(c, star, a, b));
+  const from = cands.find(ok);
+  if (!from) return;
+  fig.edges.push([from, star]); fig.stars.push(star);
+  // Hold the first link until a second one joins it, so no figure is a lone stick.
+  if (fig.edges.length < 2) return;
+  for (; fig.drawn < fig.edges.length; fig.drawn++) {
+    const [a, b] = fig.edges[fig.drawn], seg = [a, b];
+    liveLinks.add(seg); setTimeout(() => liveLinks.delete(seg), 650);
+    const line = svgEl('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, class: 'sf-link' });
+    svgNode.append(line);
+    line.animate([{ opacity: 0 }, { opacity: .55, offset: .2 }, { opacity: 0 }], { duration: 620 });
+    setTimeout(() => line.remove(), 650); // timer, not the animation clock, so lines never pile up
+  }
+}
+
+function renderB(panel) {
+  if (simple && stage !== 'selected') return renderC(panel);
+  panel.append(head(simple ? 'Feature log' : titles[stage]));
+  const q = el('p', 'b-question');
+  panel.append(q);
+  if (stage === 'selected') {
+    highlightedQuestion(q, simple);
+    if (simple) { q.classList.add('compact'); featureLog(panel); }
+    else selectedChart(panel, q);
+    linkHover(panel);
+    return;
+  }
+  q.classList.add('dim');
+  QUESTION.split(/(\s+)/).forEach(part => q.append(/\s/.test(part) ? part : el('span', 'w', part)));
+  if (stage === 'connecting') q.append(el('span', 'b-caret'));
+  const { chart, svg } = fieldChart(panel);
+  const s = status(stage === 'connecting' ? 'Uplink · sending question and target' : 'Model is choosing features from your question');
+  const t = el('span', 'c-t'); s.append(t); liveTimer(t, playing ? t0Offset() : 0);
+  panel.append(s);
+  const fade = !/^B:(connecting|selecting)/.test(lastKey);
+  setTimeout(() => {
+    const W = fieldGeometry(chart, svg), stars = starField(W);
+    drawField(svg, stars, W, fade);
+    if (stage !== 'selecting') return;
+    q.classList.add('scanning');
+    const words = [...q.querySelectorAll('.w')], STEP = 90, lit = new Map();
+    const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+    const on = w => { lit.set(w, (lit.get(w) || 0) + 1); w.classList.add('lit'); };
+    const off = w => { const n = (lit.get(w) || 1) - 1; if (n) lit.set(w, n); else { lit.delete(w); w.classList.remove('lit'); } };
+    // Scans start at random moments and overlap; each lights its own run of words.
+    const scan = () => {
+      const len = Math.min(words.length, 3 + Math.floor(Math.random() * 7)); // each scan: its own random start and length, swept in order
+      const start = Math.floor(Math.random() * (words.length - len + 1)), figure = { stars: [], edges: [], drawn: 0 };
+      words.slice(start, start + len).forEach((w, k) => {
+        later(() => { on(w); if (Math.random() < .5) for (const st of shuffle(lightUnder(chart, stars, w))) linkStar(svg, figure, st); }, k * STEP);
+        later(() => off(w), k * STEP + 340);
+      });
+    };
+    const next = () => { scan(); later(next, 280 + Math.random() * 600); };
+    next();
+    if (Math.random() < .4) later(scan, 200);
+  });
+}
+function t0Offset() { return stage === 'selecting' ? selectAt : connectAt; }
+
+// Pick each feature's stars out of the existing field: an anchor under its
+// phrase (inferred ones go to open sky), the nearest bright stars around it,
+// joined by a minimum spanning tree so the figure looks drawn, not random.
+function constellations(stars, W, q, cb) {
+  const r = rng(hash(QUESTION) ^ 0x51ed), used = new Set();
+  const anchors = FEATURES.map((f, i) => ({ f, i, x: f.phrase ? (([a, b]) => (a + b) / 2)(relX(q.querySelector(`.hit[data-f="${f.id}"]`), cb)) : null }));
+  for (const a of anchors) if (a.x === null) {
+    let best = W / 2, bd = -1;
+    for (let k = 0; k < 50; k++) { const x = 70 + r() * (W - 140), d = Math.min(1e9, ...anchors.filter(b => b.x !== null).map(b => Math.abs(b.x - x))); if (d > bd) { bd = d; best = x; } }
+    a.x = best;
+  }
+  const byX = [...anchors].sort((a, b) => a.x - b.x), gap = Math.min(130, (W - 120) / FEATURES.length);
+  byX.forEach((a, k) => { if (k) a.x = Math.max(a.x, byX[k - 1].x + gap); });
+  const over = byX[byX.length - 1].x - (W - 60); if (over > 0) byX.forEach(a => { a.x -= over; });
+  return anchors.map(a => {
+    const ay = FIELD_H * (.3 + .4 * r()), n = 4 + Math.floor(r() * 4);
+    const pick = stars.filter(s => !used.has(s)).map(s => ({ s, d: Math.hypot(s.x - a.x, (s.y - ay) * 1.3) - s.m * 30 })).sort((p, q2) => p.d - q2.d).slice(0, n).map(p => p.s);
+    pick.forEach(s => used.add(s));
+    const inTree = [0], edges = [];
+    while (inTree.length < pick.length) {
+      let best = null;
+      for (const u of inTree) pick.forEach((s, v) => { if (inTree.includes(v)) return; const d = Math.hypot(s.x - pick[u].x, s.y - pick[u].y); if (!best || d < best[2]) best = [u, v, d]; });
+      inTree.push(best[1]); edges.push(best);
+    }
+    const xs = pick.map(s => s.x), ys = pick.map(s => s.y);
+    return { ...a, stars: pick, edges, top: Math.min(...ys), cx: (Math.min(...xs) + Math.max(...xs)) / 2, cy: (Math.min(...ys) + Math.max(...ys)) / 2, right: Math.max(...xs) };
+  });
+}
+
+function selectedChart(panel, q) {
+  const { chart, svg } = fieldChart(panel);
+  const settled = settleNext; settleNext = false;
+  if (settled) chart.classList.add('settled');
+  const list = el('ol', 'fl');
+  FEATURES.forEach((f, i) => {
+    const li = el('li', `fl-row ${f.kind}${f.phrase ? '' : ' inferred'}`); li.dataset.f = f.id;
+    const name = el('button', 'fl-name', f.label); name.type = 'button'; name.setAttribute('aria-expanded', 'false');
+    const desc = el('p', 'fl-desc', f.desc); desc.hidden = true;
+    name.onclick = () => { desc.hidden = !desc.hidden; name.setAttribute('aria-expanded', String(!desc.hidden)); };
+    li.append(el('span', 'fl-num', String(i + 1).padStart(2, '0')), name, el('span', 'fl-from', f.phrase ? `from “${f.phrase}”` : 'inferred from context'), el('span', `tag ${f.kind}`, f.kind), desc);
+    list.append(li);
+  });
+  panel.append(list, status(`${FEATURES.length} features · click a name for details · next: choose representations`, true));
+  setTimeout(() => {
+    const W = fieldGeometry(chart, svg), stars = starField(W), cb = chart.getBoundingClientRect();
+    drawField(svg, stars, W, !/^B:(connecting|selecting)/.test(lastKey) && !settled);
+    const layer = svgEl('g');
+    const pr = panel.getBoundingClientRect();
+    for (const c of constellations(stars, W, q, cb)) {
+      const order = c.i, base = .15 + order * .4;
+      const grp = svgEl('g', { class: `cn ${c.f.kind}${c.f.phrase ? '' : ' inferred'}`, 'data-f': c.f.id });
+      c.edges.forEach(([u, v], k) => grp.append(svgEl('line', { x1: c.stars[u].x, y1: c.stars[u].y, x2: c.stars[v].x, y2: c.stars[v].y, pathLength: 1, class: 'cn-edge', style: `animation-delay:${(base + .2 + k * .07).toFixed(2)}s` })));
+      c.stars.forEach((s, k) => grp.append(svgEl('circle', { cx: s.x, cy: s.y, r: (1.8 + s.m * 2).toFixed(2), class: 'cn-star', style: `animation-delay:${(base + k * .05).toFixed(2)}s` })));
+      const tag = svgEl('text', { x: c.right + 8, y: c.top + 4, class: 'cn-num', style: `animation-delay:${(base + .5).toFixed(2)}s` }); tag.textContent = String(c.i + 1).padStart(2, '0');
+      grp.append(tag); layer.append(grp);
+      // The name pops out of the constellation and drops into its list row.
+      const row = list.querySelector(`.fl-row[data-f="${c.f.id}"]`);
+      if (settled || matchMedia('(prefers-reduced-motion: reduce)').matches) continue;
+      const rr = row.querySelector('.fl-name').getBoundingClientRect();
+      const ghost = el('span', `fl-ghost ${c.f.kind}`, c.f.label);
+      Object.assign(ghost.style, { left: rr.left - pr.left + 'px', top: rr.top - pr.top + 'px' });
+      panel.append(ghost);
+      const dx = cb.left - rr.left + c.cx - rr.width / 2, dy = cb.top - rr.top + c.cy - 10;
+      const delay = (base + .55) * 1000, duration = 900;
+      row.style.opacity = 0;
+      ghost.animate([
+        { opacity: 0, transform: `translate(${dx}px,${dy}px) scale(.6)` },
+        { opacity: 1, transform: `translate(${dx}px,${dy - 14}px) scale(1.05)`, offset: .25 },
+        { opacity: 1, transform: 'translate(0,0) scale(1)', offset: .85 },
+        { opacity: 0, transform: 'translate(0,0) scale(1)' }
+      ], { duration, delay, easing: 'cubic-bezier(.5,0,.25,1)', fill: 'both' }).onfinish = () => ghost.remove();
+      row.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, delay: delay + duration * .78, fill: 'forwards' }).onfinish = () => { row.style.opacity = ''; };
+    }
+    svg.append(layer);
+  });
+}
+
+function featureLog(panel) {
+  const log = el('ol', 'c-log b-log');
+  const row = (t, mark, html, right, cls = '') => {
+    const r = el('li', `c-row ${cls}`); r.append(el('span', 'c-t', t === null ? '' : `T+${fmt(t)}`), el('span', 'c-mark', mark));
+    const msg = el('div', 'c-msg'); msg.innerHTML = html; r.append(msg, el('span', 'c-right', right || '')); log.append(r); return msg;
+  };
+  row(connectAt, '›', `<b>sent</b> <span>· question + target ${TARGET.lat.toFixed(2)}°N ${TARGET.lon.toFixed(2)}°E</span>`);
+  row(selectAt, '✓', `<b>model selected features</b>`, `${fmt(doneAt - selectAt)}s`);
+  const done = row(doneAt, '✓', `<b>${FEATURES.length} features</b> <span>· ${FEATURES.filter(f => f.kind === 'comparison').length} comparisons, ${FEATURES.filter(f => f.kind === 'filter').length} filter</span>`);
+  const kids = el('ul', 'c-children');
+  FEATURES.forEach((f, i) => {
+    const li = el('li', `c-child b-logrow ${f.kind}`); li.dataset.f = f.id;
+    const d = el('details'), sm = el('summary');
+    sm.append(el('span', 'num', String(i + 1).padStart(2, '0')), el('span', `tag ${f.kind}`, f.kind), el('b', '', f.label));
+    const from = el('span', 'from'); if (f.phrase) from.append('from ', el('b', '', `“${f.phrase}”`)); else from.textContent = 'inferred';
+    sm.append(from); d.append(sm, el('p', '', f.desc)); li.append(d); kids.append(li);
+  });
+  done.append(kids);
+  row(null, '■', `<b>choosing representations</b> <span>· next stage</span>`, '', 'live pending');
+  panel.append(log);
+}
+
+/* ---------- C ---------- */
+function renderC(panel) {
+  panel.append(head(titles[stage]));
+  const log = el('ol', 'c-log');
+  const row = (t, mark, html, right, cls = '') => {
+    const r = el('li', `c-row ${cls}`); const tt = el('span', 'c-t', t === null ? '' : `T+${fmt(t)}`);
+    const msg = el('div', 'c-msg'); msg.innerHTML = html; const rr = el('span', 'c-right', right || '');
+    r.append(tt, el('span', 'c-mark', mark), msg, rr); log.append(r); return { r, msg, rr };
+  };
+  row(connectAt, '›', `<b>uplink open</b> <span>· POST /api/select/stream</span>`);
+  row(connectAt, '›', `<b>sent</b> <span>· “${QUESTION}” @ ${TARGET.lat.toFixed(2)}°N ${TARGET.lon.toFixed(2)}°E</span>`);
+  if (stage === 'connecting') {
+    const w = row(null, '■', `<b>awaiting first event</b>`, '', 'live'); liveTimer(w.rr, playing ? connectAt : 0);
+    row(null, '·', `<span>select features</span>`, '', 'pending'); row(null, '·', `<span>choose representations</span>`, '', 'pending');
+  } else {
+    if (stage === 'selecting') {
+      const w = row(selectAt, '■', `<b>model selecting features</b> <span>· reading research question</span>`, '', 'live');
+      w.msg.append(el('div', 'c-bar')); liveTimer(w.rr, playing ? selectAt : 0);
+      row(null, '·', `<span>choose representations</span>`, '', 'pending');
+    } else {
+      row(selectAt, '✓', `<b>model selecting features</b>`, `${fmt(doneAt - selectAt)}s`);
+      const done = row(doneAt, '✓', `<b>${FEATURES.length} features selected</b> <span>· ${FEATURES.filter(f => f.kind === 'comparison').length} comparisons, ${FEATURES.filter(f => f.kind === 'filter').length} filter</span>`);
+      const kids = el('ul', 'c-children');
+      FEATURES.forEach((f, i) => {
+        const li = el('li', 'c-child'); li.style.animationDelay = `${i * .09}s`;
+        const d = el('details'), s = el('summary');
+        s.append(el('span', `tag ${f.kind}`, f.kind), el('b', '', f.label));
+        const p = el('p'); p.append(el('span', 'why', f.phrase ? `matched “${f.phrase}” → ` : 'inferred from context → '), f.desc);
+        d.append(s, p); li.append(d); kids.append(li);
+      });
+      done.msg.append(kids);
+      row(null, '■', `<b>choosing representations</b> <span>· next stage</span>`, '', 'live pending');
+    }
+  }
+  panel.append(log);
+}
+
+/* ---------- E ---------- */
+function renderE(panel) {
+  panel.append(head(titles[stage]));
+  if (stage === 'connecting') {
+    const bar = el('div', 'e-bar'); bar.append(el('span', 'dot'), el('span', '', 'Connecting'));
+    const q = el('q', '', QUESTION); const t = el('span', 't'); bar.append(q, t); liveTimer(t, playing ? connectAt : 0);
+    panel.append(bar); return;
+  }
+  const canvas = el('div', 'e-canvas'); const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); canvas.append(svg);
+  const input = el('div', 'e-node input'); input.append(el('small', '', '01 · Question'), el('q', '', QUESTION), el('span', 'coords', `${TARGET.lat.toFixed(4)}°N ${TARGET.lon.toFixed(4)}°E`));
+  const mid = el('div', 'e-lanes');
+  if (stage === 'selecting') { const n = el('div', 'e-node active thinking'); n.append(el('small', '', '02 · Features'), el('strong', '', 'Selecting features…')); mid.append(n); }
+  else FEATURES.forEach((f, i) => {
+    const n = el('div', `e-node e-lane${f.phrase ? '' : ' inferred'}`); n.style.animationDelay = `${i * .08}s`;
+    const name = el('div'); name.append(el('small', '', f.phrase ? `“${f.phrase}”` : 'inferred'), el('strong', '', f.label));
+    n.append(name, el('span', `tag ${f.kind}`, f.kind)); n.title = f.desc; mid.append(n);
+  });
+  const out = el('div', 'e-node ghost'); out.append(el('small', '', '03 · Plan'), el('span', '', 'Representations — next'));
+  canvas.append(input, mid, out); panel.append(canvas);
+  panel.append(stage === 'selecting' ? status('Selecting features from your question') : status(`${FEATURES.length} features · next: choose representations`, true));
+  requestAnimationFrame(() => wireE(canvas, svg, input, mid, out));
+}
+function wireE(canvas, svg, input, mid, out) {
+  const b = canvas.getBoundingClientRect(); if (!b.width || getComputedStyle(svg).display === 'none') return;
+  svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
+  const port = (n, right) => { const r = n.getBoundingClientRect(); return [(right ? r.right : r.left) - b.left, r.top + r.height / 2 - b.top]; };
+  const path = (a, c, cls) => {
+    const [x1, y1] = port(a, true), [x2, y2] = port(c, false), k = (x2 - x1) * .55;
+    const p = document.createElementNS(svg.namespaceURI, 'path'); p.setAttribute('d', `M${x1},${y1} C${x1 + k},${y1} ${x2 - k},${y2} ${x2},${y2}`);
+    p.setAttribute('class', cls); svg.append(p); p.style.setProperty('--len', p.getTotalLength()); return p;
+  };
+  for (const n of mid.children) {
+    const p = path(input, n, 'e-edge draw');
+    if (stage === 'selecting') {
+      const dot = document.createElementNS(svg.namespaceURI, 'rect'); for (const [k, v] of Object.entries({ x: -2.5, y: -2.5, width: 5, height: 5, class: 'e-packet' })) dot.setAttribute(k, v);
+      const m = document.createElementNS(svg.namespaceURI, 'animateMotion'); m.setAttribute('path', p.getAttribute('d')); m.setAttribute('dur', '1.6s'); m.setAttribute('repeatCount', 'indefinite'); dot.append(m); svg.append(dot);
+    } else path(n, out, 'e-edge ghost');
+  }
+}
+
+/* ---------- B: star chart → simple log morph ---------- */
+// Snapshot stars and question before the re-render (FLIP "first").
+function snapshotB(panel) {
+  const q = panel.querySelector('.b-question');
+  return {
+    q: q && { rect: q.getBoundingClientRect(), size: getComputedStyle(q).fontSize },
+    nodes: [...panel.querySelectorAll('.fl-row[data-f]')].map(n => ({ id: n.dataset.f, rect: n.getBoundingClientRect(), node: n.cloneNode(true) }))
+  };
+}
+function morphB(panel, snap) {
+  const ease = 'cubic-bezier(.65,0,.35,1)', q = panel.querySelector('.b-question');
+  const targets = new Map([...panel.querySelectorAll('.b-logrow')].map(r => [r.dataset.f, r]));
+  const finals = new Map([...targets].map(([id, r]) => [id, r.querySelector('summary').getBoundingClientRect()]));
+  const qFinal = q.getBoundingClientRect();
+  if (snap.q) q.animate([{ fontSize: snap.q.size, transform: `translate(${snap.q.rect.left - qFinal.left}px,${snap.q.rect.top - qFinal.top}px)` }, { fontSize: getComputedStyle(q).fontSize, transform: 'none' }], { duration: 550, easing: ease });
+  [...panel.querySelectorAll('.b-log > .c-row')].forEach((r, i) => r.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, delay: 420 + i * 60, fill: 'backwards' }));
+  targets.forEach(r => { r.style.opacity = 0; });
+  snap.nodes.forEach((c, i) => {
+    const to = finals.get(c.id), row = targets.get(c.id); if (!to) return;
+    // Each star glides into its log line, the dot landing on the row number.
+    const g = c.node; g.classList.add('morph-ghost'); g.classList.remove('on', 'left', 'open');
+    Object.assign(g.style, { left: c.rect.left + 'px', top: c.rect.top + 'px', width: c.rect.width + 'px', opacity: 1, transform: 'none' });
+    document.body.append(g);
+    const delay = 120 + i * 70, duration = 650;
+    g.animate([
+      { transform: 'translate(0,0)', opacity: 1 },
+      { transform: `translate(${to.left - c.rect.left}px,${to.top - c.rect.top}px)`, opacity: 1, offset: .8 },
+      { transform: `translate(${to.left - c.rect.left}px,${to.top - c.rect.top}px)`, opacity: 0 }
+    ], { duration, delay, easing: ease, fill: 'both' }).onfinish = () => g.remove();
+    row.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, delay: delay + duration * .7, fill: 'forwards' }).onfinish = () => { row.style.opacity = ''; };
+  });
+}
+function toggleSimple() {
+  simple = !simple; localStorage.setItem('martwin-simple-view', simple ? '1' : '0'); render();
+  const btn = $('panel').querySelector('.simple-toggle'); if (btn) btn.focus();
+}
+
+/* ---------- control ---------- */
+let lastKey = '';
+function render() {
+  ticks.forEach(clearInterval); ticks = [];
+  if (!playing) t0 = performance.now();
+  document.querySelectorAll('.morph-ghost').forEach(g => g.remove());
+  const panel = $('panel'), key = `${variant}:${stage}:${simple ? 'simple' : 'chart'}`;
+  const morph = key === 'B:selected:simple' && lastKey === 'B:selected:chart' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const snap = morph && snapshotB(panel);
+  panel.replaceChildren();
+  ({ B: renderB, C: renderC, E: renderE })[variant](panel);
+  if (morph) morphB(panel, snap);
+  lastKey = key;
+  $('note').textContent = NOTES[variant];
+  setPressed('variantSeg', 'v', variant); setPressed('stageSeg', 's', stage);
+}
+function go(s) { stage = s; render(); }
+$('variantSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; variant = b.dataset.v; if (!playing) render(); else play(); };
+$('stageSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; clearTimers(); playing = false; connectAt = 0; selectAt = .4; doneAt = 6.2; go(b.dataset.s); };
+function play() {
+  clearTimers(); playing = true; t0 = performance.now(); connectAt = 0;
+  const cMs = 1100, sMs = 3600; selectAt = cMs / 1000; doneAt = (cMs + sMs) / 1000;
+  go('connecting');
+  timers.push(setTimeout(() => go('selecting'), cMs));
+  timers.push(setTimeout(() => { go('selected'); playing = false; }, cMs + sMs));
+}
+$('play').onclick = play;
+let resizeTimer;
+addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (variant === 'E' && stage !== 'connecting') render();
+    if (variant === 'B') { settleNext = stage === 'selected'; render(); }
+  }, 120);
+});
+render();
+</script>
+</body>
+</html>

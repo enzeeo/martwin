@@ -66,6 +66,16 @@ class WebTests(unittest.TestCase):
         self.assertTrue(comparisons[0]["label"])
         model.assert_not_called()
 
+    def test_features_selected_reports_the_question_words_behind_each_family(self):
+        request = {**self.request, "objective": "Find steep slopes with subsurface ice."}
+        with (patch("src.backend.web.prepared_comparison_headers", return_value=TERRAIN_FEATURES),
+              patch("src.backend.web.choose_features", return_value=["slope", "ground_ice"]),
+              patch("src.backend.web.choose_representations", return_value={"comparisons": [], "filters": []})):
+            stream = self.client.post("/api/select/stream", json=request)
+        selected = next(json.loads(line) for line in stream.text.splitlines() if '"features_selected"' in line)
+        phrases = {row["feature_id"]: row["phrase"] for row in selected["families"]["comparisons"]}
+        self.assertEqual(phrases.get("slope_distribution"), "slopes")
+
     def test_three_default_weights_total_one_at_two_decimal_places(self):
         response = {"comparisons": [{"header": header} for header in
                     ("slope_mean", "local_relief_1km", "roughness_detrended_std")], "filters": []}

@@ -1,0 +1,129 @@
+/* Feature selection flow (stage-view.js).
+   Scoped to .fv; the global button rules in index.html and observatory.css
+   are reset here so the track, names and tags read as plain mono text. */
+.fv{position:relative;display:block;overflow:visible;padding:0;--fv-mono:'Geist Mono',ui-monospace,monospace;--fv-dim:#6f716c}
+.fv button,#liveProgressTitle button{background:none;border:0;border-radius:0;padding:0;margin:0;min-height:0;width:auto;color:inherit;font:inherit;box-shadow:none;transform:none}
+.fv button:not(:disabled):hover,#liveProgressTitle button:not(:disabled):hover{transform:none;box-shadow:none;background:none}
+.fv button:focus-visible,#liveProgressTitle button:focus-visible{outline:1px solid var(--earth);outline-offset:3px}
+
+/* heading: one ASCII track instead of tabs */
+#liveProgress>.section-head{margin-bottom:18px;justify-content:center}
+#liveProgressTitle{display:block;margin:0;font:14px/1.8 'Geist Mono',ui-monospace,monospace;letter-spacing:.02em;color:#6f716c}
+.fv-track{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;row-gap:4px}
+.fv-step{white-space:nowrap;color:#6f716c}
+#liveProgressTitle .fv-step.done{color:var(--muted)}
+#liveProgressTitle .fv-step.now{color:var(--text)}
+#liveProgressTitle .fv-step:disabled{cursor:default;opacity:1}
+#liveProgressTitle button.fv-step:not(:disabled):hover{color:var(--mars)}
+.fv-wire{padding:0 10px;color:#34383a;white-space:pre}
+.fv-wire.lit{color:#6d7366}
+#liveProgressTitle .fv-ctl{margin-left:18px;color:var(--muted)}
+#liveProgressTitle .fv-ctl:hover{color:var(--mars)}
+
+/* question */
+.fv-question{margin:0 auto;max-width:1100px;text-align:center;font:400 clamp(18px,2vw,24px)/1.65 var(--fv-mono);letter-spacing:-.01em;color:var(--text);transition:color .4s}
+.fv-question.dim{color:var(--fv-dim)}
+.fv-question .w{transition:color .25s,background-color .25s}
+.fv-question.scanning .w{color:var(--fv-dim)}
+.fv-question.scanning .w.lit{color:#fff4e0;background:#35505a;transition:color .06s,background-color .06s}
+.fv-caret{display:inline-block;width:.55em;height:1.1em;margin-left:4px;background:var(--mars);vertical-align:-.18em;animation:fvBlink 1s steps(2,start) infinite}
+@keyframes fvBlink{to{visibility:hidden}}
+.fv-hit{background-image:linear-gradient(var(--mars),var(--mars));background-size:0 2px;background-repeat:no-repeat;background-position:0 100%;padding-bottom:2px;transition:background-size .5s ease-out,color .3s,background-color .2s}
+.fv-hit.filter{background-image:linear-gradient(var(--earth),var(--earth))}
+.fv-hit.on{background-size:100% 2px}
+.fv-hit.on-hover{color:#fff4cf;background-color:#2b221c}
+.fv-hit.filter.on-hover{background-color:#1c272b}
+.fv-target{margin:10px 0 0;text-align:center;font:13px var(--fv-mono);color:var(--fv-dim);letter-spacing:.02em}
+
+/* sky: no frame, it bleeds into the page */
+/* stage: the sky fills it; a fixed box sits in the middle with a ring of constellations around it */
+.fv-stage{position:relative;--ring-y:clamp(110px,15vh,150px);--box-h:max(420px,min(646px,calc(100vh - 2 * var(--ring-y) - 40px)));height:calc(var(--box-h) + 2 * var(--ring-y));margin:6px 0 0;overflow-x:clip}
+.fv-sky{position:absolute;inset:0}
+.fv-sky svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fv-fstars text{text-anchor:middle;dominant-baseline:central;font-family:var(--fv-mono);pointer-events:none;fill:#e9e6dc;opacity:var(--o,.3);transform-box:fill-box;transform-origin:center;transition:opacity .5s,fill .5s}
+.fv-fstars text.glit{opacity:.9;fill:#fff4e0}
+.fv-pings line{stroke-width:.8;fill:none;pointer-events:none}
+.fv-pings .fv-ghost{stroke:#d9dccd;stroke-opacity:.55;stroke-width:.9;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:fvDraw .5s ease-out forwards;transition:stroke-opacity .6s}
+.fv-pings .fv-ghost.out{stroke-opacity:0}
+.fv-pings .fv-ping.c{stroke:var(--mars)}
+.fv-pings .fv-ping.f{stroke:var(--earth)}
+@keyframes fvDraw{to{stroke-dashoffset:0}}
+.fv-fig{transition:opacity .5s}
+.fv-fig.hidden{opacity:0}
+.fv-edge{stroke:#e8b79b;stroke-width:.9;stroke-opacity:.5;stroke-linecap:round;fill:none;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset .9s ease-out,stroke-opacity .3s}
+.fv-fig.drawn .fv-edge{stroke-dashoffset:0}
+.fv-fig.filter .fv-edge{stroke:#a9cbd8;stroke-dasharray:2 4;stroke-dashoffset:0;opacity:0;transition:opacity .6s,stroke-opacity .3s}
+.fv-fig.filter.drawn .fv-edge{opacity:1}
+.fv-fig.on .fv-edge{stroke-opacity:.95}
+.fv-st{fill:#efe9dc;transform-box:fill-box;transform-origin:center;transition:r .45s cubic-bezier(.3,.7,.2,1),opacity .4s,fill .3s}
+.fv-st.cand,.fv-st.deco{opacity:.8}
+.fv-st.cut{opacity:.45}
+.fv-st.kept{fill:#fffaf0;opacity:1}
+.fv-st.on{fill:#fff}
+.fv-glow{pointer-events:none;transition:r .45s cubic-bezier(.3,.7,.2,1)}
+.fv-names{position:absolute;inset:0;pointer-events:none}
+.fv .fv-name{position:absolute;translate:-50% 0;pointer-events:auto;white-space:nowrap;font:13px var(--fv-mono);letter-spacing:.02em;color:var(--mars);padding:2px 4px;transition:color .2s}
+.fv .fv-name.filter{color:var(--earth)}
+.fv .fv-name:hover,.fv .fv-name.on,.fv .fv-name[aria-expanded=true]{color:#fff4cf}
+.fv-name[hidden]{display:none}
+
+/* feature card */
+.fv-pop{position:absolute;z-index:5;width:min(300px,100%);padding:12px 14px;background:#15181a;border:1px solid var(--line);border-top:2px solid var(--mars);font-size:15px;line-height:1.55;color:var(--muted);box-shadow:0 12px 30px #0008}
+.fv-pop.filter{border-top-color:var(--earth)}
+.fv-pop p{margin:0}
+.fv-pop p+p{margin-top:8px}
+.fv-pop-name{color:var(--text);font-weight:600}
+.fv-pop-keep,.fv-pop-why{font:14px/1.6 var(--fv-mono)}
+.fv-pop-keep{color:#f3c2a3}
+.fv-pop.filter .fv-pop-keep{color:#bcd9e5}
+
+/* clock, log and the representation table: one column centred under the sky,
+   fixed width so streaming lines don't shift it, text left-aligned inside like a terminal */
+/* the box: same black as the page and no stars inside; it keeps its size and scrolls */
+.fv-box{position:absolute;z-index:2;top:var(--ring-y);left:50%;translate:-50% 0;width:min(1100px,calc(100% - 48px));height:var(--box-h);overflow:auto;overscroll-behavior:contain;background:var(--bg);padding:0 22px 18px;scrollbar-width:thin;scrollbar-color:#34383a transparent}
+.fv-stage.stack{height:auto}
+/* log and review: the box grows to fit its content, no inner scroll; the stage (and its sky) grows around it */
+.fv-stage.fit{height:auto;padding:var(--ring-y) 0}
+.fv-stage.fit .fv-box{position:relative;top:auto;left:auto;translate:none;margin:0 auto;height:auto;min-height:var(--box-h);overflow:visible}
+.fv-stage.fit .fv-clock{position:static}
+.fv-stage.stack.fit{padding:0}
+.fv-stage.stack.fit .fv-box{height:auto;min-height:0}
+.fv-stage.stack .fv-sky{position:relative;height:240px}
+.fv-stage.stack .fv-names{bottom:auto;height:240px}
+.fv-stage.stack .fv-box{position:relative;top:auto;left:auto;translate:none;width:100%;height:min(70vh,560px);padding:0 4px 14px}
+.fv-clock{min-height:18px;display:flex;align-items:center;gap:10px;margin:0;padding:14px 0 10px;position:sticky;top:0;z-index:1;background:var(--bg);font:14px var(--fv-mono);color:var(--muted)}
+.fv-dot{display:inline-block;width:7px;height:7px;background:var(--mars);animation:fvBlink 1s steps(2,start) infinite}
+.fv-dot.done{animation:none;background:var(--earth)}
+.fv-timer{color:var(--fv-dim)}
+.fv-log{margin:0;font:14px/1.75 var(--fv-mono);color:var(--muted);white-space:pre-wrap;transition:max-height .6s ease,opacity .4s}
+.fv-log .p{color:var(--fv-dim)}
+.fv-log .c{color:var(--mars)}
+.fv-log .f{color:var(--earth)}
+.fv-log .k{color:#fff4cf}
+.fv-log .x{color:#4d4e48;text-decoration:line-through}
+.fv-log.folded{display:none}
+.fv-log.open{max-height:none}
+.fv-cursor{display:inline-block;width:.6em;background:var(--mars);animation:fvBlink 1s steps(2,start) infinite}
+.fv .fv-logtoggle{display:block;margin-top:8px;font:13px var(--fv-mono);color:var(--fv-dim)}
+.fv .fv-logtoggle:hover{color:var(--muted)}
+.fv-reps{margin-top:8px;font:14px/1.75 var(--fv-mono)}
+.fv-rrow{display:grid;grid-template-columns:20ch minmax(0,1fr);column-gap:2ch;align-items:start;padding:5px 6px 5px 2ch;transition:background-color .2s}
+.fv-rrow.on{background:#16171a}
+.fv-rlab{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:28px}
+.fv-rtags{display:flex;flex-wrap:wrap;gap:6px}
+/* each candidate is its own box; the box lights while the row steps through it */
+.fv-tok{display:inline-block;padding:2px 10px;line-height:22px;border:1px solid #2e3133;color:#7a7b74;white-space:nowrap;transition:color .25s,background-color .25s,border-color .25s}
+.fv-tok.ping{color:#101214;background:#d7ddb6;border-color:#d7ddb6}
+.fv-tok.kept.c{color:#fff;border-color:#fff;background:#1a1a1a}
+.fv-tok.kept.f{color:#fff;border-color:#fff;background:#1a1a1a}
+.fv-tok.cut{color:#46473f;border-color:#222426;text-decoration:line-through}
+@media(max-width:760px){.fv-rrow{grid-template-columns:minmax(0,1fr);padding-left:0}.fv-rlab{line-height:22px}}
+@media(prefers-reduced-motion:reduce){
+  .fv-caret,.fv-dot,.fv-cursor,.fv-pings .fv-ghost{animation:none}
+  .fv-edge,.fv-fig,.fv-hit,.fv-log,.fv-st,.fv-glow{transition:none}
+  .fv-edge,.fv-pings .fv-ghost{stroke-dashoffset:0}
+}
+
+/* the review heading is a plain label now; the track above does the switching */
+.sv-title{display:flex;align-items:baseline;gap:18px;margin:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

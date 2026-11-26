@@ -1,0 +1,230 @@
+/* Review search: ledger under the shared star chart (selection.js, stage-view.js).
+   Scoped to #liveSelection.rv; the global button and input rules in index.html
+   and observatory.css are reset here so controls read as plain mono text. */
+#liveSelection.rv{--rv-mono:'Geist Mono',ui-monospace,monospace;--rv-dim:#6f716c;--rv-rule:#3d4243}
+#liveSelection.rv .target-summary{margin:6px 0 0;font:12px/1.7 var(--rv-mono);color:var(--rv-dim)}
+
+/* reset legacy control styling inside the review */
+#liveSelection.rv :where(.rv-ledger,.rv-recap) button{background:none;border:0;border-radius:0;padding:0;margin:0;color:inherit;font:inherit;box-shadow:none;transform:none;width:auto;min-height:0}
+#liveSelection.rv :where(.rv-ledger,.rv-recap) button:not(:disabled):hover{background:none;transform:none;box-shadow:none}
+#liveSelection.rv :where(.rv-ledger,.rv-recap) :is(input,select){width:auto;min-width:0;min-height:0;margin:0;border-radius:0;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--text);font:15px var(--rv-mono);padding:1px 0;box-shadow:none}
+#liveSelection.rv :where(.rv-ledger,.rv-recap) input[type=number]{text-align:right;-moz-appearance:textfield;appearance:textfield;font-variant-numeric:tabular-nums}
+#liveSelection.rv :where(.rv-ledger,.rv-recap) input[type=number]::-webkit-inner-spin-button,#liveSelection.rv :where(.rv-ledger,.rv-recap) input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#liveSelection.rv :where(.rv-ledger,.rv-recap) :is(input,select):focus{outline:none;border-bottom-color:var(--mars)}
+#liveSelection.rv .rv-ledger :is(button,[role=slider]):focus-visible{outline:1px solid var(--earth);outline-offset:3px}
+
+/* sky */
+.rv-sky{position:relative;height:clamp(130px,21vh,230px);margin:6px -8px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.rv-sky svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rv-field circle{fill:#e9e6dc}
+.rv-fig{transition:transform .6s cubic-bezier(.3,.7,.2,1),opacity .5s}
+.rv-still .rv-fig{transition:none}
+.rv-fig.rv-enter{animation:rvIn .6s ease-out}
+.rv-fig.rv-gone{opacity:0}
+@keyframes rvIn{from{opacity:0}}
+.rv-edge{stroke:#eba078;stroke-width:1.1;transition:stroke-width .2s}
+.rv-fig.filter .rv-edge{stroke:#91bacb;stroke-dasharray:3 3}
+.rv-base{fill:#e9e3d3;opacity:.55}
+.rv-rep{fill:#fff8ea;transition:r .25s ease-out}
+.rv-fig.filter .rv-rep{fill:#e4f1f6}
+.rv-rep.inactive{opacity:.45}
+.rv-num{font:10px 'Geist Mono',ui-monospace,monospace;fill:var(--mars)}
+.rv-fig.filter .rv-num{fill:var(--earth)}
+.rv-rep-label{font:9.5px 'Geist Mono',ui-monospace,monospace;fill:var(--mars);opacity:0;transition:opacity .2s;pointer-events:none}
+.rv-fig.filter .rv-rep-label{fill:var(--earth)}
+.rv-fig.on .rv-edge{stroke-width:2;stroke-opacity:1}
+.rv-fig.on .rv-rep-label{opacity:.85}
+.rv-rep.on{fill:#fff}.rv-rep-label.on{opacity:1}
+
+/* ledger */
+.rv-ledger{font:15px/1.6 var(--rv-mono)}
+.rv-rule{display:flex;align-items:baseline;gap:10px;margin:20px 0 10px;color:var(--muted)}
+.rv-rule h3{margin:0;font:12px var(--rv-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.rv-line{flex:1;border-bottom:1px solid var(--rv-rule);transform:translateY(-4px)}
+.rv-sum{font:13px var(--rv-mono);letter-spacing:.06em;text-transform:uppercase;font-variant-numeric:tabular-nums;color:var(--text)}
+.rv-sum.bad{color:#e9a98d}
+.rv-feats{list-style:none;margin:0;padding:0}
+.rv-feat{border-top:1px solid #2a2e30;padding:10px 0 8px}
+.rv-feat:first-child{border-top:0}
+.rv-feat.on{background:linear-gradient(90deg,#2a221d,transparent 70%)}
+.rv-feat.filter.on{background:linear-gradient(90deg,#1c272b,transparent 70%)}
+.rv-empty{color:var(--rv-dim);font-size:14px;padding:4px 0}
+.rv-head{display:grid;grid-template-columns:30px 18px auto auto minmax(0,1fr) 28px;gap:8px;align-items:baseline}
+.rv-head .rv-from{text-align:right}
+.rv-n{color:var(--rv-dim)}
+.rv-star{color:var(--mars)}
+.filter .rv-star{color:var(--earth)}
+.rv-name{font-weight:500;color:var(--text)}
+.rv-from{color:var(--rv-dim);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rv-total{color:var(--mars);font-size:14px;font-variant-numeric:tabular-nums}
+.filter .rv-total{visibility:hidden} /* keeps its column, so remove stays at the row's end */
+/* remove: a clear red square, not a faint glyph */
+#liveSelection.rv .rv-x{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;font-size:20px;line-height:1;color:#e8826f;border:1px solid #6a3328;background:#1d1311;transition:color .15s,background-color .15s,border-color .15s}
+#liveSelection.rv .rv-x:not(:disabled):hover,#liveSelection.rv .rv-x:focus-visible{color:#ffd0c4;background:#4a2119;border-color:#e8826f}
+#liveSelection.rv .rv-info{color:var(--rv-dim);width:22px;height:22px;font-size:13px}
+#liveSelection.rv .rv-info:hover,#liveSelection.rv .rv-info[aria-expanded=true]{color:var(--earth)}
+.rv-reps{list-style:none;margin:4px 0 0;padding:0}
+/* weight sits right after its bar; info and remove stay at the row's end */
+.rv-rep-row{position:relative;display:grid;grid-template-columns:48px minmax(150px,250px) auto 46px minmax(0,1fr) 22px 28px;gap:8px;align-items:center;padding:3px 0}
+.rv-rep-row:not(.rv-cond)>.rv-info{grid-column:6}.rv-rep-row:not(.rv-cond)>.rv-x{grid-column:7}
+.rv-rep-row.on .rv-fill{color:#ffd2b8}
+.rv-cycler{display:flex;align-items:center;gap:2px;min-width:0}
+#liveSelection.rv .rv-step{color:var(--rv-dim);width:16px;flex:none}
+#liveSelection.rv .rv-step:hover{color:var(--text)}
+#liveSelection.rv .rv-step:disabled{opacity:.25;cursor:default}
+#liveSelection.rv .rv-rep-name{flex:1;min-width:0;text-align:left;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-bottom:1px dotted #575b5a}
+#liveSelection.rv .rv-rep-name:hover{border-bottom-color:var(--mars)}
+#liveSelection.rv .filter .rv-rep-name:hover{border-bottom-color:var(--earth)}
+.rv-tag{margin-left:6px;padding:0 4px;border:1px solid #a36f53;color:var(--mars);font-size:11px;text-transform:uppercase;letter-spacing:.06em;flex:none}
+.rv-bar{display:block;height:22px;white-space:nowrap;overflow:hidden;cursor:ew-resize;user-select:none;touch-action:none;font:15px/22px var(--rv-mono);letter-spacing:-.5px}
+.rv-bar[aria-disabled=true]{cursor:default}
+.rv-fill{color:var(--mars)}
+.rv-rest{color:var(--rv-rule)}
+.rv-context{color:#e9a98d;font-size:13px}
+#liveSelection.rv .rv-w{width:100%}
+.rv-detail{grid-column:2/-1;color:#c5c6c1;font:14px/1.6 'Geist Sans',system-ui,sans-serif;padding:4px 0 6px}
+
+/* filters */
+.rv-cond{grid-template-columns:48px minmax(150px,250px) 230px minmax(0,1fr) 22px 28px}
+.rv-cond.inactive .rv-rep-name{color:var(--muted)}
+#liveSelection.rv .rv-op{border:1px solid #2f4148;padding:1px 4px;color:var(--earth);max-width:240px;font-size:14px}
+#liveSelection.rv .rv-op:hover{border-color:var(--earth)}
+#liveSelection.rv .rv-op:focus{border-color:var(--earth)}
+.rv-vals{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;min-width:0;color:var(--rv-dim)}
+#liveSelection.rv .rv-vals input[type=number]{width:72px}
+#liveSelection.rv .rv-vals input[type=search]{width:120px;text-align:left}
+#liveSelection.rv .rv-vals select{max-width:200px}
+#liveSelection.rv .rv-vals select[multiple]{min-height:84px;border:1px solid var(--line)}
+#liveSelection.rv .rv-vals :focus{border-bottom-color:var(--earth)}
+
+/* add menus and popovers */
+.rv-add{position:relative}
+/* + add feature and + add filter sit centred under their sections */
+#liveSelection.rv .rv-ledger>.rv-add{text-align:center;margin:10px 0 4px}
+#liveSelection.rv .rv-add-btn{color:var(--muted);font:14px var(--rv-mono);padding:3px 0}
+#liveSelection.rv .rv-add-btn:hover,#liveSelection.rv .rv-add-btn[aria-expanded=true]{color:var(--text)}
+#liveSelection.rv :is(#toggleFamily,#toggleFilter){margin:8px 0 4px;padding:6px 12px;border:1px dashed #8a8780;color:var(--text);letter-spacing:.04em}
+#liveSelection.rv #toggleFamily:hover,#liveSelection.rv #toggleFamily[aria-expanded=true]{border-color:var(--mars);border-style:solid;color:var(--mars)}
+#liveSelection.rv #toggleFilter:hover,#liveSelection.rv #toggleFilter[aria-expanded=true]{border-color:var(--earth);border-style:solid;color:var(--earth)}
+#liveSelection.rv .rv-add-rep:hover{color:var(--mars)}
+#liveSelection.rv .filter .rv-add-rep:hover{color:var(--earth)}
+#familyMenu.rv-pop{min-width:360px}
+.rv-opt{display:flex;flex-direction:column;min-width:0}
+.rv-opt-meta{font-size:12px;color:var(--rv-dim)}
+#liveSelection.rv .rv-pop button:hover .rv-opt-meta{color:var(--muted)}
+#liveSelection.rv .rv-add-rep{margin-left:56px}
+.rv-pop{position:absolute;z-index:30;top:100%;left:0;margin-top:4px;min-width:300px;max-width:min(420px,calc(100vw - 40px));max-height:280px;overflow:auto;background:#0c0e0f;border:1px solid var(--line);box-shadow:0 14px 40px #000a;padding:6px 0;font:14px var(--rv-mono)}
+.rv-rep-row>.rv-pop{left:56px}
+#liveSelection.rv .rv-pop input[type=search]{display:block;width:calc(100% - 20px);margin:2px 10px 6px;font-size:12px;padding:4px 0;text-align:left}
+#liveSelection.rv .rv-pop button{display:flex;gap:8px;width:100%;text-align:left;padding:4px 12px;color:var(--muted)}
+#liveSelection.rv .rv-pop button:hover,#liveSelection.rv .rv-pop button:focus-visible{background:#1d2123;color:var(--text);outline:none}
+#liveSelection.rv .rv-pop button.kept{color:var(--mars)}
+#liveSelection.rv .filter .rv-pop button.kept,#liveSelection.rv #filterMenu button.kept{color:var(--earth)}
+#liveSelection.rv .rv-pop button:disabled{opacity:.45;cursor:default}
+.rv-mk{width:10px;flex:none;color:var(--rv-dim)}
+.kept .rv-mk{color:inherit}
+.rv-grp{padding:6px 12px 2px;color:var(--rv-dim);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.rv-none{padding:4px 12px;color:var(--rv-dim)}
+
+/* recap + submit */
+.rv-recap{margin-top:24px;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
+.rv-sentence{margin:0;font:18px/2 var(--rv-mono);color:var(--muted);max-width:960px}
+.rv-sentence b{font-weight:400}
+.rv-sentence .rv-row{display:block}
+.rv-sentence .rv-lead{color:var(--rv-dim)}
+.rv-sentence .rv-item{display:inline-block;white-space:nowrap;margin-right:1.4em}
+#liveSelection.rv .rv-sentence input{font-size:18px}
+.rv-sentence .c{color:var(--mars)}.rv-sentence .f{color:var(--earth)}
+#liveSelection.rv .rv-sentence input[type=number]{width:3.4em;text-align:center}
+#liveSelection.rv .rv-tok{color:var(--text);border-bottom:1px dotted #575b5a}
+#liveSelection.rv .rv-tok:hover,#liveSelection.rv .rv-tok[aria-expanded=true]{border-bottom-color:var(--mars)}
+#liveSelection.rv #runScore{font-family:var(--rv-mono)}
+.rv-continents{margin-top:10px;font:16px var(--rv-mono)}
+#liveSelection.rv .rv-continents label{font-size:16px;color:var(--text)}
+#liveSelection.rv .rv-continents input[type=checkbox]{width:16px;height:16px;vertical-align:-3px}
+.rv-continents .micro{font-size:14px;color:var(--rv-dim);margin:6px 0 0}
+.rv-raw{margin-top:12px;font:13px var(--rv-mono)}
+.rv-raw>summary{cursor:pointer;color:var(--rv-dim)}
+
+@media(max-width:760px){
+  .rv-head{grid-template-columns:26px 16px minmax(0,1fr) 44px 22px}.rv-from{display:none}
+  .rv-rep-row{grid-template-columns:16px minmax(0,1fr) 46px 22px 28px}.rv-rep-row:not(.rv-cond)>:is(.rv-info,.rv-x){grid-column:auto}.rv-rep-row .rv-bar,.rv-rep-row .rv-context{grid-column:2/4;grid-row:2}
+  .rv-cond{grid-template-columns:16px minmax(0,1fr) 22px 28px}.rv-cond .rv-op{grid-column:2;grid-row:2;justify-self:start}.rv-cond .rv-vals{grid-column:2/-1;grid-row:3}
+  #liveSelection.rv .rv-add-rep{margin-left:16px}.rv-rep-row>.rv-pop{left:0}
+}
+@media(prefers-reduced-motion:reduce){.rv-fig,.rv-rep{transition:none}.rv-fig.rv-enter{animation:none}}
+
+/* ---------- one unboxed flow ----------
+   The stage view and the review stack without a frame: in review the sky and
+   the folded log stay above, and the ledger sits under them (stage-view.js). */
+.stage-deck{display:block;margin:14px 0 30px;overflow-x:clip}
+#stageDeck>.process{margin:0;max-width:none;width:auto;min-width:0;background:transparent;border:0;border-radius:0;box-shadow:none;padding:0}
+#stageDeck>#liveSelection{margin-top:6px;max-width:1100px}
+#liveSelection.rv>.section-head{margin:0 0 4px;align-items:baseline}
+#liveSelection.rv .rv-title{font:13px 'Geist Mono',ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#6f716c}
+#liveSelection.rv .target-summary,#liveSelection.rv .rv-sky{display:none}
+/* In review the ledger lives inside the stage box (stage-view.js): no frame of its own, full box width,
+   the recap and Find Earth matches pinned to the bottom of the box. */
+.fv-box>#liveSelection{margin:0;max-width:none;width:auto;background:transparent;border:0;border-radius:0;box-shadow:none;padding:0}
+.fv-box>#liveSelection.rv .rv-foot{padding-bottom:12px}
+/* the selection trace is no longer offered in the review */
+#liveSelection #traceDisclosure{display:none}
+#liveSelection.rv .rv-sentence .continent-grid{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:6px 20px;font-size:16px;line-height:1.6}
+#liveSelection.rv .rv-sentence .continent-grid label{display:inline-flex;align-items:center;gap:7px;font-size:16px;color:var(--text);cursor:pointer}
+#liveSelection.rv .rv-sentence .continent-grid input[type=checkbox]{width:16px;height:16px;margin:0;accent-color:var(--earth)}
+#liveSelection.rv .rv-cstatus{margin:6px 0 0;text-align:center;color:#e9a98d}
+#liveSelection.rv .rv-cstatus:empty{display:none}
+#liveSelection.rv .rv-ledger>.rv-rule:first-child{margin-top:4px}
+#liveSelection.rv .rv-foot{border-top:1px solid var(--line);margin-top:10px;padding-top:4px}
+#liveSelection.rv .rv-foot .rv-recap{margin-top:0;border-top:0;padding-top:10px}
+#liveSelection.rv .rv-foot .form-status{margin:6px 0 0;font-size:13px}
+#liveSelection.rv .rv-foot .rv-continents,#liveSelection.rv .rv-foot .rv-raw{max-height:180px;overflow:auto}
+
+/* ---------- Find Earth matches ---------- */
+#liveSelection.rv #runScore.rv-go{display:inline-flex;align-items:center;gap:14px;padding:15px 26px;border:1px solid var(--mars);border-radius:0;background:var(--mars);color:#101214;font:700 14px/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 0 0 1px #eba07833,0 0 28px #eba07855;transition:box-shadow .2s,background-color .2s,transform .15s}
+#liveSelection.rv #runScore.rv-go .rv-go-arrow{font-size:18px;transition:transform .2s}
+#liveSelection.rv #runScore.rv-go:not(:disabled):hover{background:#f3b892;box-shadow:0 0 0 4px #eba07833,0 0 42px #eba07888;transform:none}
+#liveSelection.rv #runScore.rv-go:not(:disabled):hover .rv-go-arrow{transform:translateX(4px)}
+#liveSelection.rv #runScore.rv-go:focus-visible{outline:2px solid var(--text);outline-offset:4px}
+#liveSelection.rv #runScore.rv-go:disabled{background:transparent;color:var(--mars);box-shadow:none;opacity:.5}
+#liveSelection.rv.rv-ready #runScore.rv-go:not(:disabled){animation:rvGlow 2.4s ease-in-out infinite}
+@keyframes rvGlow{50%{box-shadow:0 0 0 6px #eba0781f,0 0 46px #eba07899}}
+
+@media(max-width:760px){
+  #liveSelection.rv .rv-recap{gap:10px}
+  #liveSelection.rv #runScore.rv-go{width:100%;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){#liveSelection.rv #runScore.rv-go,#liveSelection.rv #runScore.rv-go .rv-go-arrow{transition:none}#liveSelection.rv.rv-ready #runScore.rv-go{animation:none}}
+
+/* footer: recap on the left, the button on the right, status and raw response on one line */
+/* the recap is a centred stack: each lead word on its own dim line, its items on the next,
+   with Find Earth matches centred underneath */
+#liveSelection.rv .rv-foot{display:block;text-align:center}
+#liveSelection.rv .rv-foot .rv-recap{flex-direction:column;align-items:center;flex-wrap:nowrap;gap:14px}
+#liveSelection.rv .rv-foot .rv-sentence{flex:none;width:100%;max-width:none;text-align:center;line-height:1.8}
+#liveSelection.rv .rv-foot #runScore{flex:none}
+#liveSelection.rv .rv-sentence .rv-row.rv-lead{margin-top:.5em;font-size:14px;letter-spacing:.08em;color:var(--rv-dim)}
+#liveSelection.rv .rv-sentence .rv-row.rv-lead:first-child{margin-top:0}
+#liveSelection.rv .rv-sentence .rv-item{margin:0 .7em}
+#liveSelection.rv .rv-sentence .rv-none-yet{color:var(--muted)}
+#liveSelection.rv .rv-foot>.form-status{text-align:center;min-height:16px;margin-top:22px}
+#liveSelection.rv .rv-foot>.rv-raw{margin-top:12px}
+#liveSelection.rv .rv-continents .continent-grid{justify-content:center}
+
+
+/* dropdown contrast: everything in an open list reads at full or near-full brightness.
+   Items already in the search are told apart by colour and ✦, not by fading them. */
+#liveSelection.rv .rv-pop{background:#16191b;border-color:#5a5e5f;box-shadow:0 16px 44px #000c}
+#liveSelection.rv .rv-pop button{color:var(--text);padding:6px 14px}
+#liveSelection.rv .rv-pop button:hover,#liveSelection.rv .rv-pop button:focus-visible{background:#262b2e}
+#liveSelection.rv .rv-pop button:disabled{opacity:1}
+#liveSelection.rv .rv-pop button.kept{color:#f3c2a3}
+#liveSelection.rv .filter .rv-pop button.kept,#liveSelection.rv #filterMenu button.kept{color:#bcd9e5}
+#liveSelection.rv .rv-pop .rv-opt-meta{font-size:11px;color:#c9c7bf}
+#liveSelection.rv .rv-pop button.kept .rv-opt-meta{color:#b3b1aa}
+#liveSelection.rv .rv-pop .rv-mk{color:#a9a7a0}
+#liveSelection.rv .rv-pop .kept .rv-mk{color:var(--mars)}
+#liveSelection.rv .rv-pop .rv-grp{color:#c4c2ba;padding:10px 14px 4px}
+#liveSelection.rv .rv-pop .rv-none{color:#c9c7bf}
+#liveSelection.rv .rv-pop input[type=search]{color:var(--text)}
+#liveSelection.rv .rv-pop input[type=search]::placeholder{color:#a9a7a0}

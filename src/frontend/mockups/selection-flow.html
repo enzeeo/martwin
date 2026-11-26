@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Martwin · selection flow, star chart and ASCII ledger (mockup)</title>
+<style>
+@font-face{font-family:'Geist Sans';font-weight:100 900;src:url('../fonts/geist-sans-latin.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Geist Mono';font-weight:100 900;src:url('../fonts/geist-mono-latin.woff2') format('woff2');font-display:swap}
+:root{color-scheme:dark;--bg:#080808;--text:#eeeee5;--muted:#aaa99e;--dim:#6c6d66;--line:#2a2b27;--mars:#eba078;--earth:#91bacb;--accent:#d7ddb6;--mono:'Geist Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 'Geist Sans',system-ui,sans-serif}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,[role=slider]:focus-visible,input:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#field{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:0}
+.flow{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:34px 4vw 80px}
+.note{font:11px/1.65 var(--mono);color:var(--dim);margin:0 0 26px}
+.note b{color:var(--muted);font-weight:500}
+
+/* phase line: one ASCII track instead of tabs */
+.track{display:flex;flex-wrap:wrap;align-items:center;gap:0;font:12px var(--mono);color:var(--dim);margin-bottom:22px}
+.track button{padding:4px 2px;color:var(--dim);letter-spacing:.04em}
+.track button[data-state=done]{color:var(--muted)}
+.track button[data-state=now]{color:var(--accent)}
+.track button:disabled{cursor:default}
+.track .wire{padding:0 8px;color:#3a3b35;white-space:pre}
+.track .wire.lit{color:#6f7560}
+.track .spacer{flex:1}
+.track .ctl{color:var(--muted);margin-left:14px}
+.track .ctl:hover{color:var(--accent)}
+.clock{color:var(--dim);margin-left:14px;min-width:6ch}
+
+.question{font:clamp(17px,1.9vw,23px)/1.6 var(--mono);color:var(--dim);margin:0;max-width:1000px;letter-spacing:-.01em}
+.question .w{transition:color .25s}
+.question .w.read{color:var(--muted)}
+.question .hit{color:var(--text);background-image:linear-gradient(var(--mars),var(--mars));background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .5s ease-out,color .3s}
+.question .hit.filter{background-image:linear-gradient(var(--earth),var(--earth))}
+.question .hit.on{background-size:100% 1px}
+.question .hit.lit{color:#fff4cf}
+.question.scanning .w.lit{color:var(--text);background:#2a3a40}
+.target{font:11px var(--mono);color:var(--dim);margin:10px 0 0}
+
+/* sky: no frame, bleeds into the page */
+.sky{position:relative;margin:6px -4vw 0;height:330px}
+.sky svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fig{transition:opacity .5s}
+.fig.hidden{opacity:0}
+.fig.dim{opacity:.35}
+.fig .edge{stroke:#e8b79b;stroke-width:.9;stroke-opacity:.5;stroke-linecap:round;fill:none;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset .9s ease-out,stroke-opacity .3s}
+.fig.drawn .edge{stroke-dashoffset:0}
+.fig.filter .edge{stroke:#a9cbd8;stroke-dasharray:2 4;stroke-dashoffset:0;opacity:0;transition:opacity .6s,stroke-opacity .3s}
+.fig.filter.drawn .edge{opacity:1}
+.fstars circle{fill:#e9e6dc;opacity:.3;transform-box:fill-box;transform-origin:center}
+.pings line{stroke-width:.8;fill:none;pointer-events:none}
+.pings .ghost{stroke:#d9dccd;stroke-opacity:.55;stroke-width:.9;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:ghostDraw .5s ease-out forwards;transition:stroke-opacity .6s}
+.pings .ghost.out{stroke-opacity:0}
+@keyframes ghostDraw{to{stroke-dashoffset:0}}
+.fstars circle{transition:opacity .5s,fill .5s}
+.fstars circle.glit{opacity:.9;fill:#fff4e0}
+.pings .ping.c{stroke:var(--mars)}
+.pings .ping.f{stroke:var(--earth)}
+.fig .st{transform-box:fill-box;transform-origin:center;fill:#efe9dc;transition:r .45s cubic-bezier(.3,.7,.2,1),opacity .4s,fill .3s}
+.fig .st.cand,.fig .st.deco{opacity:.8}
+.fig .st.cut{opacity:.45}
+.fig .st.kept{fill:#fffaf0;opacity:1}
+.fig .glow{transition:r .45s cubic-bezier(.3,.7,.2,1);pointer-events:none}
+.fig .name{font:11px var(--mono);fill:var(--mars);text-anchor:middle;letter-spacing:.02em}
+.fig.filter .name{fill:var(--earth)}
+.fig .num{font:10px var(--mono);fill:var(--dim);text-anchor:middle}
+.fig.on .edge{stroke-opacity:.95}
+.fig.on .name{fill:#fff4cf}
+
+/* streaming log, collapses once the plan is ready */
+.log{font:12px/1.75 var(--mono);color:var(--muted);margin:0;white-space:pre-wrap;max-height:220px;overflow:hidden;transition:max-height .6s ease,opacity .4s}
+.log .p{color:var(--dim)}
+.log .c{color:var(--mars)}
+.log .f{color:var(--earth)}
+.log .k{color:#fff4cf}
+.log .x{color:#4d4e48;text-decoration:line-through}
+.log.folded{max-height:0;opacity:0}
+.reptable{max-height:none;margin-top:6px;color:var(--dim)}
+.reptable{white-space:normal}
+.rrow{display:grid;grid-template-columns:18ch minmax(0,1fr);column-gap:1ch;padding-left:2ch}
+.rtags{display:flex;flex-wrap:wrap;gap:0 2ch}
+.reptable .lab{color:var(--muted)}
+.reptable .tag{color:#5d5e57;transition:color .2s,background-color .2s}
+.reptable .tag.ping{color:#101214;background:#d7ddb6}
+.reptable .tag.kept.c{color:var(--mars)}
+.reptable .tag.kept.f{color:var(--earth)}
+.reptable .tag.cut{color:#3b3c37;text-decoration:line-through}
+.cursor{display:inline-block;width:.6em;background:var(--accent);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.logtoggle{font:11px var(--mono);color:var(--dim);margin-top:2px}
+.logtoggle:hover{color:var(--muted)}
+
+/* ascii ledger */
+.ledger{font:13px/1.9 var(--mono);opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+.ledger.in{opacity:1;transform:none}
+.rule{display:flex;align-items:center;gap:12px;color:var(--dim);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin:18px 0 4px;white-space:nowrap;overflow:hidden}
+.rule .line{flex:1;overflow:hidden;color:#33342f;letter-spacing:0}
+.rule .sum{color:var(--muted);letter-spacing:.02em;text-transform:none}
+.row{display:grid;grid-template-columns:3ch 2ch minmax(0,15ch) minmax(0,1fr) auto 4ch 2ch;align-items:center;column-gap:12px;padding:0 6px;margin:0 -6px;white-space:nowrap}
+.row.on{background:#14150f}
+.row .n{color:var(--dim)}
+.row .g{color:var(--mars)}
+.row.filter .g{color:var(--earth)}
+.row .fn{color:var(--text);overflow:hidden;text-overflow:ellipsis}
+.row.cont .fn,.row.cont .n,.row.cont .g{visibility:hidden}
+.rep{display:flex;align-items:center;gap:6px;color:var(--muted);overflow:hidden}
+.rep .h{overflow:hidden;text-overflow:ellipsis}
+.rep button{color:var(--dim);padding:0 2px}
+.rep button:hover{color:var(--accent)}
+.bar{cursor:ew-resize;color:var(--mars);user-select:none;touch-action:none}
+.bar .rest{color:#34352f}
+.w{color:var(--text);text-align:right}
+.rm{color:var(--dim)}
+.rm:hover{color:var(--mars)}
+.cond{color:var(--muted)}
+.cond b{color:var(--earth);font-weight:400}
+.add{display:block;color:var(--dim);margin:4px 0 0 calc(5ch + 24px)}
+.add:hover{color:var(--accent)}
+.menu{display:flex;flex-wrap:wrap;gap:4px 18px;margin:4px 0 0 calc(5ch + 24px);color:var(--muted)}
+.menu button:hover{color:var(--mars)}
+.recap{margin:22px 0 0;color:var(--muted);font-size:13px;line-height:2}
+.recap .tok{color:var(--text)}
+.recap input{width:5ch;background:transparent;border:0;border-bottom:1px solid #44463d;color:var(--text);font:inherit;text-align:center;padding:0}
+.go{display:inline-block;margin-top:18px;color:var(--accent);font-size:14px;letter-spacing:.04em}
+.go:hover{color:#fff4cf}
+.go .br{color:#6f7560}
+.status{font:11px var(--mono);color:var(--dim);min-height:18px;margin-top:6px}
+@media(max-width:760px){.row{grid-template-columns:3ch 2ch minmax(0,1fr) auto 4ch 2ch}.row .rep{grid-column:3/-1;grid-row:2}.sky{height:260px}}
+@media(prefers-reduced-motion:reduce){.pings .ghost{animation:none;stroke-dashoffset:0}.fig .edge,.fig,.ledger,.log,.question .hit{transition:none}.cursor{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="field" aria-hidden="true"></canvas>
+<main class="flow">
+  <p class="note"><b>Mockup · option C.</b> One continuous flow replaces the boxed stage card and its tabs. The sky has no frame, each stage adds to the same star chart, and the data shows up as an ASCII ledger. Sample data only; nothing is sent.</p>
+
+  <nav class="track" id="track" aria-label="Selection progress"></nav>
+
+  <h1 class="sr-only">Feature selection</h1>
+  <p id="question" class="question"></p>
+  <p class="target">18.44° N / 77.45° E · Jezero crater, western plains</p>
+
+  <div class="sky" id="sky"><svg id="chart" role="img" aria-label="Star chart: one constellation per selected feature"></svg></div>
+
+  <pre id="log" class="log" aria-live="polite"></pre>
+  <pre id="repTable" class="log reptable" hidden aria-label="Representation candidates per feature"></pre>
+  <button type="button" id="logToggle" class="logtoggle" hidden aria-expanded="false" aria-controls="log"></button>
+
+  <section id="ledger" class="ledger" hidden aria-label="Search plan">
+    <div class="rule"><span>Compare</span><span class="line" aria-hidden="true">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="sum" id="sum"></span></div>
+    <div id="comps"></div>
+    <button type="button" class="add" id="addComp" aria-expanded="false">+ add feature</button>
+    <div id="compMenu" class="menu" hidden></div>
+    <div class="rule"><span>Where</span><span class="line" aria-hidden="true">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="sum">match all</span></div>
+    <div id="filters"></div>
+    <div class="rule"><span>Then</span><span class="line" aria-hidden="true">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></div>
+    <p class="recap" id="recap"></p>
+    <button type="button" class="go" id="go"><span class="br">[</span> find earth matches → <span class="br">]</span></button>
+    <p class="status" id="status" role="status"></p>
+  </section>
+</main>
+<script src="selection-flow.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+/* Page-end planet horizon (see horizon.js). Full bleed, decorative only. */
+#horizon{position:relative;margin-top:40px;height:340px;overflow:hidden;pointer-events:none}
+#horizon canvas{display:block;width:100%;height:100%}
+@media(max-width:700px){#horizon{height:240px}}
+
+/* Scroll scenery (see scenery.js): sits above the cover's star field, below page content. */
+#scenery{position:absolute;top:0;left:0;width:100%;overflow:hidden;pointer-events:none;z-index:0}
+#scenery canvas{position:absolute;top:0;left:0}
+#scenery canvas.sc-obj{opacity:0;transition:opacity 1.2s ease}
+#scenery canvas.sc-obj.on{opacity:1}
+@media(prefers-reduced-motion:reduce){#scenery canvas.sc-obj{transition:none}}
+main.main,#horizon{position:relative;z-index:1}

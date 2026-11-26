@@ -1,22 +1,19 @@
-/* Procedural glowing ASCII, inspired by JIN2's ASCII Code Art. */
+/* Procedural glowing ASCII, inspired by JIN2's ASCII Code Art. Painted once as a still. */
 (() => {
   const canvas = document.getElementById('space');
   const cover = document.getElementById('cover');
   if (!canvas || !cover) return;
   canvas.style.opacity = '1';
   const context = canvas.getContext('2d');
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const pools = [':;!il1', 'rcvxz+=tf', 'aeouns{}[]<>', '08B$#&%@Q'];
   // Sample once so stars stay in place while their light changes.
   const stars = Array.from({ length: 380 }, () => ({
     x: Math.random(), y: Math.random(),
-    glyph: Math.random() < .22 ? (Math.random() < .5 ? '+' : '*') : '.',
+    glyph: Math.random() < .03 ? (Math.random() < .5 ? '+' : '*') : '.',
     size: 9 + Math.random() * 6,
     brightness: .5 + Math.random() * .45,
-    phase: Math.random() * Math.PI * 2,
-    speed: .3 + Math.random() * .9,
   }));
-  let width = 0, height = 0, frame = 0, last = 0, elapsed = 0;
+  let width = 0, height = 0;
 
   function resize() {
     const rect = cover.getBoundingClientRect();
@@ -29,7 +26,8 @@
     draw();
   }
 
-  function planet(cx, cy, radius, hue, seed) {
+  function planet(context, cx, cy, radius, hue, seed) {
+    if (!(radius > 0)) return; // zero-size cover (hidden or mid-resize) would make every cell NaN
     const cellX = 8, cellY = 12;
     const left = Math.floor((cx - radius) / cellX);
     const right = Math.ceil((cx + radius) / cellX);
@@ -47,79 +45,41 @@
         if (light < .1) continue;
         const hash = (Math.imul(col, 73856093) ^ Math.imul(row, 19349663) ^ seed) >>> 0;
         const pool = pools[Math.min(3, Math.floor(light * 4))];
-        const shimmer = motion.matches ? 0 : Math.floor(elapsed / 4 + (hash % 7) / 7);
         const contour = Math.abs(dx) > Math.abs(dy) ? '|' : '_';
         context.fillStyle = `hsla(${hue}, 30%, ${48 + light * 30}%, ${.24 + light * .46})`;
         context.shadowColor = `hsla(${hue}, 55%, 70%, .65)`;
         context.shadowBlur = light > .55 ? 7 : 0;
-        context.fillText(distance > .88 ? contour : pool[(hash + shimmer) % pool.length], x, y);
+        context.fillText(distance > .88 ? contour : pool[hash % pool.length], x, y);
       }
     }
     context.shadowBlur = 0;
   }
 
+  // Still frame: the stars and planets are painted once (and again on resize), never per frame.
   function draw() {
     context.clearRect(0, 0, width, height);
-    context.font = '10px ui-monospace, monospace';
     context.textAlign = 'left';
     const mobile = width < 700;
-    const count = Math.min(mobile ? 150 : 380, Math.floor(width * height / 2400));
+    const discs = [[width * .84, height * .24, Math.min(mobile ? 76 : 145, width * .16), 29, 41]];
+    if (!mobile) discs.push([width * .07, height * .28, Math.min(64, width * .055), 92, 93]);
+    // Stars sit behind the planets: skip any that would show through a disc's dark cells.
+    const behind = (x, y) => discs.some(([cx, cy, r]) => (x - cx) ** 2 + (y - cy) ** 2 < (r + 10) ** 2);
+    const count = Math.min(mobile ? 90 : 220, Math.floor(width * height / 4000));
     for (let i = 0; i < count; i++) {
       const star = stars[i];
-      const twinkle = motion.matches ? .8 : .78 + .2 * Math.sin(elapsed * star.speed + star.phase);
+      if (behind(star.x * width, star.y * height)) continue;
       context.font = `${star.size}px ui-monospace, monospace`;
-      context.fillStyle = `rgba(211, 228, 238, ${twinkle * star.brightness})`;
+      context.fillStyle = `rgba(211, 228, 238, ${.8 * star.brightness})`;
       context.shadowColor = '#91bacb';
       context.shadowBlur = star.glyph === '.' ? 0 : 6;
       context.fillText(star.glyph, star.x * width, star.y * height);
     }
     context.shadowBlur = 0;
     context.font = '10px ui-monospace, monospace';
-    planet(width * .84, height * .24, Math.min(mobile ? 76 : 145, width * .16), 29, 41);
-    if (!mobile) planet(width * .07, height * .28, Math.min(64, width * .055), 92, 93);
-
-    // A short crossing every 25 seconds leaves the scene mostly still.
-    if (!motion.matches) {
-      const phase = elapsed % 25;
-      if (phase > 3 && phase < 9) {
-        const progress = (phase - 3) / 6;
-        const x = width * (1.04 - progress * .45), y = height * (.13 + progress * .12);
-        context.save();
-        context.translate(x, y);
-        context.rotate(-.12);
-        context.font = '9px ui-monospace, monospace';
-        context.fillStyle = 'rgba(220, 224, 200, .8)';
-        context.shadowColor = '#c5d5a5';
-        context.shadowBlur = 4;
-        context.fillText('<|==>', 0, 0);
-        context.fillStyle = 'rgba(223, 171, 119, .6)';
-        context.fillText('· ·', 30, 0);
-        context.restore();
-      }
-    }
+    for (const disc of discs) planet(context, ...disc);
   }
 
-  function tick(now) {
-    frame = 0;
-    if (document.hidden || motion.matches) return;
-    if (!last || now - last >= 100) {
-      elapsed += last ? Math.min(now - last, 200) / 1000 : 0;
-      last = now;
-      draw();
-    }
-    frame = requestAnimationFrame(tick);
-  }
-
-  function updateMotion() {
-    if (frame) cancelAnimationFrame(frame);
-    frame = 0;
-    last = 0;
-    if (!document.hidden && !motion.matches) frame = requestAnimationFrame(tick);
-    else if (!document.hidden) draw();
-  }
-  window.addEventListener('resize', resize);
-  document.addEventListener('visibilitychange', updateMotion);
-  motion.addEventListener('change', updateMotion);
+  let timer = 0;
+  window.addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(resize, 150); });
   resize();
-  updateMotion();
 })();

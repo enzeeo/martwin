@@ -1,6 +1,7 @@
 """Feature and representation selection for a Mars analog search."""
 
 import json
+import re
 from pathlib import Path
 
 from .feature_selection import choose_features
@@ -10,6 +11,7 @@ CATALOG_DIR = Path(__file__).with_name("catalog")
 
 __all__ = [
     "choose_features",
+    "family_phrases",
     "choose_representations",
     "select_features_and_representations",
 ]
@@ -61,3 +63,25 @@ def representation_families(concepts, *, available=None):
                                 if option["header"] in available[key]])
             }
     return selected
+
+
+def family_phrases(objective, concepts):
+    """Map each family id to the words in the question that led to it.
+
+    A family's phrase is the longest concept alias found in the objective for
+    any of its selected concepts. Families chosen without a matching alias
+    (added by related-concept links) are absent: the viewer shows those as
+    inferred.
+    """
+    aliases = json.loads((CATALOG_DIR / "concepts.json").read_text(encoding="utf-8"))["concepts"]
+    phrases = {}
+    for mapping_name in ("concept_families.json", "earth_filter_concepts.json"):
+        mapping = json.loads((CATALOG_DIR / mapping_name).read_text(encoding="utf-8"))
+        for concept in concepts:
+            words = sorted(aliases.get(concept, {}).get("aliases", []), key=len, reverse=True)
+            found = next((m for w in words if (m := re.search(rf"(?<!\w){re.escape(w)}(?!\w)", objective, re.I))), None)
+            if found:
+                for family in mapping.get(concept, []):
+                    if len(found.group(0)) > len(phrases.get(family, "")):
+                        phrases[family] = found.group(0)
+    return phrases

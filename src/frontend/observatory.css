@@ -51,7 +51,7 @@ body,button,input,textarea,select,h1,h2,h3,.cover h1{font-family:'Geist Sans',sy
 .live-diagram .live-node.active{border-color:var(--text)}
 .live-diagram .live-node.active small::after{content:' ■';color:var(--text);animation:flowThink 1.4s steps(2,end) infinite}
 .flow-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:-1}
-.flow-edge{fill:none;stroke:#85867d;stroke-width:1;vector-effect:non-scaling-stroke}
+.flow-edge{fill:none;stroke:#a3a499;stroke-width:1.6;vector-effect:non-scaling-stroke}
 .flow-reveal .flow-edge{animation:flowDraw .7s ease-out both}
 .flow-packet{fill:var(--text)}
 .motion-paused .flow-edge,.motion-paused .live-node.active small::after{animation-play-state:paused}
@@ -64,3 +64,4 @@ body,button,input,textarea,select,h1,h2,h3,.cover h1{font-family:'Geist Sans',sy
 @media(prefers-reduced-motion:reduce){.flow-reveal .flow-edge,.live-diagram .live-node.active small::after{animation:none}.flow-packet,.flow-pause{display:none}}
 
 .point-details{max-height:calc(50% - 24px);overflow:auto;position:absolute;z-index:510;left:16px;bottom:48px;width:min(480px,calc(100% - 32px));padding:16px 42px 16px 16px;background:#101e25;border:1px solid #91bacb;box-shadow:4px 4px 0 #080f18;color:#eeeee5;overflow-wrap:anywhere}.point-details strong{display:block;margin:6px 0;font-size:16px}.point-details p{font-size:12px;margin:8px 0}.point-details small{display:block;font-size:11px;color:#aaa9a3}.point-details a{display:inline-block;font-size:12px;margin-top:8px}.point-close{position:absolute;right:8px;top:8px;padding:2px 8px;font-size:20px}
+#marsInfo .preset-choice{margin-bottom:12px}

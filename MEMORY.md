@@ -6,3 +6,6 @@
 ### 2026-11-15 — Earth result point details
 - User chose hover preview with click-to-pin details, 10 default results and 25 km minimum separation (not a search radius). Browser and ConfirmedPlan defaults match.
 - Geographic labels use the bundled Natural Earth populated-place gazetteer: distance to a named place plus its region/country. These describe the nearest listed place, not the cell's administrative membership. Keep exact coordinates and Maps links.
+
+### 2026-11-25 — Testing branch only
+- Keep all Martwin work on `testing` or branches cut from it. `main` is read-only. The operational rules are in `AGENTS.md`.

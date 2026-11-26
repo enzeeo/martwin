@@ -1,0 +1,69 @@
+/* Results: centered under the stage deck, same width and type as the review ledger (results-view.js).
+   Scoped to #mapSection.rs; the global button rules in index.html are reset here so controls read as mono text. */
+#mapSection.rs{--rs-mono:'Geist Mono',ui-monospace,monospace;--rs-rule:#2a2e30;--rs-dim:#6f716c;--rs-mars:#eba078;--rs-earth:#91bacb;--rs-text:#f1eee7;
+  position:relative;isolation:isolate;max-width:1056px;margin:24px auto 0;padding:0;font-family:var(--rs-mono);color:var(--rs-text)}
+#mapSection.rs[hidden]{display:none!important}
+#mapSection.rs button{background:none;border:0;border-radius:0;padding:0;margin:0;min-height:0;width:auto;color:inherit;font:inherit;box-shadow:none;transform:none}
+#mapSection.rs button:not(:disabled):hover{background:none;transform:none;box-shadow:none}
+#mapSection.rs button:focus-visible{outline:1px solid var(--rs-earth);outline-offset:3px}
+#mapSection.rs .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.rs-sky{position:absolute;top:-40px;bottom:0;left:0;z-index:-1;pointer-events:none;display:block}
+.rs-title{margin:0 0 18px;text-align:center;font:400 clamp(18px,2vw,24px)/1.65 var(--rs-mono);letter-spacing:-.01em;color:var(--rs-text)}
+
+/* controls bar above the map */
+.rs-bar{display:flex;align-items:center;gap:30px;flex-wrap:wrap;padding:10px 2px;border-top:1px solid var(--rs-rule);font-size:12px;color:var(--rs-dim)}
+.rs-bar .grp{display:flex;align-items:center;gap:12px}
+.rs-bar .grp[hidden],.rs-bar button[hidden]{display:none}
+.rs-bar .right{margin-left:auto}
+.rs-bar .lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#4b5052}
+.rs-bar .wire{color:#4b5052}
+#mapSection.rs .rs-bar button{color:#aaa9a3}
+#mapSection.rs .rs-bar button:hover{color:var(--rs-mars)}
+#mapSection.rs .rs-bar button.on{color:var(--rs-text)}
+#showEarth,#showMars{letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+
+/* map / 3D area */
+.rs-view{position:relative;height:clamp(620px,82vh,880px);overflow:hidden;border-top:1px solid var(--rs-rule);border-bottom:1px solid var(--rs-rule);background:#101214}
+#rsMap{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#rsMap:active{cursor:grabbing}
+#rsMap[hidden]{display:none}
+.rs-out{text-shadow:0 0 2px #000,1px 1px 0 #000,-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,0 1px 0 #000,0 -1px 0 #000,1px 0 0 #000,-1px 0 0 #000,0 0 8px #000}
+.rs-attr{position:absolute;bottom:10px;right:12px;z-index:3;font-size:10px;color:#c9c7c0;pointer-events:none}
+.rs-attr[hidden]{display:none}
+.rs-tip{position:absolute;z-index:4;pointer-events:none;font-size:12px;line-height:1.5;color:var(--rs-text);background:#101214f0;padding:4px 8px;border-left:2px solid var(--rs-mars);white-space:nowrap;transform:translate(12px,-50%)}
+.rs-tip.flip{transform:translate(calc(-100% - 12px),-50%);border-left:0;border-right:2px solid var(--rs-mars)}
+.rs-tip[hidden]{display:none}
+
+.rs-split{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--rs-rule)}
+.rs-split[hidden]{display:none}
+.rs-pane{position:relative;overflow:hidden;background:#101214}
+.rs-pane .rs-gl{position:absolute;inset:0}
+.rs-pane .rs-gl .maplibregl-canvas{filter:saturate(.85) contrast(1.04)}
+.rs-pane::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 60%,#101214aa 100%)}
+.rs-label{position:absolute;top:14px;left:16px;right:16px;z-index:3;font-size:12px;line-height:1.5;pointer-events:none}
+.rs-label .k{font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.rs-label .n{font-size:17px;color:var(--rs-text);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#rsPaneMars .k{color:var(--rs-mars)}#rsPaneEarth .k{color:var(--rs-earth)}
+.rs-load{position:absolute;inset:0;z-index:2;display:grid;place-items:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--rs-dim);pointer-events:none}
+.rs-load[hidden]{display:none}
+.rs-pattr{position:absolute;bottom:10px;z-index:3;font-size:10px;color:#c9c7c0;pointer-events:none;white-space:nowrap}
+#rsPaneMars .rs-pattr{left:12px}#rsPaneEarth .rs-pattr{right:12px}
+.rs-scale{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:5;padding:5px 12px;background:#101214d9;font-size:12px;color:var(--rs-text);white-space:nowrap}
+.rs-scale i{display:inline-block;height:6px;border:1px solid var(--rs-text);border-top:0;vertical-align:middle;margin-right:8px}
+
+/* ranked list: five per row under the map */
+#mapSection.rs .rs-rows{list-style:none;margin:0;padding:0;display:grid;gap:0;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--rs-rule)}
+.rs-row{border-bottom:1px solid var(--rs-rule);margin:0}
+#mapSection.rs .rs-row button{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:2px 8px;width:100%;padding:12px 14px;text-align:left;font-size:12px;line-height:1.6;color:#aaa9a3;cursor:pointer}
+#mapSection.rs .rs-row button:hover,.rs-row.hot button{background:#191c1e}
+.rs-row.sel button{background:#16212a!important}
+.rs-row .r{color:var(--rs-earth)}
+.rs-row .nm{color:var(--rs-text);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs-row .sc{font-variant-numeric:tabular-nums}
+.rs-row .rg{grid-column:2/4;color:var(--rs-dim);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs-empty{grid-column:1/-1;padding:18px 14px;color:#aaa9a3;font-size:12px}
+
+@media(max-width:1100px){#mapSection.rs .rs-rows{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.rs-view{height:clamp(560px,90vh,820px)}.rs-split{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.rs-scale{top:50%;bottom:auto;transform:translate(-50%,-50%)}}
+@media(max-width:700px){#mapSection.rs .rs-rows{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-bar{gap:18px}}

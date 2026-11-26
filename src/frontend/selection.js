@@ -1,6 +1,6 @@
 (() => {
   const form = $('searchForm');
-  let pending, scoreRequest, menu;
+  let pending, scoreRequest, menu, uplinkAnimation, previewTimer;
   let plan = { comparisons: [], filters: [], input: undefined };
   let recordedTrace = [], families = { comparisons: [], filters: [] };
   const friendly = item => item.label || item.description || item.header?.replaceAll('_', ' ') || item.feature_id?.replaceAll('_', ' ');
@@ -19,11 +19,33 @@
   }
 
 
+  /* Choosing representations → Review search. The stage view stays on screen:
+     review only folds its log and shows the ledger under the same sky
+     (stage-view.js, review-view.css). The ASCII track in the stage heading
+     moves between review and stills of the earlier stages. */
+  function stopSlide() { document.querySelectorAll('.stage-ghost').forEach(node => node.remove()); }
+  function slideToReview() {
+    stopSlide();
+    $('liveProgress').hidden = false; $('liveSelection').hidden = false;
+    StageView.enterReview();
+  }
+  // Review → a still of features or representations; the ledger steps aside.
+  function slideToStages(plane) {
+    stopSlide();
+    $('liveSelection').hidden = true; $('liveProgress').hidden = false;
+    StageView.redraw(plane);
+  }
+  const reviewReady = () => StageView.setReview(() => slideToReview(), plane => slideToStages(plane));
   cancelRun = function (message = true) {
+    stopSlide();
+    uplinkAnimation?.cancel(); clearTimeout(previewTimer);
+    StageView.stop();
     if (pending) { pending.abort(); pending = undefined; }
     if (scoreRequest) { scoreRequest.abort(); scoreRequest = undefined; $('liveSelection').querySelectorAll('button, input, select').forEach(node => { node.disabled = false; }); $('continents').querySelectorAll('input').forEach(node => { node.disabled = !menu?.continent_filter?.available; }); }
     $('nativeContext')?.remove();
+    $('runScore').disabled = false;
     $('liveProgress').hidden = true;
+    $('liveProgressStatus').textContent = '';
     $('liveSelection').hidden = true;
     if (mode === 'live') clearResults();
     $('searchButton').disabled = false;
@@ -34,13 +56,7 @@
     const response = await fetch(`/api/catalog?latitude=${input.lat}&longitude=${input.lon}`);
     if (!response.ok) throw Error('Could not load the feature catalog.');
     menu = await response.json();
-    const available = menu.continent_filter?.available === true; $('continents').querySelectorAll('input').forEach(input => { input.disabled = !available; }); $('continentStatus').textContent = available ? 'Applied before scoring and combined with all Earth filters.' : 'Continent masks are unavailable; continent filtering will not be applied.';
-  }
-  function fillSelect(id, entries) {
-    const select = $(id);
-    select.replaceChildren(...entries.map(([value, text]) => Object.assign(document.createElement('option'), { value, textContent: text })));
-    select.disabled = entries.length === 0;
-    $(`${id}Btn`).disabled = entries.length === 0;
+    const available = menu.continent_filter?.available === true; $('continents').querySelectorAll('input').forEach(input => { input.disabled = !available; }); $('continentStatus').textContent = available ? '' : 'Continent masks are unavailable; continent filtering will not be applied.';
   }
   function invalidateResults() {
     $('nativeContext')?.remove();
@@ -68,101 +84,345 @@
     others.forEach((item, i) => { item.weight = cents[i] / 100; });
     if (edited) edited.weight = fixed / 100;
   }
-  function renderPlan() {
-    const comparisons = $('comparisons');
-    comparisons.replaceChildren();
-    if (!plan.comparisons.length) comparisons.append(el('li', 'Add a feature to compare.', 'empty-row'));
-    for (const item of plan.comparisons) {
-      const li = el('li');
-      const heading = el('div', undefined, 'comparison-heading'); const name = el('div', undefined, 'comparison-name'); name.append(el('strong', friendly(item))); if (item.unit) name.append(el('span', ` ${item.display_unit || item.unit}`, 'micro')); if (item.caution || /proxy/i.test(item.scoring_status || '')) name.append(el('span', 'Proxy / caution', 'caution')); heading.append(name); li.append(heading);
-      const details = rowDetails(item, [item.header, item.unit, item.meaning, item.definition, item.description, item.reason, item.caution, item.source, item.scoring_status?.replaceAll('_', ' ')]); li.append(details.body);
-      if (!item.score_available) li.append(el('p', 'Context only: scoring data is unavailable for this representation.'));
-      const row = el('div', undefined, 'plan-row');
-      if (item.score_available) {
-        const label = el('label', '', 'weight-label');
-        const input = document.createElement('input');
-        Object.assign(input, { type: 'number', min: '1', max: '100', step: '1', value: Math.round(item.weight * 100), className: 'weight-input' });
-        input.setAttribute('aria-label', `Weight for ${friendly(item)}`);
-        input.oninput = () => { item.weight = Number(input.value) / 100; changed(); };
-        input.onchange = () => {
-          balanceWeights(item);
-          const items = plan.comparisons.filter(entry => entry.score_available);
-          comparisons.querySelectorAll('.weight-input').forEach((field, i) => { field.value = Math.round(items[i].weight * 100); });
-        };
-        label.append(input, document.createTextNode('%')); row.append(label);
-      }
-      const remove = el('button', '×', 'remove-row');
-      remove.type = 'button'; remove.setAttribute('aria-label', `Remove ${friendly(item)}`);
-      remove.onclick = () => { plan.comparisons = plan.comparisons.filter(entry => entry !== item); balanceWeights(); changed(); renderPlan(); $('toggleFamily').focus(); };
-      row.append(details.button, remove); heading.append(row); comparisons.append(li);
+  /* ---------- review ledger (styles: review-view.css, sky: stage-view.js) ----------
+     Features are grouped as in the earlier stages. Each representation row has a
+     ‹ name › cycler over its feature's catalog options, an ASCII weight bar that
+     works as a slider, a typed percent, details and remove. Weights always
+     rebalance to 100 with balanceWeights. */
+  const CELLS = 26, EIGHTHS = ' ▏▎▍▌▋▊▉', pad2 = n => String(n).padStart(2, '0'), clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const NUMERIC = ['continuous', 'fraction', 'percentage', 'ordinal', 'count', 'coordinate'];
+  let weightViews = [], pop;
+  const pct = item => Number.isFinite(item.weight) ? Math.round(item.weight * 100) : 0;
+  const scorable = () => plan.comparisons.filter(item => item.score_available);
+  const compOptions = id => menu?.comparisons?.find(f => f.feature_id === id)?.options || [];
+  const filterOptions = id => id === 'dataset_field' ? menu?.dataset_fields || [] : menu?.filters?.find(f => f.feature_id === id)?.options || [];
+  const featureInfo = (kind, id) => (kind === 'comparison' ? families.comparisons : families.filters)?.find(f => f.feature_id === id) || {};
+  const featureLabel = (kind, id) => featureInfo(kind, id).label || (id === 'dataset_field' ? 'Earth data fields' : String(id).replaceAll('_', ' ').replace(/^./, c => c.toUpperCase()));
+  const repKey = (kind, item) => `${kind}:${item.feature_id}/${item.header}`;
+  const button = (text, className, label) => { const b = el('button', text, className); b.type = 'button'; if (label) b.setAttribute('aria-label', label); return b; };
+  const focusKey = key => $('liveSelection').querySelector(`[data-key="${CSS.escape(key)}"]`)?.focus();
+  function groupsOf(kind) {
+    const out = [];
+    for (const item of kind === 'comparison' ? plan.comparisons : plan.filters) {
+      let group = out.find(g => g.id === item.feature_id);
+      if (!group) out.push(group = { id: item.feature_id, items: [] });
+      group.items.push(item);
     }
-    const filters = $('filters');
-    filters.replaceChildren();
-    if (!plan.filters.length) filters.append(el('li', 'No Earth filter fields selected.'));
-    for (const item of plan.filters) {
-      const li = el('li', undefined, 'filter-row'); const header = el('div', undefined, 'filter-heading'); const name = el('div', undefined, 'comparison-name'); name.append(el('strong', friendly(item))); header.append(name);
+    return out;
+  }
+  const groupTotal = group => group.items.reduce((sum, item) => sum + (item.score_available ? pct(item) : 0), 0);
+  function barText(w) {
+    const filled = clamp(w, 0, 100) / 100 * CELLS, full = Math.floor(filled), part = Math.round((filled - full) * 8);
+    return ['█'.repeat(full) + (part ? EIGHTHS[part] : ''), '·'.repeat(Math.max(0, CELLS - full - (part ? 1 : 0)))];
+  }
+  function skyGroups() {
+    const cs = groupsOf('comparison'), fs = groupsOf('filter');
+    return [
+      ...cs.map((g, i) => ({ id: 'comparison:' + g.id, kind: 'comparison', num: i + 1, label: featureLabel('comparison', g.id), reps: g.items.map(item => ({ key: repKey('comparison', item), label: item.header, weight: item.score_available ? pct(item) : 0, inactive: !item.score_available })) })),
+      ...fs.map((g, i) => ({ id: 'filter:' + g.id, kind: 'filter', num: cs.length + i + 1, label: featureLabel('filter', g.id), reps: g.items.map(item => ({ key: repKey('filter', item), label: item.header, weight: null, inactive: !item.operator })) })),
+    ];
+  }
+
+  // One small option list at a time, anchored under the control that opened it.
+  function closePop(refocus) { if (!pop) return; const { node, back } = pop; pop = undefined; node.remove(); if (refocus) back?.focus(); }
+  function openPop(anchor, back, fill) {
+    const reopen = pop?.back === back; closePop(); if (reopen) return;
+    const node = el('div', undefined, 'rv-pop'); node.setAttribute('role', 'dialog'); node.setAttribute('aria-label', back.getAttribute('aria-label') || back.textContent);
+    fill(node); anchor.append(node); pop = { node, back }; placePop(node, back);
+    node.querySelector('input, button:not(:disabled)')?.focus();
+  }
+  // Lists float over the frame so the scrolling ledger cannot clip them; they open
+  // upward when there is no room below their button.
+  function placePop(node, anchor) {
+    node.style.position = 'fixed'; node.style.top = node.style.left = '0px'; node.style.marginTop = '0';
+    const at = anchor.getBoundingClientRect(), frame = ($('liveSelection').closest('.fv-box') || $('liveSelection')).getBoundingClientRect(); // the visible part of a scrolling box
+    const height = Math.min(node.scrollHeight, 300), width = node.offsetWidth;
+    node.style.maxHeight = '300px';
+    const below = Math.min(innerHeight, frame.bottom) - at.bottom - 8, above = at.top - Math.max(0, frame.top) - 8;
+    const top = height <= below || below >= above ? at.bottom + 4 : at.top - 4 - Math.min(height, above);
+    node.style.maxHeight = `${Math.max(120, height <= below || below >= above ? below : above)}px`;
+    node.style.top = `${Math.round(top)}px`;
+    node.style.left = `${Math.round(Math.min(Math.max(8, at.left), innerWidth - width - 8))}px`;
+  }
+  function placeOpenLists() {
+    if (pop) placePop(pop.node, pop.back);
+    for (const [toggle, panel] of [['toggleFamily', 'familyMenu'], ['toggleFilter', 'filterMenu']]) if (!$(panel).hidden) placePop($(panel), $(toggle));
+  }
+  addEventListener('resize', placeOpenLists); // Capture, since the stage box scrolls too; scrolling inside an open list must not move the list.
+  document.addEventListener('scroll', event => { if (event.target instanceof Element && event.target.closest('.rv-pop')) return; placeOpenLists(); }, { passive: true, capture: true });
+  function optionButtons(node, items, search) {
+    const list = el('div'); let input;
+    if (search) { input = document.createElement('input'); input.type = 'search'; input.placeholder = 'Search'; input.setAttribute('aria-label', 'Search options'); node.append(input); }
+    node.append(list);
+    const paint = () => {
+      list.replaceChildren(); const term = (input?.value || '').trim().toLowerCase(); let last, any = false;
+      for (const item of items) {
+        if (term && !`${item.text} ${item.title || ''}`.toLowerCase().includes(term)) continue;
+        if (item.group && item.group !== last) { list.append(el('div', item.group, 'rv-grp')); last = item.group; }
+        const b = button('', item.kept ? 'kept' : ''); const mark = el('span', item.kept ? '✦' : '·', 'rv-mk'); mark.setAttribute('aria-hidden', 'true'); b.append(mark, el('span', item.text));
+        if (item.title) b.title = item.title; if (item.value) b.dataset.value = item.value;
+        b.disabled = !!item.disabled; b.onclick = () => { closePop(); item.pick(); }; list.append(b); any = true;
+      }
+      if (!any) list.append(el('p', term ? 'No matching options' : 'No options available', 'rv-none'));
+    };
+    input?.addEventListener('input', paint); paint();
+  }
+
+  function featHead(kind, group, n) {
+    const info = featureInfo(kind, group.id), label = featureLabel(kind, group.id), head = el('div', undefined, 'rv-head');
+    const total = el('span', '', 'rv-total'); if (kind === 'comparison') total.dataset.total = group.id;
+    const remove = button('×', 'rv-x', `Remove feature ${label}`); remove.dataset.key = `xf:${kind}:${group.id}`;
+    remove.onclick = () => {
+      if (kind === 'comparison') { plan.comparisons = plan.comparisons.filter(item => item.feature_id !== group.id); balanceWeights(); }
+      else plan.filters = plan.filters.filter(item => item.feature_id !== group.id);
+      changed(); renderPlan(); $(kind === 'comparison' ? 'toggleFamily' : 'toggleFilter').focus();
+    };
+    head.append(el('span', pad2(n), 'rv-n'), el('span', kind === 'comparison' ? '✦' : '·', 'rv-star'), el('span', label, 'rv-name'), total,
+      el('span', info.phrase ? `from “${info.phrase}”` : info.feature_id ? 'inferred from context' : 'added in review', 'rv-from'), remove);
+    return head;
+  }
+  // ‹ name › steps through the feature's options that are not already in use.
+  function cycler(kind, item, options, used, swap) {
+    const label = friendly(item), wrap = el('div', undefined, 'rv-cycler'), key = repKey(kind, item);
+    const usable = options.filter(o => o.header === item.header || (!used.has(o.header) && (kind === 'filter' || o.score_available)));
+    const at = usable.findIndex(o => o.header === item.header), others = usable.some(o => o.header !== item.header);
+    const step = d => swap(usable[at < 0 ? (d > 0 ? 0 : usable.length - 1) : (at + d + usable.length) % usable.length]);
+    const prev = button('‹', 'rv-step', `Previous representation for ${label}`), next = button('›', 'rv-step', `Next representation for ${label}`);
+    prev.disabled = next.disabled = !others; prev.onclick = () => step(-1); next.onclick = () => step(1);
+    prev.dataset.key = 'rp:' + key; next.dataset.key = 'rx:' + key;
+    const name = button(label, 'rv-rep-name', `${label}: change representation`); name.title = item.header; name.dataset.key = 'rn:' + key; name.setAttribute('aria-haspopup', 'dialog');
+    name.onclick = () => openPop(wrap.parentNode, name, node => optionButtons(node, options.map(o => ({
+      text: friendly(o), title: o.header, kept: used.has(o.header),
+      disabled: (used.has(o.header) && o.header !== item.header) || (kind === 'comparison' && !o.score_available), pick: () => swap(o),
+    })), options.length > 8));
+    wrap.append(prev, name, next);
+    if (kind === 'comparison' && (item.caution || /proxy/i.test(item.scoring_status || ''))) wrap.append(el('span', 'proxy', 'rv-tag'));
+    return wrap;
+  }
+  function addRepButton(kind, group, free, add) {
+    const wrap = el('div', undefined, 'rv-add');
+    const b = button(`+ ${kind === 'comparison' ? 'representation' : 'condition'} (${free.length} more)`, 'rv-add-btn rv-add-rep');
+    b.dataset.key = `ar:${kind}:${group.id}`; b.setAttribute('aria-haspopup', 'dialog');
+    b.onclick = () => openPop(wrap, b, node => optionButtons(node, free.map(o => ({ text: friendly(o), title: o.header, pick: () => add(o) })), free.length > 8));
+    wrap.append(b); return wrap;
+  }
+
+  function comparisonBlock(group, n) {
+    const li = el('li', undefined, 'rv-feat comparison'); li.dataset.rf = 'comparison:' + group.id;
+    li.append(featHead('comparison', group, n));
+    const list = el('ul', undefined, 'rv-reps'), options = compOptions(group.id), used = new Set(group.items.map(item => item.header));
+    for (const item of group.items) {
+      const row = el('li', undefined, 'rv-rep-row'), key = repKey('comparison', item); row.dataset.rr = key;
+      const swap = option => {
+        const entry = { ...option, feature_id: item.feature_id, weight: item.weight };
+        plan.comparisons[plan.comparisons.indexOf(item)] = entry;
+        if (!item.score_available) { const count = scorable().length; entry.weight = count ? 1 / (count + 1) : 1; balanceWeights(entry); }
+        changed(); renderPlan(); focusKey('rn:' + repKey('comparison', entry));
+      };
+      const details = rowDetails(item, [item.header, item.unit, item.meaning, item.definition, item.description, item.reason, item.caution, item.source, item.scoring_status?.replaceAll('_', ' ')]);
+      details.button.className = 'rv-info'; details.body.className = 'rv-detail';
+      const remove = button('×', 'rv-x', `Remove ${friendly(item)}`); remove.dataset.key = 'x:' + key;
+      remove.onclick = () => { plan.comparisons = plan.comparisons.filter(entry => entry !== item); balanceWeights(); changed(); renderPlan(); $('toggleFamily').focus(); };
+      row.append(el('span'), cycler('comparison', item, options, used, swap));
+      if (item.score_available) {
+        const bar = el('span', undefined, 'rv-bar'), fill = el('span', undefined, 'rv-fill'), rest = el('span', undefined, 'rv-rest'); bar.append(fill, rest);
+        bar.tabIndex = 0; bar.dataset.key = 'w:' + key;
+        for (const [name, value] of [['role', 'slider'], ['aria-label', `Weight bar for ${friendly(item)}`], ['aria-valuemin', '1'], ['aria-valuemax', '100']]) bar.setAttribute(name, value);
+        const set = value => { item.weight = clamp(Math.round(value), 1, 100) / 100; balanceWeights(item); refreshWeights(); };
+        bar.onkeydown = event => {
+          const size = event.shiftKey || event.key.startsWith('Page') ? 10 : 1;
+          const delta = { ArrowRight: size, ArrowUp: size, PageUp: size, ArrowLeft: -size, ArrowDown: -size, PageDown: -size }[event.key];
+          const to = delta ? pct(item) + delta : event.key === 'Home' ? 1 : event.key === 'End' ? 100 : undefined;
+          if (to === undefined || scorable().length < 2) return;
+          event.preventDefault(); set(to); changed();
+        };
+        bar.onpointerdown = event => {
+          if (scorable().length < 2 || bar.closest('[inert]') || num.disabled) return;
+          event.preventDefault(); bar.setPointerCapture(event.pointerId); bar.focus();
+          const at = e => { const box = bar.getBoundingClientRect(); set(clamp((e.clientX - box.left) / box.width, 0, 1) * 100); };
+          at(event); bar.onpointermove = at;
+          bar.onpointerup = bar.onpointercancel = () => { bar.onpointermove = bar.onpointerup = bar.onpointercancel = null; changed(); };
+        };
+        const num = document.createElement('input');
+        Object.assign(num, { type: 'number', min: '1', max: '100', step: '1', className: 'rv-w' });
+        num.setAttribute('aria-label', `Weight for ${friendly(item)}`); num.dataset.key = 'n:' + key;
+        num.oninput = () => { item.weight = Number(num.value) / 100; refreshWeights(); changed(); };
+        num.onchange = () => { balanceWeights(item); refreshWeights(); };
+        weightViews.push({ item, bar, fill, rest, num });
+        row.append(bar, num);
+      } else row.append(el('span', 'context only · no scoring data', 'rv-context'), el('span'));
+      row.append(details.button, remove, details.body); list.append(row);
+    }
+    li.append(list);
+    const free = options.filter(o => !used.has(o.header) && o.score_available);
+    if (free.length) li.append(addRepButton('comparison', group, free, option => {
+      const count = scorable().length, entry = { ...option, feature_id: group.id, weight: count ? 1 / (count + 1) : 1 };
+      plan.comparisons.splice(plan.comparisons.indexOf(group.items.at(-1)) + 1, 0, entry);
+      balanceWeights(entry); changed(); renderPlan(); focusKey('n:' + repKey('comparison', entry));
+    }));
+    return li;
+  }
+
+  function filterBlock(group, n) {
+    const li = el('li', undefined, 'rv-feat filter'); li.dataset.rf = 'filter:' + group.id;
+    li.append(featHead('filter', group, n));
+    const list = el('ul', undefined, 'rv-reps'), options = filterOptions(group.id), used = new Set(group.items.map(item => item.header));
+    for (const item of group.items) {
+      const row = el('li', undefined, `rv-rep-row rv-cond${item.operator ? '' : ' inactive'}`), key = repKey('filter', item); row.dataset.rr = key;
+      const swap = option => { const entry = { ...option, feature_id: item.feature_id }; plan.filters[plan.filters.indexOf(item)] = entry; changed(); renderPlan(); focusKey('rn:' + repKey('filter', entry)); };
       const details = rowDetails(item, [item.header, item.unit, item.definition, item.description, item.reason, item.caution, item.source]);
-      const remove = el('button', '×', 'remove-row'); remove.type = 'button'; remove.setAttribute('aria-label', `Remove ${friendly(item)}`); remove.onclick = () => { plan.filters = plan.filters.filter(entry => entry !== item); changed(); renderPlan(); $('toggleFilter').focus(); }; li.append(header, details.body);
-      if (item.filter_available === false) li.append(el('p', 'Unavailable in the prepared Earth data.', 'micro'));
-      const row = el('div', undefined, 'filter-controls'); const op = document.createElement('select'); op.setAttribute('aria-label', `Operator for ${friendly(item)}`);
-      const numeric = ['continuous','fraction','percentage','ordinal','count','coordinate'].includes(item.data_type), category = item.data_type === 'categorical', boolean = item.data_type === 'boolean';
-      const operators = numeric ? [['>','Greater than'],['>=','At least'],['<','Less than'],['<=','At most'],['==','Equals'],['!=','Does not equal'],['between','Between']] : category ? [['==','Is'],['!=','Is not'],['in','Is one of']] : boolean ? [['==','Is']] : [];
-      for (const [value, label] of [['','Suggested · inactive'], ...operators, ['has_data','Has data'],['missing','Missing']]) { const option = el('option', label); option.value = value; op.append(option); }
+      details.button.className = 'rv-info'; details.body.className = 'rv-detail';
+      const remove = button('×', 'rv-x', `Remove ${friendly(item)}`); remove.dataset.key = 'x:' + key;
+      remove.onclick = () => { plan.filters = plan.filters.filter(entry => entry !== item); changed(); renderPlan(); $('toggleFilter').focus(); };
+      const op = document.createElement('select'); op.className = 'rv-op'; op.setAttribute('aria-label', `Operator for ${friendly(item)}`);
+      const numeric = NUMERIC.includes(item.data_type), category = item.data_type === 'categorical', boolean = item.data_type === 'boolean';
+      const operators = numeric ? [['>', 'Greater than'], ['>=', 'At least'], ['<', 'Less than'], ['<=', 'At most'], ['==', 'Equals'], ['!=', 'Does not equal'], ['between', 'Between']] : category ? [['==', 'Is'], ['!=', 'Is not'], ['in', 'Is one of']] : boolean ? [['==', 'Is']] : [];
+      for (const [value, label] of [['', 'Suggested · inactive'], ...operators, ['has_data', 'Has data'], ['missing', 'Missing']]) { const option = el('option', label); option.value = value; op.append(option); }
       op.value = item.operator || ''; op.disabled = item.filter_available === false;
       const choiceSearch = document.createElement('input'); choiceSearch.type = 'search'; choiceSearch.placeholder = 'Search choices'; choiceSearch.setAttribute('aria-label', `Search choices for ${friendly(item)}`); choiceSearch.hidden = true;
       const value = document.createElement(numeric ? 'input' : 'select'); value.setAttribute('aria-label', `Value for ${friendly(item)}`);
-      const max = document.createElement('input'); Object.assign(max, {type:'number', step:'any', placeholder:'Maximum', value:item.value_max === undefined ? '' : item.value_max * (item.display_scale || 1)}); max.setAttribute('aria-label', `Maximum for ${friendly(item)}`);
-      if (numeric) { Object.assign(value, {type:'number', step:'any', placeholder:'Value', value:item.value === undefined ? '' : item.value * (item.display_scale || 1)}); }
-      else if (boolean) { for (const [v, label] of [['','Choose'],['true','Yes'],['false','No']]) { const o=el('option',label); o.value=v; value.append(o); } value.value = item.value === undefined ? '' : String(item.value); }
-      else if (category) { const placeholder = el('option', 'Choose'); placeholder.value = ''; value.append(placeholder); for (const choice of item.choices || []) { const o=el('option',choice.label); o.value=choice.value; value.append(o); } }
+      const and = el('span', 'and');
+      const max = document.createElement('input'); Object.assign(max, { type: 'number', step: 'any', placeholder: 'max', value: item.value_max === undefined ? '' : item.value_max * (item.display_scale || 1) }); max.setAttribute('aria-label', `Maximum for ${friendly(item)}`);
+      if (numeric) Object.assign(value, { type: 'number', step: 'any', placeholder: 'value', value: item.value === undefined ? '' : item.value * (item.display_scale || 1) });
+      else if (boolean) { for (const [v, label] of [['', 'Choose'], ['true', 'Yes'], ['false', 'No']]) { const o = el('option', label); o.value = v; value.append(o); } value.value = item.value === undefined ? '' : String(item.value); }
+      else if (category) { const placeholder = el('option', 'Choose'); placeholder.value = ''; value.append(placeholder); for (const choice of item.choices || []) { const o = el('option', choice.label); o.value = choice.value; value.append(o); } }
       choiceSearch.oninput = () => { const term = choiceSearch.value.toLowerCase(); for (const option of value.options) option.hidden = !!option.value && !option.textContent.toLowerCase().includes(term); };
       const unit = el('span', item.display_unit || item.unit || '', 'filter-unit');
-      const sync = () => { value.hidden = !op.value || ['has_data','missing'].includes(op.value); choiceSearch.hidden = !category || value.hidden; unit.hidden = !numeric || value.hidden; max.hidden = op.value !== 'between'; if (category) { value.multiple = op.value === 'in'; for (const option of value.options) option.selected = Array.isArray(item.value) ? item.value.includes(option.value) : option.value === item.value; } };
-      op.onchange = () => { item.operator = op.value || undefined; item.value = undefined; value.value = ''; sync(); changed(); };
-      value.onchange = value.oninput = () => { if (numeric) item.value = value.value === '' ? undefined : Number(value.value) / (item.display_scale || 1); else if (boolean) item.value = value.value === '' ? undefined : value.value === 'true'; else item.value = value.multiple ? [...value.selectedOptions].map(option => option.value).filter(Boolean) : value.value || undefined; changed(); };
-      max.oninput = () => { item.value_max = max.value === '' ? undefined : Number(max.value) / (item.display_scale || 1); changed(); }; sync(); row.append(op, choiceSearch, value, max, unit); header.append(row, details.button, remove); filters.append(li);
+      const refresh = () => { row.classList.toggle('inactive', !item.operator); StageView.review(skyGroups()); renderSentence(); };
+      const sync = () => { value.hidden = !op.value || ['has_data', 'missing'].includes(op.value); choiceSearch.hidden = !category || value.hidden; unit.hidden = !numeric || value.hidden; max.hidden = and.hidden = op.value !== 'between'; if (category) { value.multiple = op.value === 'in'; for (const option of value.options) option.selected = Array.isArray(item.value) ? item.value.includes(option.value) : option.value === item.value; } };
+      op.onchange = () => { item.operator = op.value || undefined; item.value = undefined; value.value = ''; sync(); changed(); refresh(); };
+      value.onchange = value.oninput = () => { renderSentenceSoon(); if (numeric) item.value = value.value === '' ? undefined : Number(value.value) / (item.display_scale || 1); else if (boolean) item.value = value.value === '' ? undefined : value.value === 'true'; else item.value = value.multiple ? [...value.selectedOptions].map(option => option.value).filter(Boolean) : value.value || undefined; changed(); };
+      max.oninput = () => { renderSentenceSoon(); item.value_max = max.value === '' ? undefined : Number(max.value) / (item.display_scale || 1); changed(); };
+      sync();
+      const vals = el('div', undefined, 'rv-vals'); vals.append(choiceSearch, value, and, max, unit);
+      if (item.filter_available === false) vals.append(el('span', 'unavailable in the prepared Earth data', 'rv-context'));
+      row.append(el('span'), cycler('filter', item, options, used, swap), op, vals, details.button, remove, details.body); list.append(row);
     }
-    renderFeatureOptions();
-    const chosen = new Set(plan.filters.map(item => `${item.feature_id}/${item.header}`));
-    const query = $('filterSearch').value.toLowerCase();
-    const filterOptions = [...menu.filters.flatMap(family => family.options.map(option => ({...option, feature_id: family.feature_id}))), ...(menu.dataset_fields || []).map(option => ({...option, feature_id:'dataset_field'}))];
-    fillSelect('addFilter', filterOptions.filter(option => !chosen.has(`${option.feature_id}/${option.header}`) && `${friendly(option)} ${option.header}`.toLowerCase().includes(query))
-      .map(option => [`${option.feature_id}/${option.header}`, `${friendly(option)}${option.filter_available === false ? ' · unavailable' : ''}`]));
+    li.append(list);
+    const free = options.filter(o => !used.has(o.header));
+    if (free.length) li.append(addRepButton('filter', group, free, option => {
+      const entry = { ...option, feature_id: group.id };
+      plan.filters.splice(plan.filters.indexOf(group.items.at(-1)) + 1, 0, entry);
+      changed(); renderPlan(); focusKey('rn:' + repKey('filter', entry));
+    }));
+    return li;
   }
+
+  // Weight-only refresh: bars, typed values, subtotals, budget, sky and recap. Keeps focus and drags.
+  function refreshWeights() {
+    const items = scorable(), many = items.length > 1;
+    for (const view of weightViews) {
+      const w = pct(view.item), [filled, rest] = barText(w);
+      view.fill.textContent = filled; view.rest.textContent = rest;
+      view.bar.setAttribute('aria-valuenow', String(w)); view.bar.setAttribute('aria-valuetext', `${w} percent`); view.bar.setAttribute('aria-disabled', String(!many));
+      if (document.activeElement !== view.num) view.num.value = Number.isFinite(view.item.weight) ? String(w) : '';
+    }
+    const groups = groupsOf('comparison');
+    for (const group of groups) { const node = $('comparisons').querySelector(`[data-total="${CSS.escape(group.id)}"]`); if (node) node.textContent = group.items.some(item => item.score_available) ? `Σ ${groupTotal(group)}` : ''; }
+    const sum = items.reduce((total, item) => total + pct(item), 0);
+    $('weightSum').textContent = items.length ? `Σ ${sum}` : ''; $('weightSum').classList.toggle('bad', items.length > 0 && sum !== 100);
+    $('liveSelection').classList.toggle('rv-ready', items.length > 0 && sum === 100 && plan.comparisons.every(item => item.score_available));
+    StageView.review(skyGroups()); renderSentence();
+  }
+  // The recap reads as three lines: what to compare, which conditions must hold, and where to look.
+  // Each item keeps its own star (✦ compare, ◇ filter), so no separator is needed between them.
+  const OP_TEXT = { '>': '>', '>=': '≥', '<': '<', '<=': '≤', '==': '=', '!=': '≠', between: 'between', in: 'is one of', has_data: 'has data', missing: 'is missing' };
+  function conditionText(item) {
+    const name = friendly(item).toLowerCase(), scale = item.display_scale || 1, unit = item.display_unit || item.unit || '';
+    const show = v => typeof v === 'number' ? `${Number((v * scale).toPrecision(4))}${unit && unit.length <= 3 ? ' ' + unit : ''}` : Array.isArray(v) ? v.join(', ') : typeof v === 'boolean' ? (v ? 'yes' : 'no') : v ?? '…';
+    if (item.operator === 'has_data' || item.operator === 'missing') return `${name} ${OP_TEXT[item.operator]}`;
+    if (item.operator === 'between') return `${name} between ${show(item.value)} and ${show(item.value_max)}`;
+    return `${name} ${OP_TEXT[item.operator] || item.operator} ${show(item.value)}`;
+  }
+  const renderSentenceSoon = () => queueMicrotask(renderSentence); // after the handler stores the value
+  function renderSentence() {
+    const node = $('reviewSentence'); node.replaceChildren();
+    const line = lead => { if (lead) node.append(el('span', lead, 'rv-row rv-lead')); const row = el('span', undefined, 'rv-row'); node.append(row); return row; };
+    const groups = groupsOf('comparison').map(group => ({ label: featureLabel('comparison', group.id), total: groupTotal(group) })).sort((a, b) => b.total - a.total);
+    if (!groups.length) line().append('Add a feature to compare, then search');
+    else { const row = line('Find Earth cells like'); for (const group of groups) row.append(el('b', `✦ ${group.label.toLowerCase()} ${group.total}`, 'c rv-item')); }
+    const active = plan.filters.filter(item => item.operator);
+    const row = line('where');
+    if (active.length) for (const item of active) row.append(el('b', `◇ ${conditionText(item)}`, 'f rv-item'));
+    else row.append(el('span', 'no active Earth filters', 'rv-none-yet'));
+  }
+
+  function renderPlan() {
+    closePop(); weightViews = [];
+    const comparisons = $('comparisons'), filters = $('filters'), cgroups = groupsOf('comparison'), fgroups = groupsOf('filter');
+    comparisons.replaceChildren(); filters.replaceChildren();
+    if (!cgroups.length) comparisons.append(el('li', 'Add a feature to compare.', 'rv-empty'));
+    cgroups.forEach((group, i) => comparisons.append(comparisonBlock(group, i + 1)));
+    if (!fgroups.length) filters.append(el('li', 'No Earth filter fields selected.', 'rv-empty'));
+    fgroups.forEach((group, i) => filters.append(filterBlock(group, cgroups.length + i + 1)));
+    renderFeatureOptions(); renderFilterOptions();
+    refreshWeights();
+  }
+  function menuButtons(list, items, emptyText) {
+    list.replaceChildren(); let last;
+    for (const item of items) {
+      if (item.group && item.group !== last) { list.append(el('div', item.group, 'rv-grp')); last = item.group; }
+      const b = button('', item.kept ? 'kept' : ''), mark = el('span', item.kept ? '✦' : '·', 'rv-mk'), text = el('span', undefined, 'rv-opt');
+      mark.setAttribute('aria-hidden', 'true'); text.append(el('span', item.text, 'rv-opt-name'));
+      if (item.meta) text.append(el('span', item.meta, 'rv-opt-meta'));
+      b.append(mark, text); if (item.title) b.title = item.title; b.dataset.value = item.value; b.disabled = !!item.disabled; b.onclick = item.pick; list.append(b);
+    }
+    if (!items.length) list.append(el('p', emptyText, 'rv-none'));
+  }
+  const byGroup = (a, b) => a.group.localeCompare(b.group, 'en', { sensitivity: 'base' }) || a.text.localeCompare(b.text, 'en', { sensitivity: 'base', numeric: true });
+  function closeMenu(id) { const toggle = id === 'familyMenu' ? 'toggleFamily' : 'toggleFilter'; $(id).hidden = true; $(toggle).setAttribute('aria-expanded', 'false'); $(toggle).focus(); }
+  // Every comparison feature in the catalog. Picking one adds it with its first
+  // scorable representation; ‹ › on its row then changes or adds representations.
   function renderFeatureOptions() {
-    const used = new Set(plan.comparisons.map(item => item.header));
-    const term = $('featureSearch').value.trim().toLowerCase();
-    fillSelect('addFamily', menu.comparisons.flatMap(family => family.options
-      .filter(option => !used.has(option.header) && option.score_available && `${friendly(option)} ${option.header}`.toLowerCase().includes(term))
-      .map(option => [`${family.feature_id}/${option.header}`, friendly(option)]))
-      .sort((a, b) => a[1].localeCompare(b[1], 'en', { sensitivity: 'base', numeric: true })));
-    if ($('addFamily').disabled) $('addFamily').add(new Option(term ? 'No matching features' : 'No features available'));
+    const inPlan = new Set(plan.comparisons.map(item => item.feature_id)), term = $('featureSearch').value.trim().toLowerCase();
+    const items = (menu?.comparisons || []).map(family => ({ family, options: family.options.filter(option => option.score_available), label: featureLabel('comparison', family.feature_id) }))
+      .filter(({ family, options, label }) => options.length && [label, family.feature_id, family.description, ...options.flatMap(option => [friendly(option), option.header])].join(' ').toLowerCase().includes(term))
+      .map(({ family, options, label }) => {
+        const added = inPlan.has(family.feature_id), count = options.length;
+        return {
+          group: added ? 'Already in your search' : 'Add a feature', text: label, value: family.feature_id, title: family.description, kept: added, disabled: added,
+          meta: added ? 'change or add representations from its row' : `${count} representation${count > 1 ? 's' : ''} · starts with ${friendly(options[0])}`,
+          pick: () => {
+            const total = scorable().length, entry = { ...options[0], feature_id: family.feature_id, weight: total ? 1 / (total + 1) : 1 };
+            plan.comparisons.push(entry); balanceWeights(entry); changed(); renderPlan(); closeMenu('familyMenu'); focusKey('rn:' + repKey('comparison', entry));
+          },
+        };
+      })
+      .sort((a, b) => a.kept - b.kept || a.text.localeCompare(b.text, 'en', { sensitivity: 'base', numeric: true }));
+    menuButtons($('addFamily'), items, term ? 'No matching features' : 'No features available');
   }
-  $('addFamilyBtn').onclick = () => {
-    const [feature_id, header] = $('addFamily').value.split('/');
-    const option = menu.comparisons.find(f => f.feature_id === feature_id)?.options.find(o => o.header === header);
-    if (option) { const count = plan.comparisons.filter(item => item.score_available).length; plan.comparisons.push({ ...option, feature_id, weight: count ? 1 / count : 1 }); balanceWeights(); changed(); }
-    renderPlan(); $('familyMenu').hidden = true; $('toggleFamily').setAttribute('aria-expanded', 'false'); $('toggleFamily').focus();
-  };
-  $('addFilterBtn').onclick = () => {
-    const [feature_id, header] = $('addFilter').value.split('/');
-    const option = feature_id === 'dataset_field' ? (menu.dataset_fields || []).find(o => o.header === header) : menu.filters.find(f => f.feature_id === feature_id)?.options.find(o => o.header === header);
-    if (option) { plan.filters.push({ ...option, feature_id }); changed(); }
-    renderPlan(); $('filterMenu').hidden = true; $('toggleFilter').setAttribute('aria-expanded', 'false'); $('toggleFilter').focus();
-  };
+  function renderFilterOptions() {
+    const chosen = new Set(plan.filters.map(item => `${item.feature_id}/${item.header}`)), term = $('filterSearch').value.trim().toLowerCase();
+    const all = [...(menu?.filters || []).flatMap(family => family.options.map(option => ({ ...option, feature_id: family.feature_id }))), ...(menu?.dataset_fields || []).map(option => ({ ...option, feature_id: 'dataset_field' }))];
+    const items = all.filter(option => !chosen.has(`${option.feature_id}/${option.header}`) && `${friendly(option)} ${option.header}`.toLowerCase().includes(term))
+      .map(option => ({ group: featureLabel('filter', option.feature_id), text: `${friendly(option)}${option.filter_available === false ? ' · unavailable' : ''}`, title: option.header, value: `${option.feature_id}/${option.header}`, pick: () => {
+        const last = plan.filters.findLastIndex(item => item.feature_id === option.feature_id);
+        if (last >= 0) plan.filters.splice(last + 1, 0, option); else plan.filters.push(option);
+        changed(); renderPlan(); closeMenu('filterMenu');
+      } })).sort(byGroup);
+    menuButtons($('addFilter'), items, term ? 'No matching filters' : 'No filters available');
+  }
   const continents = ['Africa', 'Antarctica', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'];
-  for (const name of continents) { const label = el('label'); const input = document.createElement('input'); input.type = 'checkbox'; input.value = name; input.checked = true; input.onchange = () => { changed(); $('continents').previousElementSibling.previousElementSibling.querySelector('span').textContent = `· ${$('continents').querySelectorAll('input:checked').length} of 7 selected`; }; label.append(input, document.createTextNode(name)); $('continents').append(label); }
+  for (const name of continents) { const label = el('label'); const input = document.createElement('input'); input.type = 'checkbox'; input.value = name; input.checked = true; input.onchange = () => { changed(); }; label.append(input, document.createTextNode(name)); $('continents').append(label); }
   $('resultLimit').oninput = changed; $('separation').oninput = changed;
-  for (const [button, panel, search] of [['toggleFamily','familyMenu','featureSearch'], ['toggleFilter','filterMenu','filterSearch']]) $(button).onclick = () => {
-    const open = $(panel).hidden;
-    $(panel).hidden = !open;
-    $(button).setAttribute('aria-expanded', String(open));
-    if (open) {
-      if (search === 'featureSearch') { $(search).value = ''; renderFeatureOptions(); }
-      $(search).focus();
-    }
+  for (const [toggle, panel, search] of [['toggleFamily', 'familyMenu', 'featureSearch'], ['toggleFilter', 'filterMenu', 'filterSearch']]) $(toggle).onclick = () => {
+    const open = $(panel).hidden; closePop();
+    $(panel).hidden = !open; $(toggle).setAttribute('aria-expanded', String(open));
+    if (open) { $(search).value = ''; if (search === 'featureSearch') renderFeatureOptions(); else renderFilterOptions(); placePop($(panel), $(toggle)); $(search).focus(); }
   };
-  $('featureSearch').oninput = renderFeatureOptions; $('filterSearch').oninput = renderPlan;
+  $('featureSearch').oninput = () => { renderFeatureOptions(); placePop($('familyMenu'), $('toggleFamily')); };
+  $('filterSearch').oninput = () => { renderFilterOptions(); placePop($('filterMenu'), $('toggleFilter')); };
+  $('liveSelection').querySelector('.rv-ledger').addEventListener('scroll', placeOpenLists, { passive: true });
+  StageView.link($('stageDeck'));
+  document.addEventListener('pointerdown', event => {
+    if (pop && !pop.node.contains(event.target) && event.target !== pop.back) closePop();
+    for (const [toggle, panel] of [['toggleFamily', 'familyMenu'], ['toggleFilter', 'filterMenu']]) if (!$(panel).hidden && !$(panel).parentNode.contains(event.target)) { $(panel).hidden = true; $(toggle).setAttribute('aria-expanded', 'false'); }
+  });
+  $('liveSelection').addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    if (pop) { event.preventDefault(); closePop(true); return; }
+    for (const panel of ['familyMenu', 'filterMenu']) if (!$(panel).hidden) { event.preventDefault(); closeMenu(panel); }
+  });
   $('runScore').onclick = async () => {
     const status = $('scoreStatus'), output = $('scoreResult');
     output.hidden = true; output.textContent = '';
@@ -208,11 +468,11 @@
         mode = 'live'; recorded = { run_id: 'live Method D', revision: data.reference_id || 'not supplied' };
         locations = data.ranked.map((row, index) => ({ name: row.region_id, region_id: row.region_id, lat: row.latitude, lon: row.longitude, score: row.score, elevation_m: row.elevation_m, rank: row.rank, marker: index + 1, group_distances: row.group_distances, group_contributions: row.group_contributions, environment: 'unspecified' }));
         window.resultFeatureLabels = Object.fromEntries(comparisons.flatMap(item => [[item.feature_id, friendly(item)], [item.header, friendly(item)]]));
-        selectedId = null; $('filterText').value = ''; populateEnvironments(); renderLocations();
+        selectedId = null; renderLocations();
         setPlanet('earth');
-        $('mapTitle').textContent = 'Method D results'; $('listHeading').textContent = 'Ranked Earth locations';
+        $('listHeading').textContent = 'Ranked Earth locations';
         $('listDescription').textContent = 'Locations scored using your reviewed representations and weights.';
-        $('mapStatus').textContent = `Natural Earth 1:110m · ${data.ranked.length} of ${result_count} requested · minimum separation ${min_separation_km} km`; earthView={lat:0,lon:0,zoom:1}; drawAsciiEarth();
+        $('mapStatus').textContent = `${data.ranked.length} of ${result_count} requested · minimum separation ${min_separation_km} km`; fitAsciiEarth(locations);
       }
     } catch (error) { if (scoreRequest === request) status.textContent = error.message || 'Could not reach the scoring service.'; }
     finally { if (scoreRequest === request) { scoreRequest = undefined; $('liveSelection').querySelectorAll('button, input, select').forEach(node => { node.disabled = false; }); $('continents').querySelectorAll('input').forEach(input => { input.disabled = !menu.continent_filter?.available; }); renderPlan(); $('runScore').focus(); } }
@@ -253,7 +513,13 @@
   });
   function renderDiagram(stage, reveal = false) {
     diagramObserver.disconnect();
-    const host = $('liveStages'), running = ['features', 'representations'].includes(stage);
+    // Connecting, selecting features and choosing representations use the star view.
+    // Review keeps the diagram, which the plan below still edits, in a hidden holder:
+    // it is only shown inside the selection trace, and the stars stay to come back to.
+    // A stopped run shows it in place of the stars.
+    if (stage === '' || stage === 'features' || stage === 'representations') { StageView.show(stage === 'representations' && reveal ? 'selected' : stage, families); return; }
+    StageView.stop();
+    const host = stage === 'review' ? $('reviewDiagram') : $('liveStages'), running = ['features', 'representations'].includes(stage);
     const paused = host.classList.contains('motion-paused');
     host.className = `live-diagram${running ? ' is-running' : ''}${paused ? ' motion-paused' : ''}`; host.replaceChildren();
     const node = (label, text, active, description) => {
@@ -298,6 +564,92 @@
     renderDiagram(stage);
     $('liveProgressStatus').textContent = index >= 0 ? stageNames[index][1] + '…' : '';
   }
+  const previewFamilies = { comparisons: [
+    { feature_id: 'terrain', label: 'Terrain shape', phrase: 'field-testing', description: 'Slope, relief and roughness inside one 5 km cell.' },
+    { feature_id: 'surface', label: 'Surface properties', phrase: 'subsurface ice', description: 'Near-surface ice and surface reflectance, with caveats about differing sources.' }
+  ], filters: [{ feature_id: 'climate', label: 'Climate', description: 'Earth-only temperature and moisture climatology.' }] };
+  const previewComparisons = [
+    { feature_id: 'terrain', header: 'slope', label: 'Mean terrain slope', unit: '°', score_available: true, weight: .6 },
+    { feature_id: 'surface', header: 'albedo', label: 'Surface albedo', score_available: true, weight: .4 }
+  ];
+  const previewFilters = [{ feature_id: 'climate', header: 'temperature', label: 'Mean temperature', unit: '°C', data_type: 'continuous', filter_available: true }];
+  // Well-known Mars analog field sites; ranks and distances are made up for the preview.
+  const previewMenu = { comparisons: [
+    { feature_id: 'terrain', options: [['slope', 'Mean terrain slope'], ['slope_p90', '90th percentile slope'], ['slope_frac_gt_5', 'Area steeper than 5°'], ['relief', 'Local relief'], ['tri_p50', 'Median terrain ruggedness']].map(([header, label]) => ({ header, label })) },
+    { feature_id: 'surface', options: [['albedo', 'Surface albedo'], ['ice_frac', 'Ice coverage'], ['ti_pct', 'Thermal inertia percentile']].map(([header, label]) => ({ header, label })) },
+    // Not chosen in the sample run; they show up under + add feature in the review preview.
+    { feature_id: 'wind', description: 'Near-surface wind speed statistics.', options: [['wind_mean_ms', 'Mean wind speed'], ['wind_max_ms', 'Maximum wind speed']].map(([header, label]) => ({ header, label })) },
+    { feature_id: 'dunes', description: 'Dune coverage and distance to dune fields.', options: [['dune_frac', 'Dune coverage'], ['dist_dune_km', 'Distance to dunes']].map(([header, label]) => ({ header, label })) },
+    { feature_id: 'surface_temperature', description: 'Surface temperature range across the day and year.', options: [['tsurf_min_K', 'Minimum surface temperature'], ['tsurf_diurnal_K', 'Daily temperature swing']].map(([header, label]) => ({ header, label })) }
+  ], filters: [
+    { feature_id: 'climate', options: [['temperature', 'Mean temperature'], ['tsurf_min_K', 'Minimum surface temperature'], ['h2o_col', 'Column water vapour']].map(([header, label]) => ({ header, label })) }
+  ] };
+  const previewAnswer = () => ({
+    comparisons: previewComparisons.map(item => ({ ...item, reason: 'Sample reason: the statistic that most directly addresses the stated need.' })),
+    filters: previewFilters.map(item => ({ ...item, reason: 'Sample reason: an Earth-only constraint named in the question.' }))
+  });
+  const previewMatches = [
+    ['sample_atacama_yungay', -24.08, -70.02, 3, 'Atacama Desert, Yungay'],
+    ['sample_dry_valleys', -77.47, 161.77, 186, 'McMurdo Dry Valleys'],
+    ['sample_haughton_crater', 75.38, -89.68, 210, 'Haughton crater, Devon Island'],
+    ['sample_rio_tinto', 37.72, -6.56, 290, 'Río Tinto'],
+    ['sample_utah_mdrs', 38.41, -110.79, 1390, 'San Rafael Swell, Utah'],
+  ];
+  function previewResults() {
+    mode = 'live'; recorded = { run_id: 'stage preview', revision: 'sample data' };
+    locations = previewMatches.map(([id, lat, lon, elevation_m, name], index) => ({
+      name, region_id: id, lat, lon, elevation_m, rank: index + 1, marker: index + 1, environment: 'unspecified',
+      score: Number((0.12 + index * 0.07).toFixed(4)),
+      group_distances: { slope: Number((0.08 + index * 0.05).toFixed(4)), albedo: Number((0.15 + index * 0.04).toFixed(4)) },
+      group_contributions: { slope: 0.6, albedo: 0.4 },
+    }));
+    window.resultFeatureLabels = { slope: 'Mean terrain slope', albedo: 'Surface albedo' };
+    selectedId = null; renderLocations();
+    setPlanet('earth');
+    $('listHeading').textContent = 'Ranked Earth locations';
+    $('listDescription').textContent = 'Sample matches for previewing the layout. No scoring was run.';
+    $('mapStatus').textContent = `Sample data · ${locations.length} example analog sites, not real scores`;
+    fitAsciiEarth(locations);
+  }
+  function previewStage(stage) {
+    clearTimeout(previewTimer);
+    if (mode === 'live' && stage !== 'results') clearResults();
+    const reviewed = stage === 'review' || stage === 'results';
+    families = stage === 'connecting' || stage === 'features' ? { comparisons: [], filters: [] } : previewFamilies;
+    if (reviewed) {
+      // The sample run, already decided, so Features and Representations stay one tab away.
+      StageView.begin({ question: $('objective').value, lat: $('latitude').value, lon: $('longitude').value, sample: true });
+      StageView.setCatalog(previewMenu); StageView.show('representations', previewFamilies); StageView.settle(previewAnswer()); reviewReady();
+      slideToReview();
+    } else { stopSlide(); $('liveProgress').hidden = false; $('liveSelection').hidden = true; }
+    if (reviewed) {
+      menu = { comparisons: previewMenu.comparisons.map(f => ({ ...f, options: f.options.map(o => ({ ...o, score_available: true })) })), filters: previewMenu.filters.map(f => ({ ...f, options: f.options.map(o => ({ ...o, data_type: 'continuous', filter_available: true })) })), dataset_fields: [], continent_filter: { available: false } };
+      plan = { comparisons: previewComparisons.map(item => ({ ...item })), filters: previewFilters.map(item => ({ ...item })) };
+      renderPlan(); renderDiagram('review');
+      $('selectionTarget').textContent = '18.4446° N / 77.4509° E · Sample research question';
+      $('recordedTrace').replaceChildren($('reviewDiagram').cloneNode(true));
+      $('recordedTrace').firstChild.removeAttribute('id'); $('recordedTrace').firstChild.hidden = false;
+      $('traceDisclosure').open = false;
+      $('scoreStatus').textContent = 'Preview only · scoring is disabled.';
+      $('runScore').disabled = true;
+      if (stage === 'results') { previewResults(); $('scoreStatus').textContent = 'Preview only · sample matches shown on the map below.'; }
+    } else {
+      $('runScore').disabled = false;
+      StageView.begin({ question: $('objective').value, lat: $('latitude').value, lon: $('longitude').value, sample: true });
+      if (stage === 'representations') {
+        StageView.setCatalog(previewMenu);
+        previewTimer = setTimeout(() => StageView.resolve(previewAnswer()), 9000); // sample answer, replayed
+      }
+      showStage(stage === 'connecting' ? '' : stage);
+      $('liveProgressStatus').textContent = stage === 'connecting' ? 'Connecting…' : stageNames.find(([id]) => id === stage)[1] + '…';
+    }
+  }
+  $('testLoading').onclick = () => {
+    cancelRun(false);
+    previewStage('features');
+    $('liveProgress').scrollIntoView({ behavior: 'instant', block: 'start' });
+    setStatus('Stage preview: no search was sent.');
+  };
   form.onsubmit = async event => {
     event.preventDefault();
     let input;
@@ -308,9 +660,28 @@
     if (mode !== 'empty') clearResults();
     $('liveProgress').hidden = false;
     $('searchButton').disabled = true; $('cancel').hidden = false;
-    families = { comparisons: [], filters: [] }; recordedTrace = []; plan = { comparisons: [], filters: [], input: undefined }; $('recordedTrace').replaceChildren(); $('traceDisclosure').open = false; showStage(''); $('liveProgressStatus').textContent = 'Connecting…';
-    $('liveProgressTitle').focus(); setStatus('Selecting features and representations…');
+    families = { comparisons: [], filters: [] }; recordedTrace = []; plan = { comparisons: [], filters: [], input: undefined }; $('recordedTrace').replaceChildren(); $('traceDisclosure').open = false; StageView.begin({ question: input.objective, lat: input.lat, lon: input.lon }); showStage(''); $('liveProgressStatus').textContent = 'Connecting…';
+    const progressTitle = $('liveProgressTitle');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      progressTitle.focus();
+    } else {
+      progressTitle.focus({ preventScroll: true });
+      uplinkAnimation = $('uplinkPacket').animate([
+        { left: '0', opacity: 1 },
+        { left: 'calc(100% - 7px)', opacity: 1, offset: 0.82 },
+        { left: 'calc(100% - 7px)', opacity: 0, transform: 'translateY(10px)' }
+      ], { duration: 520, easing: 'linear' });
+      uplinkAnimation.onfinish = () => {
+        if (document.activeElement === progressTitle && !$('liveProgress').hidden) {
+          StageView.reveal(); // slide down to the question and the log
+        }
+      };
+    }
+    setStatus('Selecting features and representations…');
     const request = new AbortController(); pending = request;
+    // The catalog lists every candidate representation; load it alongside the stream.
+    const menuLoad = loadMenu(input);
+    menuLoad.then(() => { if (pending === request) StageView.setCatalog(menu); }, () => {});
     try {
       const response = await fetch('/api/select/stream', { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: request.signal,
         body: JSON.stringify({ longitude: input.lon, latitude: input.lat, objective: input.objective }) });
@@ -333,13 +704,15 @@
         if (done) break;
       }
       if (!result) throw Error('Selection ended before a result was returned.');
-      await loadMenu(input); if (pending !== request) return;
+      await menuLoad; if (pending !== request) return;
+      // Replay the model's choices in the order it wrote them, then review.
+      await StageView.resolve(result); if (pending !== request) return;
       plan = { input, comparisons: result.comparisons.map(item => ({ ...item, weight: item.weight })), filters: result.filters };
       balanceWeights(); renderPlan(); renderDiagram('review', true); $('scoreResult').textContent = ''; $('scoreResult').hidden = true; $('scoreStatus').textContent = '';
       $('selectionTarget').textContent = `${input.lat}° N / ${input.lon}° E · ${input.objective}`;
       $('liveProgressStatus').textContent = 'Selection complete · review and edit your plan below.';
-      const traceDetails = $('recordedTrace'); const originalDiagram = $('liveStages').cloneNode(true); originalDiagram.removeAttribute('id'); originalDiagram.querySelectorAll('.event-reveal').forEach(node => node.classList.remove('event-reveal')); const rawTrace = el('details'); rawTrace.append(el('summary', 'Raw trace'), el('pre', JSON.stringify(recordedTrace, null, 2), 'trace-record')); traceDetails.replaceChildren(originalDiagram, rawTrace);
-      $('liveProgress').hidden = true; $('liveSelection').hidden = false; $('selectionTitle').focus(); setStatus('Selection complete.');
+      const traceDetails = $('recordedTrace'); const originalDiagram = $('reviewDiagram').cloneNode(true); originalDiagram.removeAttribute('id'); originalDiagram.hidden = false; originalDiagram.querySelectorAll('.event-reveal').forEach(node => node.classList.remove('event-reveal')); const rawTrace = el('details'); rawTrace.append(el('summary', 'Raw trace'), el('pre', JSON.stringify(recordedTrace, null, 2), 'trace-record')); traceDetails.replaceChildren(originalDiagram, rawTrace);
+      reviewReady(); slideToReview(); $('selectionTitle').focus({ preventScroll: true }); setStatus('Selection complete.');
     } catch (error) {
       if (pending === request) { renderDiagram('stopped'); $('liveProgressStatus').textContent = error.message || 'Could not reach the selection service.'; setStatus(error.message, true); }
     } finally {
@@ -348,6 +721,6 @@
   };
   for (const id of ['latitude', 'longitude', 'objective']) {
     const original = $(id).oninput;
-    $(id).oninput = event => { if (pending || scoreRequest || !$('liveSelection').hidden) cancelRun(false); original(event); };
+    $(id).oninput = event => { if (pending || scoreRequest || !$('liveProgress').hidden || !$('liveSelection').hidden) cancelRun(false); original(event); };
   }
 })();

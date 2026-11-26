@@ -15,7 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, StringConstraints
 from starlette.concurrency import run_in_threadpool
 
-from . import choose_features, representation_families, select_features_and_representations
+from . import choose_features, family_phrases, representation_families, select_features_and_representations
 from .display_catalog import metadata
 from .plan import ConfirmedPlan, ScoringBackend, catalog_menu, filter_metadata
 from .representation_selection import choose_representations
@@ -121,8 +121,10 @@ def select_stream(request: SelectionRequest):
             concepts = await run_in_threadpool(choose_features, request.objective)
             available = await run_in_threadpool(selection_availability, request)
             families = representation_families(concepts, available=available)
+            phrases = family_phrases(request.objective, concepts)
             yield event("features_selected", concepts=concepts, families={
-                name: [{"feature_id": feature_id, "description": family["description"]}
+                name: [{"feature_id": feature_id, "description": family["description"],
+                        "phrase": phrases.get(feature_id)}
                        for feature_id, family in available.items()]
                 for name, available in families.items()
             })

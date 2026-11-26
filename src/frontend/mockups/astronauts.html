@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Martwin · ASCII astronaut options (proposal)</title>
+<style>
+body{margin:0;background:#101214;color:#aaa9a3;font:13px system-ui,sans-serif;padding:40px 24px}
+.row{display:flex;align-items:flex-end;justify-content:center;gap:48px;flex-wrap:wrap}
+.opt{display:flex;flex-direction:column;align-items:center;gap:14px}
+pre{margin:0;font:15px/1.1 ui-monospace,Menlo,monospace;white-space:pre;text-shadow:0 0 4px rgba(241,238,231,.3)}
+b{color:#f1eee7;font-weight:500}
+</style>
+</head>
+<body>
+<div class="row" id="row"></div>
+<script>
+const W='#f1eee7',S='#e3e2dd',G='#aab0b9',L='#9aa8d8',N='#3d4a78',U='#5b9dff',GL='#ffffff';
+const chest=(ch)=>ch==='o'?U:G;
+const options=[
+ {name:'A · Big visor',note:'closest to the reference',lines:[
+  '     .-"""""-.',
+  '   .\'  _____  \'.',
+  '  /  .\'     \'.  \\',
+  ' |  /  o      \\  |',
+  ' | |   .       | |[]',
+  ' |  \\         /  |[]',
+  '  \\  \'._____.\'  /',
+  '   \'._________.\'',
+  '    /|  [o]  |\\',
+  '   ( |_______| )',
+  '     | |   | |',
+  '     (__) (__)'],
+  color:(r,c,ch)=>(r===3&&ch==='o')||(r===4&&c===7)?GL:r>=1&&r<=6&&c>=4&&c<=14&&!(r===1&&(c<5||c>13))?L:ch==='['||ch===']'?(r>=8?G:G):r===8&&c>=8&&c<=10?chest(ch):r===11?G:r>=8?S:W},
+ {name:'B · Filled visor',note:'solid dark visor, two glints',lines:[
+  '    .-"""-.',
+  '   /.:::::.\\',
+  '  |:o:::::::|[]',
+  '  |:.:::::::|[]',
+  '   \\\':::::\'/',
+  '  .-\'-----\'-.',
+  ' ( | [o]   | )',
+  '   |__|_|__|',
+  '   (__) (__)'],
+  color:(r,c,ch)=>r>=2&&r<=3&&c===4?GL:ch===':'?N:r>=1&&r<=4&&c>=4&&c<=10?L:ch==='['||ch===']'?G:r===6&&c>=5&&c<=7?chest(ch):r===8?G:r>=5?S:W},
+ {name:'C · Arms out',note:'floating pose with mitten hands',lines:[
+  '     .-"""-.',
+  '    / .---. \\',
+  '   | |o    | |]',
+  '   | |.    | |]',
+  '    \\ \'---\' /',
+  '  _.-\'-----\'-._',
+  ' (_ |  [o]  | _)',
+  '    |__.-.__|',
+  '    (__) (__)'],
+  color:(r,c,ch)=>r>=2&&r<=3&&c===6?GL:r>=1&&r<=4&&c>=5&&c<=11?L:ch===']'?G:r===6&&c>=7&&c<=9?chest(ch):r===8?G:r>=5?S:W},
+ {name:'D · Tiny',note:'for distant or small spots',lines:[
+  ' .---.',
+  '( o  )]',
+  ' \'---\'',
+  ' /[o]\\',
+  ' (_)(_)'],
+  color:(r,c,ch)=>r===1&&ch==='o'?GL:r===1&&c>=1&&c<=4?L:ch===']'&&r===1?G:r===3&&c>=2&&c<=4?chest(ch):r===4?G:r>=3?S:W},
+];
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+for (const o of options) {
+  const box=document.createElement('div'); box.className='opt';
+  const pre=document.createElement('pre');
+  pre.innerHTML=o.lines.map((l,r)=>[...l].map((ch,c)=>ch===' '?' ':`<span style="color:${o.color(r,c,ch)}">${esc(ch)}</span>`).join('')).join('\n');
+  const cap=document.createElement('div'); cap.innerHTML=`<b>${o.name}</b><br>${o.note}`; cap.style.textAlign='center';
+  box.append(pre,cap); document.getElementById('row').appendChild(box);
+}
+</script>
+</body>
+</html>

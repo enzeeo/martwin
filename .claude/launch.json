@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "martwin",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "--no-sync", "uvicorn", "src.backend.web:app", "--port", "8765"],
+      "port": 8765
+    }
+  ]
+}
